@@ -1,4 +1,13 @@
 \chapter{Estado del arte}
 
-El software libre y sus licencias \cite{gplv3} ha permitido llevar a cabo una expansión del
-aprendizaje de la informática sin precedentes.
+Los word embeddinng son una técnica de la rama del procesamiento del lenguaje natural que ayuda a capturar la semántica y el contexto sintáctico para comprender cómo de parecidos o diferentes son los términos en un documento, o corpus de texto.
+
+En el modelo \emph{word2vec} \cite{word2vec:1} \cite{word2vec:2}, se crea una representación en forma vector para cada palabra. Los vectores son elegidos de forma que una simple función matemática, como la similitud coseno, pueda ser usada para calcular la similitud entre dos palabras. Por ejemplo, si se calculara una palabra cercana a \emph{plátano}, obtendríamos como resultado \emph{fruta}, o la famosa operación \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina}. Básicamente, este modelo aporta información sobre el significado de una palabra.
+
+El principal problema de este modelo es que cada palabra tiene un único vector asociado, pero en el mundo real, cada palabra puede tener distintos significados dependiendo del contexto. Por ejemplo, en las frases \emph{kiwi y mango son coches españoles}, y \emph{kiwi y mango son frutas}, el mismo word embedding es usado para kiwi y mango.
+
+Modelos como \emph{Adaptive Skipgram} \cite{adaptiveskipgram}, intentan solventar este problema usando  varios vectores para \emph{cada} sentido de una palabra, generando así un vocabulario de sentidos de palabras. Sin embargo, se sigue usando el mismo embedding para cada ocurrencia de un sentido en específico.
+
+Entre los últimos avances se encuentra \emph{BERT/ELMO} \cite{bert}, un exitoso modelo que soluciona el problema antes descrito. En lugar de aportar información sobre el significado de una palabra, se construye un embedding dependiente del contexto (y por lo tanto, específico a cada aparición). De forma que la palabra \emph{kiwi} tendrá diferentes embeddings en las frases \emph{kiwi y mango son coches españoles}, y \emph{kiwi y mango son frutas}.
+
+En el caso de este trabajo, los tropos no tienen, a priori, distintos sentidos, por lo que se ha optado por usar el modelo \emph{word2vec}.
