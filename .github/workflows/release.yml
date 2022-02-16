@@ -21,7 +21,7 @@ jobs:
           prerelease: false
       - uses: xu-cheng/latex-action@v2
         with:
-          working-directory: ./doc
+          working_directory: ./doc
           root_file: proyecto.tex
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
