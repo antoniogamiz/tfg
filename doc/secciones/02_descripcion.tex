@@ -29,7 +29,7 @@ objetivos del trabajo:
 \begin{enumerate}
       \item \label{obj:1} Crear una herramienta que permita hacer \textit{scraping} de los distintos
             tropos de \url{https://tvtropes.org/}. La herramienta debe ser fácilmente extensible a
-            otras páginas de tropos.
+            otras páginas de tropos. \href{https://github.com/antoniogamiz/tfg/milestone/3}{Milestone asociada}.
       \item \label{obj:2} Crear una herramienta que permita hacer \textit{scraping} de ratings de
             películas en \url{https://www.imdb.com/}. La herramienta debe ser fácilmente extensible a
             otras páginas de ratings.
@@ -39,4 +39,18 @@ objetivos del trabajo:
             de forma sencilla qué rating estimado obtendrían a partir de los tropos de su obra. Es necesario
             que haya al menos dos interfaces: una fácil de usar por usuarios no técnicos y otra que sea
             fácilmente integrable con otros proyectos de código.
+\end{enumerate}
+
+Del primer objetivo \ref{obj:1}, se pueden refinar los siguientes casos de uso:
+
+\begin{enumerate}
+      \item \label{us:1} La herramienta debe ser altamente paralelizable. También debe de tener en
+            cuenta a la página que se está atacando, es decir, no se debe de sobrecargar de peticiones.
+      \item \label{us:2} Dado el tiempo que se necesita para hacer scraping, es necesario tener un
+            sistema de pausa por si el usuario tiene que parar de hacer scraping o el proveedor está
+            temporalmente caído.
+      \item \label{us:3} La herramienta debe poder ser usada por la comunidad, es decir, debe ser
+            publicada con instrucciones de uso e instalación. De forma que cualquier usuario pueda usarla.
+      \item \label{us:4} El formato de salida de la herramienta tiene que ser configurable. Poder elegir
+            varios formatos facilita su uso (afecta a \label{us:3})
 \end{enumerate}
