@@ -11,7 +11,7 @@
 *.cb
 *.cb2
 .*.lb
-
+doc/figures
 ## Intermediate documents:
 *.dvi
 *.xdv
@@ -123,7 +123,7 @@ acs-*.bib
 
 # knitr
 *-concordance.tex
-# TODO Comment the next line if you want to keep your tikz graphics 
+# TODO Comment the next line if you want to keep your tikz graphics
 files
 *.tikz
 *-tikzDictionary

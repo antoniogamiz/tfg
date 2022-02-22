@@ -1,0 +1,52 @@
+\chapter{Conceptos previos}
+
+Antes de empezar el desarrollo matemático del modelo, es necesario presentar una serie de conceptos
+matemáticos que son la fundación sobre la que se construirá el resto del trabajo. Como se verá en el
+siguiente capítulo, no de los puntos claves para las redes neuronales es la
+optimización de una determinada función $f$. Normalmente esta tarea de optimización consiste en encontrar valores
+para los que ese función toma valores mínimos (ya sean globales o locales).
+
+Por lo tanto, lo primero  que se debe de hacer es definir un algoritmo de optimización de funciones.
+Posteriormente se explicará cómo usar ese algoritmo para variar el valor de $x$, de forma que se
+obtengan valores deseables para $f(x)$.
+
+\section{Descenso de gradiente}
+
+Es importante recordar que la derivada de una función en un punto $x$ da como resultado la pendiente de
+$f(x)$ en $x$. Esto es lo mismo que la escala con la que un pequeño cambio en el valor de $x$ afecta
+al valor de $f(x)$. Es decir, si $\epsilon\in\mathbb{R}$ (pequeño), entonces
+$f(x+\epsilon)\approx f(x)+\epsilon f'(x)$. En el contexto del aprendizaje máquina, la función $f$ suele
+ser multidimensional. Sin embargo, esto no es un problema ya que el razonamiento anterior es igualmente válido
+sustituyendo la derivada por el gradiente, $\nabla f$, que además da nombre a este algoritmo.
+
+Una función multidimensional, $f \colon \mathbb{R}^n \longrightarrow \mathbb{R}$, puede presentar muchos
+mínimos locales que no son óptimos, o muchos puntos de inflexión rodeados de zonas planas. Esto hace que
+el proceso de optimización se complique. Por lo tanto, el objetivo principal es encontrar un valor \textit{pequeño}
+de $f$, pero que no tiene que ser mínimo.
+
+Si $x\in\mathbb{R}$ es un mínimo, entonces $\nabla f(x)=0$. La entrada $i\in\{1,\dots, n\}$ de
+$\nabla f$ es la derivada parcial de $f$ con respecto a $x_i$. Usando la derivada direccional, se puede
+comprobar que el gradiente de una función siempre apunta directamente \textit{cuesta arriba}. Por lo tanto,
+si lo que se quiere es minimizar la función $f$, lo que hay que hacer es ir \textit{cuesta abajo}, es decir,
+considerar $-\nabla f$.
+
+Queda claro ntonces que la derivada es útil para minimizar una
+función, ya que te dice como modificar $x$ para aproximarte a otro valor $y$. En consiguiente, ya se puede
+definir el algoritmo denominado \textit{descenso de gradiente} \cite{lemarechal2012cauchy}:
+
+\[
+    x'=x-\epsilon\nabla f(x)
+\]
+
+donde $\epsilon\in\mathbb{R}^+$ es el ratio de aprendizaje. Para la elección de $\epsilon$, se pueden tomar
+varias opciones:
+
+\begin{itemize}
+    \item Elegir un valor pequeño arbitario.
+    \item Evaluar $f(x-\epsilon\nabla f(x))$ varias veces y escoger el valor que produzca el mínimo resultado.
+\end{itemize}
+\begin{figure}[H]
+    \includegraphics[width=8cm]{gradient_descent.png}
+    \centering
+    \caption{Ejemplo de descenso de gradiente}
+\end{figure}
