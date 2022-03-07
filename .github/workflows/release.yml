@@ -1,7 +1,11 @@
 name: Create Release
 
 on:
-  push:
+  workflow_dispatch:
+    inputs:
+      draft:
+        type: boolean
+        description: Draf PR
 
 jobs:
   build:
@@ -17,7 +21,7 @@ jobs:
         with:
           tag_name: ${{ github.sha }}
           release_name: ${{ github.sha }}
-          draft: true
+          draft: ${{ github.event.inputs.draft }}
           prerelease: false
       - uses: xu-cheng/latex-action@v2
         with:
