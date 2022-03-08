@@ -282,21 +282,60 @@ varias opciones:
     \caption{Ejemplo de descenso de gradiente}
 \end{figure}
 
+\section{Back-propagation}
+
 En el caso particular de redes neuronales, este algoritmo se usará para actualizar el valor de los pesos
-de forma que el error definiedo en \ref{eqn:3}, sea mínimo. Por lo tanto, la expresión puede ser reescrita:
+de forma que el error definiedo en \ref{eqn:3}, sea mínimo. A este algoritmo, se le conoce como
+\textit{back-propagation}. Adaptando la expresión del descenso de gradiente al caso más sencillo, se obtiene:
 
 \begin{equation}
     \label{eqn:gradient_descent_nn}
-    W^{(nueva)}=W^{(vieja)}-\epsilon (y-t)y(1-y)x
+    w^{(nueva)}=w^{(vieja)}-\epsilon (y-t)y(1-y)x
 \end{equation}
 
-donde una vez más $y$ es el vector de salida, $t$ el vector que se quiere y $x$ el vector de entrada.
-Esta expresión se ha obtenido usando la regla de la cadena derivando $E=\frac{1}{2}(t-y)^2$:
+donde $y$ es el valor de salida, $t$ el valor que se quiere y $x$ el valor de entrada. Para obtener esa
+expresión en el caso de una red neuronal con una capa escondida, son necesarios algunos pasos adicionales.
+Primero, es necesario derivar el error con respecto al valor de entrada:
+\[
+    \frac{\partial E}{\partial y_j} = y_j - t_j
+\]
+Una vez ese valor es conocido, se puede calcular la derivada respecto $u_j'$:
+\[
+    \frac{\partial E}{\partial u_j'} =     \frac{\partial E}{\partial y_j}     \frac{\partial y_j}{\partial u_j'}=
+    (y_j-t_j)y_j(1-y_j) := EI_j'
+\]
+A este valor se le va a denotar $EI_j'$ porque es usado en los siguientes cálculos. Siguiendo ahora con $w_{ij}'$:
+\[
+    \frac{\partial E}{\partial w_{ij}'} =     \frac{\partial E}{\partial u_j'}     \frac{\partial u_j'}{\partial w_{ij}'} =
+    EI_j' h_i
+\]
+Por lo tanto, aplicando el método de descenso de gradiente, se han obtenido las ecuaciones para actualizar los pesos
+entre la capa escondida y la capa de salida:
+\[
+    w_{ij}'^{(nuevo)} = w_{ij}'^{(viejo)} - \epsilon \frac{\partial E}{\partial w_{ij}'} =
+    w_{ij}'^{(viejo)}-\epsilon EI_j' h_i
+\]
 
-\begin{equation}
-    \frac{\partial E}{\partial w_i} = \frac{\partial E}{\partial y} \frac{\partial y}{\partial u} \frac{\partial u}{\partial w_i} = (y-t)y(1-y)x_i
-\end{equation}
-
-
-donde se han usado las expresiones \ref{sigmoid:1}, \ref{sigmoid:2} y \ref{eqn:2}.
-
+A continuación se va a realizar el paso que le da nombre a este algoritmo. Repitiendo el cálculo anterior
+pero para la capa de entrada y la escondida, es decir, considerando $h_i$, $u_i$ y $w_{ki}$, es posible
+actualizar su matriz de pesos teniendo en cuenta la optimización obtenida en la capa anterior. Por lo tanto,
+derivando respecto de $h_i$:
+\[
+    \frac{\partial E}{\partial h_i} = \sum_{j=1}^M\frac{\partial E}{\partial u_j'} \frac{\partial u_j'}{\partial h_i} =
+    \sum_{j=1}^M EI_j' w_{ij}'
+\]
+Continuando con $u_i$, una vez más se denota el valor obtenido por su importancia en cálculos posteriores:
+\[
+    \frac{\partial E}{\partial u_i} =     \frac{\partial E}{\partial h_i}     \frac{\partial h_i}{\partial u_i} =
+    \sum_{j=1}^M  EU_j' w_{ij}' h_i (1-h_i) := EI_i
+\]
+Y por último:
+\[
+    \frac{\partial E}{\partial w_{ki}} = \frac{\partial E}{\partial u_i} \frac{\partial u_i}{\partial w_{ki}} =
+    EI_i x_k
+\]
+Obteniendo, finalmente, la ecuación para actualizar los pesos entre la capa de entrada y la escondida:
+\[
+    w_{ki}^{(nuevo)} = w_{ki}^{(viejo)} - \epsilon \frac{\partial E}{\partial w_{ki}} =
+    w_{ij}^{(viejo)}-\epsilon EI_i x_k
+\]
