@@ -1,10 +1,10 @@
 \chapter{Redes neuronales}
 
-Este trabajo gira en torno al algoritmo \textit{Word2Vec} \textbf{ref}, una técnica de procesamiento
+Este trabajo gira en torno al algoritmo \textit{Word2Vec} \cite{word2vec:1} \cite{word2vec:2}, una técnica de procesamiento
 de lenguaje natural, que usa \textit{aprendizaje profundo} para su funcionamiento. El aprendizaje
 profundo es una rama del Aprendizaje Máquina, que a su vez está incluido dentro del campo más general
 de la Inteligencia Artificial. En general, el objetivo del aprendizaje máquina es estudiar algoritmos
-que mejoran a partir de la experiencia. Tom M. Mitchell \textbf{ref} enunció una definición formal
+que mejoran a partir de la experiencia. Tom M. Mitchell \cite{mitchell1997} enunció una definición formal
 del término:
 
 \begin{definition}
@@ -41,7 +41,7 @@ el número presente en la imagen.
 
         \draw[-stealth] (input1) -- node[above,xshift=1cm]   {$w_1$} (hidden1);
         \draw[-stealth] (input2) -- node[above,xshift=1cm, yshift=-0.1cm]   {$w_2$} (hidden1);
-        \draw[-stealth] (input1) -- node[above, xshift=1cm, yshift=-0.5cm] {$w_3$} (hidden2);
+        \draw[-stealth] (input1) -- node[above, xshift=1cm, yshift=-0.7cm] {$w_3$} (hidden2);
         \draw[-stealth] (input2) -- node[below, xshift=1cm]   {$w_4$} (hidden2);
 
         \draw[-stealth] (hidden1) -- node[above]   {$w_5$} (output);
@@ -67,7 +67,7 @@ capa anterior (o del input, si es la segunda capa) junto con el valor de los pes
     a^{(n+1)} = a^{(n)}_1w^{(n)}_1+a^{(n)}_2w^{(n)}_2+\cdots+a^{(n)}_nw^{(n)}_n=\sum_{i=1}^na^{(n)}_iw^{(n)}_i\in\mathbb{R}
 \]
 
-Los pesos no son más que números arbitrarios, que son actualizados en cada fase de aprendizaje (\textbf{ref backprop section}).
+Los pesos no son más que números arbitrarios, que son actualizados en cada fase de aprendizaje \cite{rumelhart1986learning}.
 Es trivial comprobar que $a^{(n+1)}$ es un número real, de cualquier valor. Esto es problemático porque
 lo que se quiere ahora es saber cuando una neurona está \textit{activa}. Para ello, se puede usar lo
 que se denomina una \textit{función de activación}, que no es ni más ni menos que una función  que transforma
@@ -92,11 +92,12 @@ Esta función es una de las más usada como función de activación. Entre sus p
 \end{equation}
 
 \begin{figure}[H]
-    \includegraphics[width=5cm]{sigmoind.png}
+    \includegraphics[width=7cm]{sigmoid.png}
     \centering
 \end{figure}
 
-El principal problema de esta función se denomina \textit{vanishing problem} \textbf{ref}. Cuando se avance un poco más en los fundamentos de las redes neuronales, se volverá a este problema.
+El principal problema de esta función se denomina \textit{vanishing problem} \cite{hochreiter1991untersuchungen}.
+Cuando se avance un poco más en los fundamentos de las redes neuronales, se volverá a este problema.
 
 \subsubsection{Tangente Hiperbólica}
 
@@ -109,7 +110,7 @@ La función tangente hiperbólica está definida como:
 En el gráfico de esta función, se puede apreciar que su derivada es más pronunciada que la de la función sigmoide. Esto permite a la red neuronal aprender de forma más rápida, haciendo el aprendizaje más eficiente.
 
 \begin{figure}[H]
-    \includegraphics[width=5cm]{sigmoind.png}
+    \includegraphics[width=7cm]{tanh.png}
     \centering
 \end{figure}
 
@@ -124,7 +125,7 @@ La función ReLU está definida por:
 Evidentemente, está función es mucho más eficiente, computacionalmente hablando, que las dos primeras alternativas. Sin embargo, presenta un gran problema: cuando los valores de entrada se aproximan o son inferiores a 0, la red no puede efectuar propagación hacia atrás, por lo que no puede aprender.
 
 \begin{figure}[H]
-    \includegraphics[width=5cm]{sigmoind.png}
+    \includegraphics[width=7cm]{relu.png}
     \centering
 \end{figure}
 
@@ -272,21 +273,11 @@ donde $\epsilon$ es un escalar positivo, pequeño y arbitrario, denominado \text
 Para la elección de $\epsilon$, se pueden tomar
 varias opciones:
 
-\begin{itemize}
-    \item Elegir un valor pequeño arbitario.
-    \item Evaluar $f(x-\epsilon\nabla f(x))$ varias veces y escoger el valor que produzca el mínimo resultado.
-\end{itemize}
-\begin{figure}[H]
-    \includegraphics[width=8cm]{gradient_descent.png}
-    \centering
-    \caption{Ejemplo de descenso de gradiente}
-\end{figure}
-
 \section{Back-propagation}
 
 En el caso particular de redes neuronales, este algoritmo se usará para actualizar el valor de los pesos
 de forma que el error definiedo en \ref{eqn:3}, sea mínimo. A este algoritmo, se le conoce como
-\textit{back-propagation}. Adaptando la expresión del descenso de gradiente al caso más sencillo, se obtiene:
+\textit{back-propagation} \cite{rumelhart1986learning}. Adaptando la expresión del descenso de gradiente al caso más sencillo, se obtiene:
 
 \begin{equation}
     \label{eqn:gradient_descent_nn}
