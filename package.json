@@ -1,6 +1,6 @@
 {
   "name": "tfg",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "**Este sería el README de tu proyecto. Consulta las [instrucciones de instalación](INSTALL.md)",
   "main": "index.js",
   "directories": {
