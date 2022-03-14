@@ -1,11 +1,7 @@
 name: Create Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      draft:
-        type: boolean
-        description: Draf PR
+  push:
 
 jobs:
   build:
@@ -13,16 +9,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+    - name: Conventional Changelog Action
+      id: changelog
+      uses: TriPSs/conventional-changelog-action@v3
+      with:
+        github-token: ${{ secrets.github_token }}
+        output-file: 'changelod.md'
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: ${{ github.sha }}
-          draft: ${{ github.event.inputs.draft }}
+          tag_name: v1.0.0
+          release_name: "Configuración y planifiación"
+          draft: false
           prerelease: false
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+
       - uses: xu-cheng/latex-action@v2
         with:
           working_directory: ./doc
