@@ -8,29 +8,17 @@ import known
 
 
 def get_files_to_check():
-    """
-    A generator that returns paths of latex files.
-
-    Note that this could be extended to yield other files as necessary.
-    """
     for path in pathlib.Path("tex/").glob("*.tex"):
         yield path
 
 
 @task
 def spellcheck(c):
-    """
-    Run the book through a spell checker.
-
-    Known exceptions are in `known.py`
-    """
     exit_code = 0
-
     for tex_path in get_files_to_check():
-
         tex = tex_path.read_text()
         aspell_output = subprocess.check_output(
-            ["aspell", "-t", "--list", "--lang=en_GB"], input=tex, text=True
+            ["aspell", "-t", "--list"], input=tex, text=True
         )
         incorrect_words = set(aspell_output.split("\n")) - {""} - known.words
         if len(incorrect_words) > 0:
