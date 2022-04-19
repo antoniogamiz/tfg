@@ -8,7 +8,7 @@ import known
 
 
 def get_files_to_check():
-    for path in pathlib.Path("tex/").glob("*.tex"):
+    for path in pathlib.Path("doc/").glob("*.tex"):
         yield path
 
 
