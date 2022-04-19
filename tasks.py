@@ -18,7 +18,7 @@ def spellcheck(c):
     for tex_path in get_files_to_check():
         tex = tex_path.read_text()
         aspell_output = subprocess.check_output(
-            ["aspell", "-t", "--list"], input=tex, text=True
+            ["aspell", "-t", "--list", "--lang=es"], input=tex, text=True
         )
         incorrect_words = set(aspell_output.split("\n")) - {""} - known.words
         if len(incorrect_words) > 0:

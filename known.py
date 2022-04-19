@@ -1,1 +1,1 @@
-words = {"colorlinks"}
+words = {"colorlinks", "Gámiz", "bibliografia", "linkcolor", "urlcolor"}
