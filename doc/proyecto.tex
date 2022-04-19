@@ -53,7 +53,7 @@
 \usepackage{tikz}
 \theoremstyle{definition}
 \newtheorem{definition}{Definicion}[section]
-
+\graphicspath{{figures/}}
 
 \begin{document}
 
@@ -63,12 +63,11 @@
 \newpage
 \tableofcontents
 
-% Índice de imágenes y tablas
-% \newpage
-% \listoffigures
+\newpage
+\listoffigures
 
-% \listoftables
-% \newpage
+\listoftables
+\newpage
 
 \input{secciones/01_introduccion}
 \input{secciones/02_descripcion}

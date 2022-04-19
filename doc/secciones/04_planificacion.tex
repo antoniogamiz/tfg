@@ -1,7 +1,47 @@
 \chapter{Planificación}
 
+En este capítulo se detalla la planificación del proyecto y las metodologías y buenas prácticas
+usadas para el desarrollo del mismo. Siguiendo uno los objetivos de este trabajo, la planificación
+ha sido muy influenciada por el desarrollo ágil aplicado a la ciencia \cite{desarrolloagil}.
+
 \section{Metodología utilizada}
 
+\subsection{Kanban}
+
+Como el objetivo del trabajo es \textit{ser ágil}, es necesario escoger una metodología de trabajo que
+lo permita. En este proyecto se ha escogido \textit{Kanban}. Los objetivos principales de kanban son dar
+visibilidad al trabajo que se está haciendo, maximizar la eficiencia y limitar la cantidad de trabajo
+en progreso. Esto se hace a través de un tablero en el que de un simple vistazo, se puede consultar el
+estado del trabajo. Esto es realmente útil para el objetivo \ref{obj:3}, ya que permite a los tutores
+ver en todo momento en qué estado se encuentra el proyecto.
+
+Kanban se base en hacer pequeños cambios incrementales de forma que el esfuerzo para que se puede realizar
+la tarea sea mínimo. Esto no implica que Kanban favorezca la rapidez sobre la calidad, al contrario,
+prevalece la callidad del producto final sobre la velocidad de desarrollo.
+
+\subsection{Desarrollo dirigido por pruebas}
+
+Kanban es una metodología para organizar el trabajo. A la hora de escribir código, es necesario usar
+buenas prácticas adicionales. El desarrollo dirigido por tests (TDD, del inglés \textit{Test Driven Development})
+es un gran complemento a Kanban, ya que nos permite hacer incrementos pequeños que aporten valor al
+producto final. El flujo de trabajo consiste en:
+
+\begin{itemize}
+    \item Escribit test: definir un test que comprueba que la nueva funcinalidad funciona como es debido.
+          Evidentemente, al principio debe fallar (salir en rojo) porque no hay nada implementado.
+    \item Implementar funcionalidad: escribir \textit{solo} el código necesario para hacer pasar el test
+          (que salga en verde).
+    \item Refactorizar: iterar sobre la solución obtenida para mejorarla.
+\end{itemize}
+
+\subsection{Github}
+
+Para implementar lo enunciado anteriormente, el trabajo ha sido desarrollado usando \textit{git} y \textit{GitHub}.
+Para ello, las tareas necesarias se han dividido en hitos \cite{milestones}. Cada hito contiene una
+serie de \textit{issues}, o tareas a resolver, para alcanzar dicho hito.
+
+Para implementar la tabla de Kanban también se ha usado Github, ya que implementa de forma nativa un
+tablero que permite definir las columnas comunes en esta metología:
 
 \section{Usuarios}
 
@@ -55,5 +95,11 @@ Como guionista, necesito una herramienta
 fácil de usar que no requiera conocimientos técnicos para ser usada.
 
 \section{Temporización}
+\begin{itemize}
+    \item Tareas por hacer
+    \item En progreso
+    \item Hechas
+\end{itemize}
 
-\section{Seguimiento del desarrollo}
+Además esto ha sido complementado con la herramienta de \textit{pull requests} de Github para poder hacer
+un desarrollo incremental de forma cómoda.
