@@ -20,7 +20,7 @@ jobs:
 
       - name: Install aspell (spell checker)
         run: |
-          sudo apt-get install aspell aspell-es
+          sudo apt-get install aspell aspell-es aspell-en
 
       - name: Run spell checker
         run: |
