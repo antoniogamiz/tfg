@@ -8,14 +8,14 @@
 Los usuarios o \textit{stakeholders} de este proyecto son:
 
 \begin{enumerate}
-      \item Tribunal / Tutor: al ser un trabajo de fin de grado, el proyecto debe llevar asociado una memoria
+      \item Tribunal: al ser un trabajo de fin de grado, el proyecto debe llevar asociado una memoria
             que explique el trabajo.
+      \item Tutores: el trabajo esta cotutorizado por varias personas que no son expertas en ambas partes del trabajo.
       \item Cientifíco de datos: investigador que quiera expandir este trabajo o usarlo como
             referencia en alguno de sus proyectos. Se asume que este usuario tiene alto conocimiento técnico.
       \item Guionista: profesional cuyo principal interés es modificar los tropos de su película para
             conseguir un buen rating. Se asume que este usuario no tiene, en principio, ningún conocimiento
             técnico.
-      \item Estudiante: como estudiente de la carrera, necesito presentar una memoria donde explique el trabajo realizado.
 \end{enumerate}
 
 \section{Casos de uso}
@@ -24,22 +24,34 @@ Una vez se conocen los usuarios del trabajo, se pueden desarrollar sus principal
 
 \subsubsection*{Configuración del proyecto} \label{uc:configuration}
 
-Como tutor del trabajo necesito disponer de una forma fácil de leer el resultado final en cada
+Como tutores necesitamos disponer de una forma fácil de leer el resultado en cada
 una de las iteraciones.
 
-\subsubsection*{Datos de tropos}\label{uc:trope_data}: como desarrollador necesito obtener información acerca de los
+Como tribunal necesitamos disponer de una forma fácil de leer el resultado final.
+
+\subsubsection*{Datos de tropos}\label{uc:trope_data}
+
+Como desarrollador necesito obtener información acerca de los
 tropos: a qué película pertenecen, cuántos hay, etc.
 
-\subsubsection*{Datos de rating}\label{uc:rating_data}: como desarrollador necesito obtener información acerca del rating
+\subsubsection*{Datos de rating}\label{uc:rating_data}
+
+Como desarrollador necesito obtener información acerca del rating
 de las películas.
 
-\subsubsection*{Explicación del modelo Word2Vec}\label{uc:math}: como tutor/científico de datos/estudiante
+\subsubsection*{Explicación del modelo Word2Vec}\label{uc:math}
+
+Como tribunal/tutor/científico de datos/estudiante
 necesito entender el desarrollo matemático del modelo Word2Vec.
 
-\subsubsection*{Extensión del modelo Word2Vec}\label{uc:math}: como tutor/científico de datos/estudiante
+\subsubsection*{Extensión del modelo Word2Vec}\label{uc:math_extension}
+
+Como tribunal/tutor/científico de datos/estudiante
 necesito entender la extensión del modelo Word2Vec.
 
-\subsubsection*{Herramienta fácil de usar}\label{uc:user_friendly_tool}: como guionista, necesito una herramienta
+\subsubsection*{Herramienta fácil de usar}\label{uc:user_friendly_tool}
+
+Como guionista, necesito una herramienta
 fácil de usar que no requiera conocimientos técnicos para ser usada.
 
 \section{Temporización}
