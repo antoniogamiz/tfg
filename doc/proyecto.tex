@@ -14,7 +14,7 @@
 \usepackage[spanish, es-tabla]{babel} % Selecciona el español para palabras introducidas automáticamente, p.ej. "septiembre" en la fecha y especifica que se use la palabra Tabla en vez de Cuadro
 \usepackage{url} % ,href} %para incluir URLs e hipervínculos dentro del texto (aunque hay que instalar href)
 \usepackage{graphics,graphicx, float} %para incluir imágenes y colocarlas
-\usepackage[gen]{eurosym} %para incluir el símbolo del euro
+\usepackage[gen]{eurosym} %para incluir el símbolo del eu:ro
 \usepackage{cite} %para incluir citas del archivo <nombre>.bib
 \usepackage{enumerate}
 \usepackage{hyperref}
@@ -57,27 +57,28 @@
 
 \begin{document}
 
-\input{portada/portada}
-\input{prefacios/prefacio}
+% \input{portada/portada}
+% \input{prefacios/prefacio}
 
-\newpage
-\tableofcontents
+% \newpage
+% \tableofcontents
 
-\newpage
-\listoffigures
+% \newpage
+% \listoffigures
 
-\listoftables
-\newpage
+% \listoftables
+% \newpage
 
-\input{secciones/01_introduccion}
-\input{secciones/02_descripcion}
-\input{secciones/03_estado_del_arte}
-\input{secciones/04_planificacion}
+% \input{secciones/01_introduccion}
+% \input{secciones/02_descripcion}
+% \input{secciones/03_estado_del_arte}
+% \input{secciones/04_planificacion}
 \input{secciones/introduccion_matematica}
-\input{secciones/06_implementacion}
-\input{secciones/05_analisis}
-\input{secciones/06_implementacion}
-\input{secciones/07_conclusiones}
+\input{secciones/word2vec}
+% \input{secciones/06_implementacion}
+% \input{secciones/05_analisis}
+% \input{secciones/06_implementacion}
+% \input{secciones/07_conclusiones}
 
 \newpage
 \bibliography{bibliografia}
