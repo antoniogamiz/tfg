@@ -51,9 +51,9 @@ def hiperbolic_tangent_plot():
 
 def relu_plot():
     plt.clf()
-    x = np.linspace(-2, 2, 101)
+    x = np.linspace(-2, 2)
     def relu(x): return np.maximum(x, 0)
-    def relu_der(x): return np.maximum((-x)/x, 0)
+    def relu_der(x): return np.maximum(x / np.abs(x), 0)
 
     plt.plot(x, relu(x), label=r'$f(x)$')
     plt.plot(x, relu_der(x), 'r--', label=r"$f'(x)$")
