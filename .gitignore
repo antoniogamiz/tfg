@@ -13,6 +13,7 @@ doc/proyecto.tex
 *.cb2
 .*.lb
 doc/figures
+__pycache__
 ## Intermediate documents:
 *.dvi
 *.xdv
