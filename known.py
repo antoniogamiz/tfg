@@ -117,4 +117,8 @@ words = {
     "pull",
     "requests",
     "tests",
+    "HU",
+    "INVEST",
+    "cotutorizado",
+    "stakeholders",
 }

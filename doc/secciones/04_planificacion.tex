@@ -51,48 +51,75 @@ Los usuarios o \textit{stakeholders} de este proyecto son:
       \item Tribunal: al ser un trabajo de fin de grado, el proyecto debe llevar asociado una memoria
             que explique el trabajo.
       \item Tutores: el trabajo esta cotutorizado por varias personas que no son expertas en ambas partes del trabajo.
-      \item Cientifíco de datos: investigador que quiera expandir este trabajo o usarlo como
+      \item Científico de datos: investigador que quiera expandir este trabajo o usarlo como
             referencia en alguno de sus proyectos. Se asume que este usuario tiene alto conocimiento técnico.
       \item Guionista: profesional cuyo principal interés es modificar los tropos de su película para
             conseguir un buen rating. Se asume que este usuario no tiene, en principio, ningún conocimiento
             técnico.
 \end{enumerate}
 
-\section{Casos de uso}
+\section{Historias de usuario}
 
-Una vez se conocen los usuarios del trabajo, se pueden desarrollar sus principales casos de uso:
+Una vez se conocen los usuarios del trabajo, se pueden desarrollar sus principales historias de usuario o casos de uso:
 
-\subsubsection*{Configuración del proyecto} \label{uc:configuration}
+\subsection{[HU0] Configuración del proyecto} \label{uc:configuration}
 
 Como tutores necesitamos disponer de una forma fácil de leer el resultado en cada
 una de las iteraciones.
 
 Como tribunal necesitamos disponer de una forma fácil de leer el resultado final.
 
-\subsubsection*{Datos de tropos}\label{uc:trope_data}
+\subsection{[HU1] Análisis de tropos}
+
+Como científico de datos necesito un modelo reproducible que pueda alimentar con mis propios
+conjuntos de datos.
+
+Como tribunal necesitamos ver el desarrollo matemático e informático necesario para realizar
+un análisis semántico de los tropos.
+
+En este primera iteración del trabajo los datos sobre \textit{rating} no se van a incluir para
+hacer las historias de usuario más pequeñas e independientes (acorde a \textit{INVEST} \cite{buglione2013improving})
+
+\subsubsection{Datos de tropos}\label{uc:datos_tropos}
 
 Como desarrollador necesito obtener información acerca de los
 tropos: a qué película pertenecen, cuántos hay, etc.
 
-\subsubsection*{Datos de rating}\label{uc:rating_data}
+\subsubsection{Explicación del modelo Word2Vec}\label{uc:word2vec_explicacion}
 
-Como desarrollador necesito obtener información acerca del rating
-de las películas.
+Como tribunal/tutor/científico de datos necesito entender el desarrollo matemático del modelo Word2Vec.
 
-\subsubsection*{Explicación del modelo Word2Vec}\label{uc:math}
+\subsubsection{Primera extensión del modelo Word2Vec}\label{uc:word2vec_primera_extension}
 
-Como tribunal/tutor/científico de datos/estudiante
-necesito entender el desarrollo matemático del modelo Word2Vec.
+Como tribunal/tutor/científico de datos
+necesito entender cómo se ha extendido el modelo Word2Vec para analizar la semántica de un conjunto de
+tropos. Este extensión debe permitir que el modelo acepte conjuntos de palabras (tropos) sin orden, ya
+los tropos son conjuntos no ordenados.
 
-\subsubsection*{Extensión del modelo Word2Vec}\label{uc:math_extension}
-
-Como tribunal/tutor/científico de datos/estudiante
-necesito entender la extensión del modelo Word2Vec.
-
-\subsubsection*{Herramienta fácil de usar}\label{uc:user_friendly_tool}
+\subsection{[HU2] Herramienta fácil de usar}\label{uc:herramienta_guionistas}
 
 Como guionista, necesito una herramienta
 fácil de usar que no requiera conocimientos técnicos para ser usada.
+
+\subsubsection{Criterios de aceptación}
+
+\begin{itemize}
+      \item Tiene que poder ser usada por personas sin conocimiento técnico.
+      \item Dado un tropo, se debe poder obtener el más similar semánticamente.
+      \item Dado un tropo, se deben poder ver los más \textit{cercanos} a él semánticamente.
+\end{itemize}
+
+\subsection{[HU3] Considerar datos sobre \textit{rating}}\label{uc:word2vec_rating}
+
+\subsubsection{Datos de \textit{rating}}\label{uc:rating_data}
+
+Como desarrollador necesito obtener información acerca del \textit{rating}
+de las películas.
+
+\subsubsection{Segunda extensión del modelo Word2Vec}\label{uc:word2vec_segunda_extension}
+
+Como tribunal/tutor/científico de datos
+necesito entender cómo se ha extendido el modelo anterior para incluir datos sobre \textit{rating}.
 
 \section{Temporización}
 \begin{itemize}
