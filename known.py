@@ -98,7 +98,7 @@ words = {
     "diferenciable",
     "Any",
     "Abstract",
-    "Embddeddings",
+    "Embeddings",
     "Keywords",
     "and",
     "arithmetic",
