@@ -100,6 +100,8 @@ words = {
     "Abstract",
     "Embeddings",
     "multidimensional",
+    "LaTex",
+    "agile",
     "Keywords",
     "and",
     "arithmetic",
