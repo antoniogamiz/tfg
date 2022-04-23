@@ -1,0 +1,46 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseName:
+        description: "Release Name"
+        required: true
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.github_token }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ github.event.inputs.releaseName }}
+          draft: false
+          prerelease: false
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+
+      - uses: xu-cheng/latex-action@v2
+        with:
+          working_directory: ./doc
+          root_file: proyecto.tex
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./doc/proyecto.pdf
+          asset_name: proyecto.pdf
+          asset_content_type: application/pdf
