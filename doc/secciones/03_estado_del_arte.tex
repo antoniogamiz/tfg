@@ -1,13 +1,48 @@
 \chapter{Estado del arte}
 
-Los word embeddinng son una técnica de la rama del procesamiento del lenguaje natural que ayuda a capturar la semántica y el contexto sintáctico para comprender cómo de parecidos o diferentes son los términos en un documento, o corpus de texto.
+Este capítulo comienza con una descripción de los \textit{embeddings} para introducir a
+continuación los \textit{word embeddings}, que son una parte fundamental del trabajo. Por
+último, se justifica la elección del modelo escogido para el trabajo haciendo una comparación con
+otros modelos que también usan \textit{word embeddings}.
 
-En el modelo \emph{word2vec} \cite{word2vec:1} \cite{word2vec:2}, se crea una representación en forma vector para cada palabra. Los vectores son elegidos de forma que una simple función matemática, como la similitud coseno, pueda ser usada para calcular la similitud entre dos palabras. Por ejemplo, si se calculara una palabra cercana a \emph{plátano}, obtendríamos como resultado \emph{fruta}, o la famosa operación \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina}. Básicamente, este modelo aporta información sobre el significado de una palabra.
+\section{Embeddings}
 
-El principal problema de este modelo es que cada palabra tiene un único vector asociado, pero en el mundo real, cada palabra puede tener distintos significados dependiendo del contexto. Por ejemplo, en las frases \emph{kiwi y mango son coches españoles}, y \emph{kiwi y mango son frutas}, el mismo word embedding es usado para kiwi y mango.
+Un \textit{embedding} es un espacio dimensional con una dimensión relativamente pequeña, en la que se pueden
+representar vector con dimensiones mayores. Por ejemplo, si tenemos un vector que incluye cientos de características
+de una película, podemos usar un vector de menor dimensión que represente esa película.  Esta representación se puede
+hacer de forma que las películas que sean similares entre sí, tengan representaciones similares (cercanas).
 
-Modelos como \emph{Adaptive Skipgram} \cite{adaptiveskipgram}, intentan solventar este problema usando  varios vectores para \emph{cada} sentido de una palabra, generando así un vocabulario de sentidos de palabras. Sin embargo, se sigue usando el mismo embedding para cada ocurrencia de un sentido en específico.
+Cuando estos embeddings se usan para capturar el significado semántico de palabras, se suelen denominar
+\textit{word embeddings}. La motivación para usar \textit{embeddings} con palabras es la idea de John Rupert
+Firth de que `una palabra se caracteriza por la compañía que mantiene'. Por lo tanto, usando estas representaciones,
+podemos capturar la semántica y el contexto sintáctico de palabras en un documento o corpus de texto.
 
-Entre los últimos avances se encuentra \emph{BERT/ELMO} \cite{bert}, un exitoso modelo que soluciona el problema antes descrito. En lugar de aportar información sobre el significado de una palabra, se construye un embedding dependiente del contexto (y por lo tanto, específico a cada aparición). De forma que la palabra \emph{kiwi} tendrá diferentes embeddings en las frases \emph{kiwi y mango son coches españoles}, y \emph{kiwi y mango son frutas}.
+A lo largo del tiempo, numerosos modelos han sido usados para encontrar o calcular estos \textit{embeddings}, cada uno
+con una aproximación diferente. A continuación se ven algunos de estos modelos.
 
-En el caso de este trabajo, los tropos no tienen, a priori, distintos sentidos, por lo que se ha optado por usar el modelo \emph{word2vec}.
+\section{Modelos}
+
+En el modelo \emph{word2vec} \cite{word2vec:1} \cite{word2vec:2}, se crea una representación
+en forma vector para cada palabra. Los vectores son elegidos de forma que una simple función
+matemática, como la similitud coseno, pueda ser usada para calcular la similitud entre dos palabras.
+Por ejemplo, si se calculara una palabra cercana a \emph{plátano}, obtendríamos como resultado
+\emph{fruta}, o la famosa operación \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina}.
+Básicamente, este modelo aporta información sobre el significado de una palabra.
+
+El principal problema de este modelo es que cada palabra tiene un único vector asociado,
+pero en el mundo real, cada palabra puede tener distintos significados dependiendo del contexto.
+Por ejemplo, en las frases \emph{kiwi y mango son coches españoles}, y \emph{kiwi y mango son frutas},
+el mismo word embedding es usado para kiwi y mango.
+
+Modelos como \emph{Adaptive Skipgram} \cite{adaptiveskipgram}, intentan solventar este problema usando
+varios vectores para \emph{cada} sentido de una palabra, generando así un vocabulario de sentidos de palabras.
+Sin embargo, se sigue usando el mismo embedding para cada ocurrencia de un sentido en específico.
+
+Entre los últimos avances se encuentra \emph{BERT/ELMO} \cite{bert}, un exitoso modelo que soluciona el
+problema antes descrito. En lugar de aportar información sobre el significado de una palabra, se construye
+un embedding dependiente del contexto (y por lo tanto, específico a cada aparición). De forma que la palabra
+\emph{kiwi} tendrá diferentes embeddings en las frases \emph{kiwi y mango son coches españoles}, y
+\emph{kiwi y mango son frutas}.
+
+En el caso de este trabajo, los tropos no tienen, a priori, distintos sentidos, por lo que se ha optado
+por usar el modelo \emph{word2vec}.
