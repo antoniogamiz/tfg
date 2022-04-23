@@ -99,6 +99,7 @@ words = {
     "Any",
     "Abstract",
     "Embeddings",
+    "embeddings",
     "multidimensional",
     "LaTex",
     "agile",
