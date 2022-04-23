@@ -12,8 +12,7 @@ Como el objetivo del trabajo es \textit{ser ágil}, es necesario escoger una met
 lo permita. En este proyecto se ha escogido \textit{Kanban}. Los objetivos principales de kanban son dar
 visibilidad al trabajo que se está haciendo, maximizar la eficiencia y limitar la cantidad de trabajo
 en progreso. Esto se hace a través de un tablero en el que de un simple vistazo, se puede consultar el
-estado del trabajo. Esto es realmente útil para el objetivo \ref{obj:3}, ya que permite a los tutores
-ver en todo momento en qué estado se encuentra el proyecto.
+estado del trabajo.
 
 Kanban se base en hacer pequeños cambios incrementales de forma que el esfuerzo para que se puede realizar
 la tarea sea mínimo. Esto no implica que Kanban favorezca la rapidez sobre la calidad, al contrario,
@@ -69,25 +68,33 @@ una de las iteraciones.
 
 Como tribunal necesitamos disponer de una forma fácil de leer el resultado final.
 
+\subsubsection{Criterios de aceptación}
+
+\begin{itemize}
+      \item Debe estar claro que metodología se está llevando a cabo para el desarrollo del trabajo.
+      \item Se debe poder generar el trabajo de forma sencilla.
+      \item Se debe incluir una sección en la que se detalle el estado del arte.
+      \item Los objetivos e historias del usuario deben de estar definidos.
+\end{itemize}
+
 \subsection{[HU1] Análisis de tropos}
 
 Como científico de datos necesito un modelo reproducible que pueda alimentar con mis propios
 conjuntos de datos.
 
-Como tribunal necesitamos ver el desarrollo matemático e informático necesario para realizar
-un análisis semántico de los tropos.
+Como tribunal/tutor necesito ver el desarrollo matemático e informático necesario para realizar
+un análisis semántico de los tropos para que pueda evaluar al estudiante.
 
 En este primera iteración del trabajo los datos sobre \textit{rating} no se van a incluir para
 hacer las historias de usuario más pequeñas e independientes (acorde a \textit{INVEST} \cite{buglione2013improving})
 
-\subsubsection{Datos de tropos}\label{uc:datos_tropos}
+\subsubsection{Criterios de aceptación}
 
-Como desarrollador necesito obtener información acerca de los
-tropos: a qué película pertenecen, cuántos hay, etc.
+\begin{itemize}
+      \item Dado un conjunto de tropos, se deben poder obtener sus representaciones para operar con ellos  (\textit{embeddings}).
+      \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
+\end{itemize}
 
-\subsubsection{Explicación del modelo Word2Vec}\label{uc:word2vec_explicacion}
-
-Como tribunal/tutor/científico de datos necesito entender el desarrollo matemático del modelo Word2Vec.
 
 \subsubsection{Primera extensión del modelo Word2Vec}\label{uc:word2vec_primera_extension}
 
@@ -99,7 +106,8 @@ los tropos son conjuntos no ordenados.
 \subsection{[HU2] Herramienta fácil de usar}\label{uc:herramienta_guionistas}
 
 Como guionista, necesito una herramienta
-fácil de usar que no requiera conocimientos técnicos para ser usada.
+fácil de usar que no requiera conocimientos técnicos en la que pueda especificar un conjunto de tropos para obtener
+información adicional sobre ellos.
 
 \subsubsection{Criterios de aceptación}
 
@@ -107,19 +115,24 @@ fácil de usar que no requiera conocimientos técnicos para ser usada.
       \item Tiene que poder ser usada por personas sin conocimiento técnico.
       \item Dado un tropo, se debe poder obtener el más similar semánticamente.
       \item Dado un tropo, se deben poder ver los más \textit{cercanos} a él semánticamente.
+      \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
 \end{itemize}
 
 \subsection{[HU3] Considerar datos sobre \textit{rating}}\label{uc:word2vec_rating}
 
-\subsubsection{Datos de \textit{rating}}\label{uc:rating_data}
+Como guionista quiero poder asociar \textit{ratings} a los tropos para saber cómo van
+a influir en mi siguiente obra.
 
-Como desarrollador necesito obtener información acerca del \textit{rating}
-de las películas.
+Como tribunal/tutor/científico de datos necesito entender cómo se ha asociado la información
+de \textit{ratings} al conjunto de tropos.
 
-\subsubsection{Segunda extensión del modelo Word2Vec}\label{uc:word2vec_segunda_extension}
+\subsubsection{Criterios de aceptación}
 
-Como tribunal/tutor/científico de datos
-necesito entender cómo se ha extendido el modelo anterior para incluir datos sobre \textit{rating}.
+\begin{itemize}
+      \item Dado un conjunto de tropos, se debe poder consultar información sobre el \textit{rating} que se obtendría.
+      \item Dado un conjunnto de tropos, se debe poder saber cómo modificar un tropo afectaría al rating.
+      \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
+\end{itemize}
 
 \section{Temporización}
 \begin{itemize}
