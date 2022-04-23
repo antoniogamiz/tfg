@@ -14,8 +14,13 @@ hacer de forma que las películas que sean similares entre sí, tengan represent
 
 Cuando estos embeddings se usan para capturar el significado semántico de palabras, se suelen denominar
 \textit{word embeddings}. La motivación para usar \textit{embeddings} con palabras es la idea de John Rupert
-Firth de que `una palabra se caracteriza por la compañía que mantiene'. Por lo tanto, usando estas representaciones,
-podemos capturar la semántica y el contexto sintáctico de palabras en un documento o corpus de texto.
+Firth de que `una palabra se caracteriza por la compañía que mantiene' \cite{firth1957synopsis}. Por lo tanto,
+usando estas representaciones, podemos capturar la semántica y el contexto sintáctico de palabras en un documento
+o corpus de texto.
+
+En este trabajo, lo que se pretende es crear \textit{word embeddings} para tropos, con el fin de poder estudiar
+su semántica. El principal reto viene de que, a diferencia de las palabras en un documento, los tropos no presentan
+un orden, por lo que es más complejo determinar 'su compañía'.
 
 A lo largo del tiempo, numerosos modelos han sido usados para encontrar o calcular estos \textit{embeddings}, cada uno
 con una aproximación diferente. A continuación se ven algunos de estos modelos.
