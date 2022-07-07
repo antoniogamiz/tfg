@@ -20,7 +20,8 @@ def spellcheck(c):
         aspell_output = subprocess.check_output(
             ["aspell", "-t", "--list", "--lang=es"], input=tex, text=True
         )
-        incorrect_words = set(aspell_output.split("\n")) - {""} - known.words
+        incorrect_words_from_aspell = [word.lower() for word in aspell_output.split("\n")]
+        incorrect_words = set(incorrect_words_from_aspell) - {""} - known.words
         if len(incorrect_words) > 0:
             print(f"In {tex_path} the following words are not known: ")
             for string in sorted(incorrect_words):
