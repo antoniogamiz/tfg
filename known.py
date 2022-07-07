@@ -122,4 +122,6 @@ words = {
     "INVEST",
     "cotutorizado",
     "stakeholders",
+    "invest",
+    "hu"
 }
