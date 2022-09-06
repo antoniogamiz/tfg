@@ -23,6 +23,8 @@ ello, se presentan dos variantes del modelo.
 
 \section{Coninuous Bad-of-Word Model}
 
+\subsection{Contexto de una sola palabra}
+
 Primero se va a desarrollar el modelo \textit{bolsa de palabras continuas} (o CBOW, por sus siglas en inglés) considerando que el contexto está formado por una única palabra.
 Esto será útil para establecer la notación para el resto del trabajo. Que haya una única palabra por contexto implica que el modelo precidirá también una única palabra objetivo.
 Por lo tanto, se está presentando un modelo \textit{bigram} (es decir, que usa dos palabras).
@@ -121,16 +123,79 @@ esta notación, se puede calcular ahora un escalar (antes se ha calculado un vec
 u_j = v_{w_j}^{'T}h
 \]
 Finalmente, se puede usar \textit{softmax}, un modelo de clasificación lineal logarítmico, para obtener una distribución de las palabras (que es una distribución multinomial):
-\[
+\begin{equation}\label{eq:yj}
 p(w_j|w_I) = \frac{\exp(u_j)}{\sum_{j'=1}^V\exp(u_{j'})} =: y_j
-\]
+\end{equation}
 donde $y_j$ es el valor de la $j$-ésima neurona de la capa de salida. Una vez se tiene esta expresión, se pueden sustituir los valores de $u_j$ y $u_j'$ por los obtenidos
 en párrafos anteriors, llegando a la siguiente fórmula:
-\[
-p(w_j|w_I) = \frac{\exp(w^{'T}_{w_j}v_{w_I})}{\sum_{j'=1}^V\exp(v^{'T}_{w_{j'}}v_{w_I})}
-\]
+\begin{equation}\label{eq:4}
+  p(w_j|w_I) = \frac{\exp(w^{'T}_{w_j}v_{w_I})}{\sum_{j'=1}^V\exp(v^{'T}_{w_{j'}}v_{w_I})}
+\end{equation}
+
 Como clarificación, es importante recordar que $v_w$ y $v'_w$, son representaciones distintas de la palabra $w$:
 \begin{itemize}
   \item $v_w$ proviene de las filas de la matriz $W$. Normalmente es denominado el vector de entrada.
   \item $v'_w$ proviene de las columnas de la matriz $W'$. Normalmente es denominado el vector de salida.
 \end{itemize}
+
+\subsubsection*{Actualización de pesos de capa escondida a capa de salida}
+
+A continuación se presenta el desarrollo para la ecuación de actualización de pesos de este modelo. El objetivo de
+entrenamiento (para una muestra de entrenamiento) es maximizar \ref*{eq:4}, que no es más que la probabilidad condicionada
+de observar una palabra $w_O$ (denotando a su índice en la capa de salida por $j^*$), dada la palabra del contexto $w_I$:
+\begin{equation}
+  \begin{split}
+  \max p(w_O|w_I) & = \max y_{j^*}\\
+         & =\max \log(y_{j^*})\\
+         & = u_{j^*} - \log \sum_{j'=1}^V\exp(u_{j'}) := -E \\
+  \end{split}
+\end{equation}
+de donde se deduce que $E=-\log p(w_O|w_I)$ es la función de pérdida del modelo (porque es la función que se quiere minimizar).
+
+Ahora es posible deducir la equación de actualización de pesos entre la capa escondida y la de salida. Para ello, se calcula
+la derivada de $E$ respecto al escalar $u_j$, que se definió anteriormente para cada palabra:
+\begin{equation}
+  \begin{split}
+  \frac{\partial E}{\partial u_j} & = \left(-u_{j*}+ \log\sum_{j'=1}^V\exp(u_{j'})\right)\frac{\partial}{\partial u_j} \\
+  \end{split}
+\end{equation}
+Para el desarrollo de esa expresión, es importante resaltar que $j^*\neq j$, por lo que la expresión resultante queda mucho
+más simple:
+\begin{equation}
+  \frac{\partial E}{\partial u_j} = y_j - t_j, \;\; \forall j \in \{1, \cdots, V\}
+\end{equation}
+donde $y_j$ fue definido en \ref*{eq:yj} y $t_j$ es definido, por simplicidad, como:
+\[ t_j = \begin{cases}
+  1 & j = j^* \\
+  0 & j \neq j^*
+\end{cases}
+\]
+Es importante notar que lo que se acaba de calcular no es más ni menos que la componente $j$-ésima del error de predicción de la capa de salida, por lo tanto,
+se puede notar como:
+\begin{equation}
+  \frac{\partial E}{\partial u_j} = y_j - t_j := e_j, \;\; \forall j \in \{1, \cdots, V\}
+\end{equation}
+Ahora es necesario calcular el gradiente en los pesos entre la capa escondida y de salida (que fueron denotados por $W'=\{w'_{ij}\}$). Para ello,
+basta con derivar la misma expresión pero respecto de $w'_{ij}$:
+\begin{equation}
+  \frac{\partial E}{\partial w'_{ij}} = \frac{\partial E}{\partial u_j} \frac{\partial u_j}{\partial w'_{ij}} = e_j h_i
+\end{equation}
+Por lo tanto, ya se puede aplicar la técnica de descenso de gradiente porque se ha obtenido la ecuación de actualización de pesos para cada uno de los valores de $W'$:
+\[
+  w_{ij}^(new) = w_{ij}^{'(old)} - \eta e_jh_i
+\]
+En lugar de escalar a escalar, esa expresión también se puede escribir usando la representación vectorial de la palabra $w$ en $W'$, es decir, $v'_{w_j}$:
+\[
+  v_{w_j}^{'(new)}=v_{w_j}^{'(old)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
+\]
+donde $\eta > 0$ es el ratio de aprendizaje.
+
+Es importante resaltar que esta ecuación implica que es necesario recorrer cada posible palabra en el vocabulario, comprobar su probalidad de la capa de salida, $y_j$, y
+compararlo con su valor esperado, $t_j$ (que solo puede ser 0 o 1). Si se da $y_j > t_j $ (caso de sobreestimación) entonces se resta una proporción de $h$ (se recuerda que
+$h=v_{w_I}$) a $v'_{w_j}$. Si se tiene el caso contrario, entonces se realiza la operación contraria. En ambos casos, $v'_{w_O}$ es cada vez más cercano a $v_{w_I}$ (en
+este caso la \textit{cercanía} usa el producto escalar y no la distancia euclídea usual).
+
+\subsubsection*{Actualización de pesos de capa de entrada a capa escondida}
+
+
+\subsection{Contexto de múltiples palabras}
