@@ -110,18 +110,18 @@ de la palabra $w$ de entrada (representada por $x$).
 
 Dado entonces un contexto con una única palabra, $w_I$, se tiene su representación como vector de entrada $x\in\mathbb{R}^V$, de forma que $x_k=1$ con $x_{k'}=0$ si $k'\neq k$. A partir de
 $W$ y $x$, se puede obtener el vector $N$-dimensional de la capa intermedia, de la siguiente forma:
-\[
+\begin{equation}\label{eq:h}
   h=W^Tx=W^T_{k, \cdot}=v^T_{w_I}
-\]
+\end{equation}
 donde es importante resaltar que esta operación no es más que copiar la fila $k$-ésima de $W$ en $h$. Esa fila fue denotada en el párrafo anterior por $v_{w_I}$.
 Esto significa que la función de activación de la capa escondida es simplemente linear, es decir, pasa directamente la suma ponderada de sus inputs a la siguiente capa.
 
 De forma similar, se puede operar de la capa escondida a la capa de salida, donde se tiene una matriz de pesos diferente, $W'\in\mathbb{R}^{N\times V}$. En esta matriz, la representación
 de cada palabra viene dada por cada una de sus columnas, es decir, la representación de la palabra $w_j$ en $W'$, es la columna $j$-ésima de $W'$ y es representada por $v'_{v_{w_j}}$. Con
 esta notación, se puede calcular ahora un escalar (antes se ha calculado un vector) $u_j$ para cada una de las palabras del vocabulario:
-\[
-u_j = v_{w_j}^{'T}h
-\]
+\begin{equation}\label{eq:uj}
+  u_j = v_{w_j}^{'T}h
+\end{equation}
 Finalmente, se puede usar \textit{softmax}, un modelo de clasificación lineal logarítmico, para obtener una distribución de las palabras (que es una distribución multinomial):
 \begin{equation}\label{eq:yj}
 p(w_j|w_I) = \frac{\exp(u_j)}{\sum_{j'=1}^V\exp(u_{j'})} =: y_j
@@ -172,7 +172,7 @@ donde $y_j$ fue definido en \ref*{eq:yj} y $t_j$ es definido, por simplicidad, c
 \]
 Es importante notar que lo que se acaba de calcular no es más ni menos que la componente $j$-ésima del error de predicción de la capa de salida, por lo tanto,
 se puede notar como:
-\begin{equation}
+\begin{equation}\label{eq:ej}
   \frac{\partial E}{\partial u_j} = y_j - t_j := e_j, \;\; \forall j \in \{1, \cdots, V\}
 \end{equation}
 Ahora es necesario calcular el gradiente en los pesos entre la capa escondida y de salida (que fueron denotados por $W'=\{w'_{ij}\}$). Para ello,
@@ -182,11 +182,11 @@ basta con derivar la misma expresión pero respecto de $w'_{ij}$:
 \end{equation}
 Por lo tanto, ya se puede aplicar la técnica de descenso de gradiente porque se ha obtenido la ecuación de actualización de pesos para cada uno de los valores de $W'$:
 \[
-  w_{ij}^(new) = w_{ij}^{'(old)} - \eta e_jh_i
+  w_{ij}^(nuevo) = w_{ij}^{'(viejo)} - \eta e_jh_i
 \]
 En lugar de escalar a escalar, esa expresión también se puede escribir usando la representación vectorial de la palabra $w$ en $W'$, es decir, $v'_{w_j}$:
 \[
-  v_{w_j}^{'(new)}=v_{w_j}^{'(old)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
+  v_{w_j}^{'(nuevo)}=v_{w_j}^{'(viejo)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
 \]
 donde $\eta > 0$ es el ratio de aprendizaje.
 
@@ -197,5 +197,39 @@ este caso la \textit{cercanía} usa el producto escalar y no la distancia euclí
 
 \subsubsection*{Actualización de pesos de capa de entrada a capa escondida}
 
+Una vez obtenida la ecuación para actualizar los pesos de la capa escondida a la de salida, se pueden usar usar esos mismos cálculos para calcular
+la ecuación de actualización de la capa anterior (\textit{back-propagation}), es decir, de la capa de entrada a la de salida.
 
+Para obtener esa ecuación, es necesario minimizar una vez más la función de error $E$, pero esta vez con respecto a $h_i$:
+\begin{equation}
+  \frac{\partial E}{\partial h_i} = \sum_{j=1}^V\frac{\partial E}{\partial u_j} \frac{\partial u_j}{\partial h_i} = \sum_{j=1}^Ve_j w'_{ij} := EH_i, \;\; \forall i \in \{1, \cdots, N\}
+\end{equation}
+donde $h_i$ es la $i$-ésiima componente de la capa escondida, $u_j$ se definió en \ref*{eq:uj} y $e_j$ se definió en \ref*{eq:ej} como el error de predicción
+de la $j$-ésima unidad de la capa de salidad. A partir de $EH_i$, se puede definir un vector de dimensión $N$, en el que cada componente es la suma de los vectores
+de salida de todas las palabras, promediados por el error de predicción.
+
+El siguiente paso sería calcular la derivada de $E$ con respecto de $W$. Primero, se recuerda que la capa escondida simplemente es una función linear de los valores de la capa de entrada. Expandiendo
+la notación vectorial de \ref*{eq:h}, se obtiene:
+\begin{equation}
+  h_i=\sum_{k=1}^Vx_kw_k{ki}
+\end{equation}
+Usando esa expresión se puede derivar $E$ con respecto a cada elemento de $W$, obteniendo:
+\begin{equation}
+  \frac{\partial E}{\partial w_{ki}} = \frac{\partial E}{\partial h_i} \frac{\partial h_i}{\partial w_{ki}} = EH_i x_k
+\end{equation}
+Con ese resultado, se puede expresar $\frac{\partial E}{\partial W}=xEH^T$. Como solo un componente de $x$ es distinto de cero (se recuerda que se están usando \textit{one-hot encoded vectors}), solo
+una fila de $\frac{\partial E}{\partial W}$ es distinta de cero, y su valor es $EH^T$, un vector $N$-dimensional.  Finalmente, se puede obtener la ecuación de actualización de $W$:
+\begin{equation}
+  v_{w_I}^{(nuevo)} - v_{w_I}^{(antiguo)} - \eta EH^T
+\end{equation}
+donde $v_{w_I}$ es una fila de $W$, la representación del vector de entrada (la única palabra del contexto). Como consecuecnia de que solo una fila de $\frac{\partial E}{\partial W}$ sea distinta de 0,
+es que todas las otras filas de $W$ permanecerán sin cambiar después de esta iteración.
+
+De igual forma que en el apartado anterior, si la probabilidad de una palabra $w_j$ es sobreestimada ($y_j>t_j$), entonces el vector de entrada de la palabra del contexto $w_I$ tenderá a alejarse del vector de salida
+de $w_j$. Lo contrario es cierto, si la probabilidad es subestimada. Por lo tanto, el movimiento del vector de entrada de $w_I$ es determinado por el error de predicción de todos los vectores en el vocabulario. Cuanto más
+grande sea el error de predicción, más significativo será el cambio en el vector de entrada de la palabra del contexto.
+
+Conforme se actualizan los parámetros del modelo de forma iterativa, los efectos de cada iteración se van a ir acumulando. Se puede imaginar que el vector de salida de una palabra $w$ es `arrastrado' de un lado hacia otro
+por los vectores de entrada de los vecinos de $w$.
 \subsection{Contexto de múltiples palabras}
+
