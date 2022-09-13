@@ -233,3 +233,80 @@ Conforme se actualizan los parámetros del modelo de forma iterativa, los efecto
 por los vectores de entrada de los vecinos de $w$.
 \subsection{Contexto de múltiples palabras}
 
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+          roundnode/.style={circle, draw=black, minimum size=4mm},
+      ]
+
+      \node[rectangle, draw, minimum width = 0.3cm, minimum height = 2cm] (xck) at (0.5,0) {};
+      \node[] at (-0.2,0) {$x_{Ck}$};
+      \draw[] (0.5, 0.7) circle (0.1cm);
+      \draw[] (0.5, 0.3) circle (0.1cm);
+      \draw[] (0.5, -0.7) circle (0.1cm);
+      \path (0.5, -0.9) -- (0.5, 0.3) node [black, midway, sloped] {$\dots$};
+
+      \node[rectangle, draw, minimum width = 0.3cm, minimum height = 2cm] (xdk) at (0.5,3) {};
+      \node[] at (-0.2,3) {$x_{2k}$};
+      \draw[] (0.5, 3.7) circle (0.1cm);
+      \draw[] (0.5, 3.3) circle (0.1cm);
+      \draw[] (0.5, 2.3) circle (0.1cm);
+      \path (0.5, 2.3) -- (0.5, 3.3) node [black, midway, sloped] {$\dots$};
+
+      \node[rectangle, draw, minimum width = 0.3cm, minimum height = 2cm] (xuk) at (0.5,6) {};
+      \node[] at (-0.2,6) {$x_{1k}$};
+      \draw[] (0.5, 6.7) circle (0.1cm);
+      \draw[] (0.5, 6.3) circle (0.1cm);
+      \draw[] (0.5, 5.3) circle (0.1cm);
+      \path (0.5, 5.3) -- (0.5, 6.3) node [black, midway, sloped] {$\dots$};
+
+      \path (xdk) -- (xck) node [black, midway, sloped] {$\dots$};
+
+     % ========= hidden layer
+
+
+      \node[rectangle, draw, minimum width = 0.3cm, minimum height = 1.6cm] (xdk) at (3.5,3) {};
+      \node[] at (4,3) {$h$};
+      \draw[] (3.5, 3.5) circle (0.1cm);
+      \draw[] (3.5, 2.4) circle (0.1cm);
+      \path (3.5, 2.4) -- (3.5, 3.5) node [black, midway, sloped] {$\dots$};
+
+     % ========= connections input->hidden layer
+
+     \draw[] (0.65,1) -- (3.35,3.8);
+     \draw[] (0.65,4) -- (3.35,3.8);
+     \draw[] (0.65,7) -- (3.35,3.8);
+
+     \draw[] (0.65,-1) -- (3.35,2.2);
+     \draw[] (0.65,2) -- (3.35,2.2);
+     \draw[] (0.65,5) -- (3.35,2.2);
+
+     \node[] at (1.5,0.8) {$W_{V\times N}$};
+     \node[] at (1.5,3) {$W_{V\times N}$};
+     \node[] at (1.5,5.3) {$W_{V\times N}$};
+
+
+     % ========= output layer
+
+     \node[rectangle, draw, minimum width = 0.3cm, minimum height = 4cm] (xdk) at (6.5,3) {};
+     \node[] at (7,3) {$y$};
+     \draw[] (6.5, 4.8) circle (0.1cm);
+     \draw[] (6.5, 4.5) circle (0.1cm);
+     \draw[] (6.5, 4.2) circle (0.1cm);
+     \draw[] (6.5, 3.9) circle (0.1cm);
+     \draw[] (6.5, 3.6) circle (0.1cm);
+     \draw[] (6.5, 1.4) circle (0.1cm);
+     \path (6.5, 1.4) -- (6.5, 3.6) node [black, midway, sloped] {$\dots$};
+
+
+     % ========= connections hidden->output layer
+
+     \draw[] (3.65,3.8) -- (6.35, 5);
+     \draw[] (3.65,2.2) -- (6.35, 1);
+
+     \node[] at (5,3) {$W'_{N\times V}$};
+
+  \end{tikzpicture}
+  \caption{CBOW con C palabras por contexto}
+  \label{redneuronal:4}
+\end{figure}
