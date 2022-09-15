@@ -1,40 +1,59 @@
 \chapter{Estado del arte}
 
 Este capítulo comienza con una descripción de los \textit{embeddings} para introducir a
-continuación los \textit{word embeddings}, que son una parte fundamental del trabajo. Por
+continuación los \textit{word embeddings}, un concepto muy importante en el proceso del lenguaje natural. Por
 último, se justifica la elección del modelo escogido para el trabajo haciendo una comparación con
 otros modelos que también usan \textit{word embeddings}.
 
 \section{Embeddings}
 
 Un \textit{embedding} es un espacio dimensional con una dimensión relativamente pequeña, en la que se pueden
-representar vector con dimensiones mayores. Por ejemplo, si tenemos un vector que incluye cientos de características
-de una película, podemos usar un vector de menor dimensión que represente esa película.  Esta representación se puede
-hacer de forma que las películas que sean similares entre sí, tengan representaciones similares (cercanas).
+representar vectores con dimensiones mayores. Por ejemplo, si se tiene un vector que incluye cientos de características
+de una palabra, se puede usar un vector de menor dimensión que represente esa palabra.
 
 Cuando estos embeddings se usan para capturar el significado semántico de palabras, se suelen denominar
 \textit{word embeddings}. La motivación para usar \textit{embeddings} con palabras es la idea de John Rupert
 Firth de que `una palabra se caracteriza por la compañía que mantiene' \cite{firth1957synopsis}. Por lo tanto,
-usando estas representaciones, podemos capturar la semántica y el contexto sintáctico de palabras en un documento
+usando estas representaciones, se puede capturar la semántica y el contexto sintáctico de palabras en un documento
 o corpus de texto.
 
-En este trabajo, lo que se pretende es crear \textit{word embeddings} para tropos, con el fin de poder estudiar
-su semántica. El principal reto viene de que, a diferencia de las palabras en un documento, los tropos no presentan
-un orden, por lo que es más complejo determinar 'su compañía'.
+A partir de una palabra se puede generar un vector que represente el valor semántico de tal palabra, es decir, qué signigica la palabra, qué caracteriza
+su significado, etc. Adicionalmente, esta representación vectorial se genera de forma que se puedan obtener otras palabras
+cercanas `semánticamente' (dada la representación vectorial de la palabra \textit{pera}, la representación de la palabra \textit{naranja}
+debería ser cercana semánticamente a la de pera porque ambas son frutas). Para medir este concepto se va a definir una forma de medir el nivel
+de cercanía semántica entre dos palabras. Una posible forma sería usar la similitud coseno (es importante notar que la similitud coseno no es una función de medida,
+ya que no cumple la desigualdad de Schwarz):
+
+\begin{definition}
+  Dados dos vectores $a,b\in\mathbb{R}$, $n\in\mathbb{N}$, se define la similitud coseno como:
+  \[
+    S_c(a,b)=\cos\theta = \frac{a\cdot b}{\norm{a}\norm{b}} \in [-1, 1]
+  \]
+donde $\theta\in[-\pi,\pi]$ es el ángulo entre los vectores $a$ y $b$.
+\end{definition}
+
+Se usa esta función para medir la cercanía semántica porque la magnitud de los vectores usados para las representaciones no aporta
+ningún valor semántico, sino que es la dirección del vector la que lo aporta. Sea un embedding de dimensión $d\in\mathbb{N}$, es decir,
+se tienen $d$ componentes numéricas por cada embedding. El valor de las componentes (o más bien las combinaciones lineales) de esos embeddings,
+codifican el significado semántico de cada palabra. Un famoso ejemplo de este cálculo sería \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina} \cite{drozd-etal-2016-word}.
+De ahí se puede deducir que hay una cierta dirección que más o menos apunta al concepto de realeza y otra dirección que apunta al concepto de género.
+
+A partir de ese ejemplo, se puede ver perfectamente la razón de que la magnitud de los vectores no sea relevante pero sí lo sea su dirección. Sean $a,b\in\mathbb{R}^d$ dos embeddings
+distintos, de forma que $a=(-1, 2, 3)$ y $b=(-3, 6, -9)$. Estos dos vectores tienen magnitudes totalmente distintas ($a=3b$), pero apuntan hacia la misma dirección
+(por lo que tienen similitud coseno igual a 0, $S_c(a,b)=0$). Eso es el resultado esperable porque significa que tienen la misma proporción relativa en cada componente.
+Sin embargo, si se hubiera usado la distancia euclídea usual, la distancia entra $a$ y $b$ sería de aproximadamente $7.48$. Sería fácil encontrar otro vector $c$ igual de cercano (distancia euclídea) a $a$
+que $b$, pero probablemente apuntaría en una dirección totalmente distinta.
+
+De igual forma que se puede hacer con palabras, en este trabajo, lo que se pretende es crear \textit{any embeddings} para tropos, con el fin de poder estudiar
+su semántica.
+
+\section{Modelos}
 
 A lo largo del tiempo, numerosos modelos han sido usados para encontrar o calcular estos \textit{embeddings}, cada uno
 con una aproximación diferente. A continuación se ven algunos de estos modelos.
 
-\section{Modelos}
-
 En el modelo \emph{word2vec} \cite{word2vec:1} \cite{word2vec:2}, se crea una representación
-en forma vector para cada palabra. Los vectores son elegidos de forma que una simple función
-matemática, como la similitud coseno, pueda ser usada para calcular la similitud entre dos palabras.
-Por ejemplo, si se calculara una palabra cercana a \emph{plátano}, obtendríamos como resultado
-\emph{fruta}, o la famosa operación \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina}.
-Básicamente, este modelo aporta información sobre el significado de una palabra.
-
-El principal problema de este modelo es que cada palabra tiene un único vector asociado,
+en forma de vector para cada palabra. El principal problema de este modelo es que cada palabra tiene un único vector asociado,
 pero en el mundo real, cada palabra puede tener distintos significados dependiendo del contexto.
 Por ejemplo, en las frases \emph{kiwi y mango son coches españoles}, y \emph{kiwi y mango son frutas},
 el mismo word embedding es usado para kiwi y mango.
