@@ -12,8 +12,7 @@ Como el objetivo del trabajo es \textit{ser ágil}, es necesario escoger una met
 lo permita. En este proyecto se ha escogido \textit{Kanban}. Los objetivos principales de kanban son dar
 visibilidad al trabajo que se está haciendo, maximizar la eficiencia y limitar la cantidad de trabajo
 en progreso. Esto se hace a través de un tablero en el que de un simple vistazo, se puede consultar el
-estado del trabajo. Esto es realmente útil para el objetivo \ref{obj:3}, ya que permite a los tutores
-ver en todo momento en qué estado se encuentra el proyecto.
+estado del trabajo.
 
 Kanban se base en hacer pequeños cambios incrementales de forma que el esfuerzo para que se puede realizar
 la tarea sea mínimo. Esto no implica que Kanban favorezca la rapidez sobre la calidad, al contrario,
@@ -43,6 +42,99 @@ serie de \textit{issues}, o tareas a resolver, para alcanzar dicho hito.
 Para implementar la tabla de Kanban también se ha usado Github, ya que implementa de forma nativa un
 tablero que permite definir las columnas comunes en esta metodología:
 
+\section{Usuarios}
+
+Los usuarios o \textit{stakeholders} de este proyecto son:
+
+\begin{enumerate}
+      \item Tribunal: al ser un trabajo de fin de grado, el proyecto debe llevar asociado una memoria
+            que explique el trabajo.
+      \item Tutores: el trabajo esta cotutorizado por varias personas que no son expertas en ambas partes del trabajo.
+      \item Científico de datos: investigador que quiera expandir este trabajo o usarlo como
+            referencia en alguno de sus proyectos. Se asume que este usuario tiene alto conocimiento técnico.
+      \item Guionista: profesional cuyo principal interés es modificar los tropos de su película para
+            conseguir un buen rating. Se asume que este usuario no tiene, en principio, ningún conocimiento
+            técnico.
+\end{enumerate}
+
+\section{Historias de usuario}
+
+Una vez se conocen los usuarios del trabajo, se pueden desarrollar sus principales historias de usuario o casos de uso:
+
+\subsection{[HU0] Configuración del proyecto} \label{uc:configuration}
+
+Como tutores necesitamos disponer de una forma fácil de leer el resultado en cada
+una de las iteraciones.
+
+Como tribunal necesitamos disponer de una forma fácil de leer el resultado final.
+
+\subsubsection{Criterios de aceptación}
+
+\begin{itemize}
+      \item Debe estar claro que metodología se está llevando a cabo para el desarrollo del trabajo.
+      \item Se debe poder generar el trabajo de forma sencilla.
+      \item Se debe incluir una sección en la que se detalle el estado del arte.
+      \item Los objetivos e historias del usuario deben de estar definidos.
+\end{itemize}
+
+\subsection{[HU1] Análisis de tropos}
+
+Como científico de datos necesito un modelo reproducible que pueda alimentar con mis propios
+conjuntos de datos.
+
+Como tribunal/tutor necesito ver el desarrollo matemático e informático necesario para realizar
+un análisis semántico de los tropos para que pueda evaluar al estudiante.
+
+En este primera iteración del trabajo los datos sobre \textit{rating} no se van a incluir para
+hacer las historias de usuario más pequeñas e independientes (acorde a \textit{INVEST} \cite{buglione2013improving})
+
+\subsubsection{Criterios de aceptación}
+
+\begin{itemize}
+      \item Dado un conjunto de tropos, se deben poder obtener sus representaciones para operar con ellos  (\textit{embeddings}).
+      \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
+\end{itemize}
+
+
+\subsubsection{Primera extensión del modelo Word2Vec}\label{uc:word2vec_primera_extension}
+
+Como tribunal/tutor/científico de datos
+necesito entender cómo se ha extendido el modelo Word2Vec para analizar la semántica de un conjunto de
+tropos. Este extensión debe permitir que el modelo acepte conjuntos de palabras (tropos) sin orden, ya
+los tropos son conjuntos no ordenados.
+
+\subsection{[HU2] Herramienta fácil de usar}\label{uc:herramienta_guionistas}
+
+Como guionista, necesito una herramienta
+fácil de usar que no requiera conocimientos técnicos en la que pueda especificar un conjunto de tropos para obtener
+información adicional sobre ellos.
+
+\subsubsection{Criterios de aceptación}
+
+\begin{itemize}
+      \item Tiene que poder ser usada por personas sin conocimiento técnico.
+      \item Dado un tropo, se debe poder obtener el más similar semánticamente.
+      \item Dado un tropo, se deben poder ver los más \textit{cercanos} a él semánticamente.
+      \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
+\end{itemize}
+
+\subsection{[HU3] Considerar datos sobre \textit{rating}}\label{uc:word2vec_rating}
+
+Como guionista quiero poder asociar \textit{ratings} a los tropos para saber cómo van
+a influir en mi siguiente obra.
+
+Como tribunal/tutor/científico de datos necesito entender cómo se ha asociado la información
+de \textit{ratings} al conjunto de tropos.
+
+\subsubsection{Criterios de aceptación}
+
+\begin{itemize}
+      \item Dado un conjunto de tropos, se debe poder consultar información sobre el \textit{rating} que se obtendría.
+      \item Dado un conjunto de tropos, se debe poder saber cómo modificar un tropo afectaría al rating.
+      \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
+\end{itemize}
+
+\section{Temporización}
 \begin{itemize}
     \item Tareas por hacer
     \item En progreso
