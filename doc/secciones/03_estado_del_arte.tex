@@ -1,53 +1,19 @@
 \chapter{Estado del arte}
 
-Este capítulo comienza con una descripción de los \textit{embeddings} para introducir a
-continuación los \textit{word embeddings}, un concepto muy importante en el proceso del lenguaje natural. Por
-último, se justifica la elección del modelo escogido para el trabajo haciendo una comparación con
-otros modelos que también usan \textit{word embeddings}.
+El concepto de \emph{tropo} para el cine fue definido por Michael Rizzo \cite{rizzo2013art} en el año 2013. Este término
+tiene el mismo origen que los tropos para la literatura, cuyo estudio y clasificación fue una importante investigación en el
+campo de la retórica (como por ejemplo, el estudio de tropos en películas \cite{nelson1998tropes}). En el ámbito del cine,
+los tropos han sido usados para el estudio de la semiología de las películas \cite{howtoreadafilm}, que inlcuye el estudio
+de los signos o elemenos de una película y su significado (semántica).
 
-\section{Embeddings}
+Hay algunos estudios recientes sobre los tropos en películas \cite{garcia2018overview} que han ayudado a interpretar las
+películas y los tropos que se encuentran dentro de ellas. En este trabajo se pretende extender ese estudio aplicando el uso
+de \emph{embeddings}, para extraer más información sobre los tropos y su semántica.
 
-Un \textit{embedding} es un espacio dimensional con una dimensión relativamente pequeña, en la que se pueden
-representar vectores con dimensiones mayores. Por ejemplo, si se tiene un vector que incluye cientos de características
-de una palabra, se puede usar un vector de menor dimensión que represente esa palabra.
-
-Cuando estos embeddings se usan para capturar el significado semántico de palabras, se suelen denominar
-\textit{word embeddings}. La motivación para usar \textit{embeddings} con palabras es la idea de John Rupert
-Firth de que `una palabra se caracteriza por la compañía que mantiene' \cite{firth1957synopsis}. Por lo tanto,
-usando estas representaciones, se puede capturar la semántica y el contexto sintáctico de palabras en un documento
-o corpus de texto.
-
-A partir de una palabra se puede generar un vector que represente el valor semántico de tal palabra, es decir, qué signigica la palabra, qué caracteriza
-su significado, etc. Adicionalmente, esta representación vectorial se genera de forma que se puedan obtener otras palabras
-cercanas `semánticamente' (dada la representación vectorial de la palabra \textit{pera}, la representación de la palabra \textit{naranja}
-debería ser cercana semánticamente a la de pera porque ambas son frutas). Para medir este concepto se va a definir una forma de medir el nivel
-de cercanía semántica entre dos palabras. Una posible forma sería usar la similitud coseno (es importante notar que la similitud coseno no es una función de medida,
-ya que no cumple la desigualdad de Schwarz):
-
-\begin{definition}
-  Dados dos vectores $a,b\in\mathbb{R}$, $n\in\mathbb{N}$, se define la similitud coseno como:
-  \[
-    S_c(a,b)=\cos\theta = \frac{a\cdot b}{\norm{a}\norm{b}} \in [-1, 1]
-  \]
-donde $\theta\in[-\pi,\pi]$ es el ángulo entre los vectores $a$ y $b$.
-\end{definition}
-
-Se usa esta función para medir la cercanía semántica porque la magnitud de los vectores usados para las representaciones no aporta
-ningún valor semántico, sino que es la dirección del vector la que lo aporta. Sea un embedding de dimensión $d\in\mathbb{N}$, es decir,
-se tienen $d$ componentes numéricas por cada embedding. El valor de las componentes (o más bien las combinaciones lineales) de esos embeddings,
-codifican el significado semántico de cada palabra. Un famoso ejemplo de este cálculo sería \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina} \cite{drozd-etal-2016-word}.
-De ahí se puede deducir que hay una cierta dirección que más o menos apunta al concepto de realeza y otra dirección que apunta al concepto de género.
-
-A partir de ese ejemplo, se puede ver perfectamente la razón de que la magnitud de los vectores no sea relevante pero sí lo sea su dirección. Sean $a,b\in\mathbb{R}^d$ dos embeddings
-distintos, de forma que $a=(-1, 2, 3)$ y $b=(-3, 6, -9)$. Estos dos vectores tienen magnitudes totalmente distintas ($a=3b$), pero apuntan hacia la misma dirección
-(por lo que tienen similitud coseno igual a 0, $S_c(a,b)=0$). Eso es el resultado esperable porque significa que tienen la misma proporción relativa en cada componente.
-Sin embargo, si se hubiera usado la distancia euclídea usual, la distancia entra $a$ y $b$ sería de aproximadamente $7.48$. Sería fácil encontrar otro vector $c$ igual de cercano (distancia euclídea) a $a$
-que $b$, pero probablemente apuntaría en una dirección totalmente distinta.
-
-De igual forma que se puede hacer con palabras, en este trabajo, lo que se pretende es crear \textit{any embeddings} para tropos, con el fin de poder estudiar
-su semántica.
-
-\section{Modelos}
+La primera noción de \textit{embedding} proviene del concepto matemático de una instancia de alguna
+estructura matemática contenida en otra. Como por ejemplo, los números naturales, contenidos en los números enteros
+$\mathbb{N}$. Seguramente inspirado por este concepto, surgió el concepto de \textit{embedding} en la rama del procesamiento
+del lenguaje natural.
 
 A lo largo del tiempo, numerosos modelos han sido usados para encontrar o calcular estos \textit{embeddings}, cada uno
 con una aproximación diferente. A continuación se ven algunos de estos modelos.
@@ -70,3 +36,7 @@ un embedding dependiente del contexto (y por lo tanto, específico a cada aparic
 
 En el caso de este trabajo, los tropos no tienen, a priori, distintos sentidos, por lo que se ha optado
 por usar el modelo \emph{word2vec}.
+
+Como el nombre del trabajo indica, la intentación es generar \textit{any embeddings}, es decir, no solo aplicado a
+palabras \cite{word2vec:1} \cite{word2vec:2} o frases \cite{kiros2015skip}. En este trabajo en particular, se va a centrar
+el estudio en generar embeddings para tropos de películas.

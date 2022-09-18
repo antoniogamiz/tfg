@@ -22,7 +22,6 @@ relación existente entre los tropos y su rating, para obtener el máximo \emph
 {rating} posible. En particular, este trabajo se centra en el estudio de tropos
 encontrados en películas.
 
-
 El trabajo está organizado en diferentes bloques:
 
 \begin{enumerate}
@@ -38,3 +37,76 @@ El trabajo está organizado en diferentes bloques:
 \end{enumerate}
 
 Este proyecto es software libre, y está liberado con la licencia \cite{gplv3}.
+
+\section*{Definiciones previas}
+
+Antes de pasar a la descripción del problema, es necesario definir algunos conceptos importantes para
+este trabajo.
+
+\subsection*{\textit{Embeddings}}
+
+En el análisis de datos de texto se suele encontrar el problema de la alta dimensionalidad de los datos. Por eso surgió el
+Análisis Semántico Latente (o más conocido por LSA, \textit{Latent Semantic Analysis}), que es una técnica popular
+de reducción de la dimensionalidad. Básicamente transforma datos en forma de texto en términos de $d\in\mathbb{N}$
+características latentes (es decir, escondidas), donde $d<m$, siendo $m\in\mathbb{N}$, el número de términos en los
+datos. Una de las primeras menciones del término \textit{embedding} puede ser encontrada en \cite{landauer1997learning}.
+En este trabajo, un \textit{embedding} se va a definir como:
+
+\begin{definition}[Embedding]
+    Dado un conjunto de datos $D$, de tamaño $m\in\mathbb{N}$, un término $w\in D$, el embedding de $w$ es
+    la representación en un vector de $d$ dimensiones (o características) con $d<m$.
+\end{definition}
+
+Este concepto puede ser usado para codificar la semántica de un término, en un espacio vectorial de dimensión reducida
+y fija, $m$, de forma que se pueda operar con esas representaciones de forma sencilla y eficiente. A continuación se ve cómo
+se deduce la semántica del término a partir de su \textit{embedding}. Normalmente si el conjunto de datos son palabras, el nombre
+que se suele usar es \textit{word embedding}.
+
+\subsection*{Semántica de un embedding}
+
+La motivación para usar \textit{embeddings} con palabras proviene de la idea de John Rupert
+Firth de que `una palabra se caracteriza por la compañía que mantiene' \cite{firth1957synopsis}. Por ejemplo, si no se sabe
+el significado de la palabra \textit{coche}, pero aparece en las siguientes frases (o contextos):
+\begin{itemize}
+    \item El coche es muy importante para el transporte en las zonas rurales.
+    \item En la autovía, la velocidad máxima de un coche son 120 kilómetros por hora.
+    \item El coche y otros vehículos...
+\end{itemize}
+Y suponiendo que se han visto esas mismas palabras en otros contextos:
+\begin{itemize}
+    \item Un camión es usado para el transporte de grandes mercancías.
+    \item Un camión no puedo alcanzar gran velocidad.
+\end{itemize}
+Del hecho de que \textit{coche} aparezca al lado de palabas como \textit{transprote}, \textit{velocidad} y \textit{vehículo},
+de igual forma aparecen para cambión, sugiere que un coche y un camión son similares (ambos son vehículos). Usando esta intuición,
+ahora se va a introducir como detectar estas relaciones matemáticamente.
+
+
+Dada una palabra, se puede generar un vector que represente el valor semántico de tal palabra (\textit{embedding}), es decir, qué signigica la palabra, qué caracteriza
+su significado, etc. Esta representación vectorial se genera de forma que se puedan obtener otras palabras
+cercanas `semánticamente' (dada la representación vectorial de la palabra \textit{coche}, la representación de la palabra \textit{camión}
+debería ser cercana semánticamente a la de camión porque ambas son vehículos). Para medir este concepto se va a definir una forma de medir el nivel
+de cercanía semántica entre dos palabras. Una posible forma sería usar la similitud coseno (es importante notar que la similitud coseno no es una función de medida,
+ya que no cumple la desigualdad de Schwarz):
+
+\begin{definition}
+  Dados dos vectores $a,b\in\mathbb{R}$, $n\in\mathbb{N}$, se define la similitud coseno como:
+  \[
+    S_c(a,b)=\cos\theta = \frac{a\cdot b}{\norm{a}\norm{b}} \in [-1, 1]
+  \]
+donde $\theta\in[-\pi,\pi]$ es el ángulo entre los vectores $a$ y $b$.
+\end{definition}
+
+Se usa esta función para medir la cercanía semántica porque la magnitud de los vectores usados para las representaciones no aporta
+ningún valor semántico, sino que es la dirección del vector la que lo aporta. Sea un embedding de dimensión $d\in\mathbb{N}$, es decir,
+se tienen $d$ componentes numéricas por cada embedding. El valor de las componentes (o más bien las combinaciones lineales) de esos embeddings,
+codifican el significado semántico de cada palabra. Un famoso ejemplo de este cálculo sería \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina} \cite{drozd-etal-2016-word}.
+De ahí se puede deducir que hay una cierta dirección que más o menos apunta al concepto de realeza y otra dirección que apunta al concepto de género.
+
+A partir de ese ejemplo, se puede ver perfectamente la razón de que la magnitud de los vectores no sea relevante pero sí lo sea su dirección. Sean $a,b\in\mathbb{R}^d$ dos embeddings
+distintos, de forma que $a=(-1, 2, 3)$ y $b=(-3, 6, -9)$. Estos dos vectores tienen magnitudes totalmente distintas ($a=3b$), pero apuntan hacia la misma dirección
+(por lo que tienen similitud coseno igual a 0, $S_c(a,b)=0$). Eso es el resultado esperable porque significa que tienen la misma proporción relativa en cada componente.
+Sin embargo, si se hubiera usado la distancia euclídea usual, la distancia entra $a$ y $b$ sería de aproximadamente $7.48$. Sería fácil encontrar otro vector $c$ igual de cercano (distancia euclídea) a $a$
+que $b$, pero probablemente apuntaría en una dirección totalmente distinta.
+
+Con estos conceptos definidos, se puede definir el problema y ver el estado del arte en cuanto a la generación y uso de estos embeddings.
