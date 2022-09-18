@@ -156,7 +156,7 @@ words = {
     "vectors",
     "softmax",
     "dimensionalidad",
-    "analysis"
+    "analysis",
     "HU",
     "INVEST",
     "cotutorizado",
