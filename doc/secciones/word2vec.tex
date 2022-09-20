@@ -21,12 +21,12 @@ de esta función indica el nivel de similitud semántica entre las palabras repr
 A continuación, se presenta cómo se van a obtener esos vectores, y posteriormente, cómo tratar esos vectores para obtener información sobre las palabras. Para
 ello, se presentan dos variantes del modelo.
 
-\section{Coninuous Bad-of-Word Model}
+\section{Continuous Bag-of-Word Model}
 
 \subsection{Contexto de una sola palabra}
 
 Primero se va a desarrollar el modelo \textit{bolsa de palabras continuas} (o CBOW, por sus siglas en inglés) considerando que el contexto está formado por una única palabra.
-Esto será útil para establecer la notación para el resto del trabajo. Que haya una única palabra por contexto implica que el modelo precidirá también una única palabra objetivo.
+Esto será útil para establecer la notación para el resto del trabajo. Que haya una única palabra por contexto implica que el modelo generará también una única palabra objetivo.
 Por lo tanto, se está presentando un modelo \textit{bigram} (es decir, que usa dos palabras).
 
 \begin{figure}[H]
@@ -105,7 +105,7 @@ que simplemente es un vector de tamaño $V$ donde cada posición representa una 
 posición, entonces el vector $(0, \dots, 1, \dots, 0)$ con un 1 en la $k-$ésima posición, sería la representación de la palabra coche.
 
 Los pesos entra la capa de entrada y la de salida pueden ser representados por una matriz $W\in\mathbb{R}^{V\times N}$, donde cada fila de $W$ es la representación
-vectorial $N-$dimensional de la palabra $w$ asociada en la capa de entrada. Las filas de esta matriz son la represención vectorial $N$-dimensional, $v_{w_I}$ (donde $I\in\{1, \ldots, V\}$),
+vectorial $N-$dimensional de la palabra $w$ asociada en la capa de entrada. Las filas de esta matriz son la representación vectorial $N$-dimensional, $v_{w_I}$ (donde $I\in\{1, \ldots, V\}$),
 de la palabra $w$ de entrada (representada por $x$).
 
 Dado entonces un contexto con una única palabra, $w_I$, se tiene su representación como vector de entrada $x\in\mathbb{R}^V$, de forma que $x_k=1$ con $x_{k'}=0$ si $k'\neq k$. A partir de
@@ -127,7 +127,7 @@ Finalmente, se puede usar \textit{softmax}, un modelo de clasificación lineal l
 p(w_j|w_I) = \frac{\exp(u_j)}{\sum_{j'=1}^V\exp(u_{j'})} =: y_j
 \end{equation}
 donde $y_j$ es el valor de la $j$-ésima neurona de la capa de salida. Una vez se tiene esta expresión, se pueden sustituir los valores de $u_j$ y $u_j'$ por los obtenidos
-en párrafos anteriors, llegando a la siguiente fórmula:
+en párrafos anteriores, llegando a la siguiente fórmula:
 \begin{equation}\label{eq:4}
   p(w_j|w_I) = \frac{\exp(w^{'T}_{w_j}v_{w_I})}{\sum_{j'=1}^V\exp(v^{'T}_{w_{j'}}v_{w_I})}
 \end{equation}
@@ -186,11 +186,11 @@ Por lo tanto, ya se puede aplicar la técnica de descenso de gradiente porque se
 \]
 En lugar de escalar a escalar, esa expresión también se puede escribir usando la representación vectorial de la palabra $w$ en $W'$, es decir, $v'_{w_j}$:
 \[
-  v_{w_j}^{'(nuevo)}=v_{w_j}^{'(viejo)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
+  v_{w_j}^{'(nuevo) }= v_{w_j}^{'(viejo)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
 \]
 donde $\eta > 0$ es el ratio de aprendizaje.
 
-Es importante resaltar que esta ecuación implica que es necesario recorrer cada posible palabra en el vocabulario, comprobar su probalidad de la capa de salida, $y_j$, y
+Es importante resaltar que esta ecuación implica que es necesario recorrer cada posible palabra en el vocabulario, comprobar su probabilidad de la capa de salida, $y_j$, y
 compararlo con su valor esperado, $t_j$ (que solo puede ser 0 o 1). Si se da $y_j > t_j $ (caso de sobreestimación) entonces se resta una proporción de $h$ (se recuerda que
 $h=v_{w_I}$) a $v'_{w_j}$. Si se tiene el caso contrario, entonces se realiza la operación contraria. En ambos casos, $v'_{w_O}$ es cada vez más cercano a $v_{w_I}$ (en
 este caso la \textit{cercanía} usa el producto escalar y no la distancia euclídea usual).
@@ -204,8 +204,8 @@ Para obtener esa ecuación, es necesario minimizar una vez más la función de e
 \begin{equation}
   \frac{\partial E}{\partial h_i} = \sum_{j=1}^V\frac{\partial E}{\partial u_j} \frac{\partial u_j}{\partial h_i} = \sum_{j=1}^Ve_j w'_{ij} := EH_i, \;\; \forall i \in \{1, \cdots, N\}
 \end{equation}
-donde $h_i$ es la $i$-ésiima componente de la capa escondida, $u_j$ se definió en \ref*{eq:uj} y $e_j$ se definió en \ref*{eq:ej} como el error de predicción
-de la $j$-ésima unidad de la capa de salidad. A partir de $EH_i$, se puede definir un vector de dimensión $N$, en el que cada componente es la suma de los vectores
+donde $h_i$ es la $i$-ésima componente de la capa escondida, $u_j$ se definió en \ref*{eq:uj} y $e_j$ se definió en \ref*{eq:ej} como el error de predicción
+de la $j$-ésima unidad de la capa de salida. A partir de $EH_i$, se puede definir un vector de dimensión $N$, en el que cada componente es la suma de los vectores
 de salida de todas las palabras, promediados por el error de predicción.
 
 El siguiente paso sería calcular la derivada de $E$ con respecto de $W$. Primero, se recuerda que la capa escondida simplemente es una función linear de los valores de la capa de entrada. Expandiendo
@@ -220,9 +220,9 @@ Usando esa expresión se puede derivar $E$ con respecto a cada elemento de $W$, 
 Con ese resultado, se puede expresar $\frac{\partial E}{\partial W}=xEH^T$. Como solo un componente de $x$ es distinto de cero (se recuerda que se están usando \textit{one-hot encoded vectors}), solo
 una fila de $\frac{\partial E}{\partial W}$ es distinta de cero, y su valor es $EH^T$, un vector $N$-dimensional.  Finalmente, se puede obtener la ecuación de actualización de $W$:
 \begin{equation}
-  v_{w_I}^{(nuevo)} - v_{w_I}^{(antiguo)} - \eta EH^T
+  v_{w_I}^{(nuevo)} = v_{w_I}^{(antiguo)} - \eta EH^T
 \end{equation}
-donde $v_{w_I}$ es una fila de $W$, la representación del vector de entrada (la única palabra del contexto). Como consecuecnia de que solo una fila de $\frac{\partial E}{\partial W}$ sea distinta de 0,
+donde $v_{w_I}$ es una fila de $W$, la representación del vector de entrada (la única palabra del contexto). Como consecuencia de que solo una fila de $\frac{\partial E}{\partial W}$ sea distinta de 0,
 es que todas las otras filas de $W$ permanecerán sin cambiar después de esta iteración.
 
 De igual forma que en el apartado anterior, si la probabilidad de una palabra $w_j$ es sobreestimada ($y_j>t_j$), entonces el vector de entrada de la palabra del contexto $w_I$ tenderá a alejarse del vector de salida
@@ -233,7 +233,26 @@ Conforme se actualizan los parámetros del modelo de forma iterativa, los efecto
 por los vectores de entrada de los vecinos de $w$.
 \subsection{Contexto de múltiples palabras}
 
-\begin{figure}[H]
+La figura \ref{redneuronal:4} muestra el modelo en el caso de varias palabras por contexto. Cuando se calcula la salida de la capa
+escondida, en lugar de copiar directamente el valor del vector de entrada de la palabra del contexto, el modelo calcula la media
+de todos los vectores de las palabras en el contexto, resultando en la siguiente expresión de $h$:
+\begin{equation}
+  \begin{split}
+     h & = \frac{1}{C} W^T \left( x_1 + x_2 + \cdots + x_C \right)\\
+       & = \frac{1}{C} \left( v_{w_1} + v_{w_2} + \cdots + v_{w_C} \right)^T\\
+    \end{split}
+\end{equation}
+donde $C$ es el númeor de palabras en el contexto, $w_1, \cdots, w_C$ son las palabras en el contexto y $v_w$ es la representación de entrada
+de una palabra $w$. En este caso particular, repitiendo los cálculos del apartado anterior, se obtiene la siguiente función de pérdida:
+\begin{equation}
+  \begin{split}
+    E & = -\log p\left( w_O | w_{I,1}, \cdots, w_{I, C} \right) \\
+      & = -u_j^* + \log\displaystyle\sum_{j'=1}^V\exp\left(u'_j\right) \\
+      & = -v_{w_O}^{'T}h + \log\displaystyle\sum_{j'=1}^V\exp\left( v_{w_j}^{'T}h \right) \\
+  \end{split}
+\end{equation}
+
+\begin{figure}
   \centering
   \begin{tikzpicture}[
           roundnode/.style={circle, draw=black, minimum size=4mm},
@@ -310,3 +329,17 @@ por los vectores de entrada de los vecinos de $w$.
   \caption{CBOW con C palabras por contexto}
   \label{redneuronal:4}
 \end{figure}
+
+La ecuación de actualización de la capa escondida a la de salida, es básicamente la misma que para el contexto de una
+única palabra (pero ahora $h$ ha sido definida de diferente forma):
+\begin{equation}
+  v_{w_j}^{'(nuevo)}=v_{w_j}^{'(viejo)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
+\end{equation}
+Es importante notar que es necesario aplicar esta ecuación a cada elemento de la matriz de pesos de la capa escondida a la de salida,
+por cada iteración en el entrenamiento del modelo.
+
+La ecuación de actualización para la capa de entrada a la escondida es similar a la de una palabra por contexto, excepto que ahora es
+necesario aplicarlo para cada palabra $w_{I,c}$ en el contexto:
+\begin{equation}
+  v_{w_{I,c}}^{(nuevo)} = v_{w_{I,c}}^{(antiguo)} - \frac{1}{C}\eta EH^T \;\; \forall c \in \{1,2,\cdots, C \}
+\end{equation}
