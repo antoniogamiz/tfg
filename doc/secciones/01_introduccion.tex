@@ -45,22 +45,27 @@ este trabajo.
 
 \subsection*{\textit{Embeddings}}
 
-En el análisis de datos de texto se suele encontrar el problema de la alta dimensionalidad de los datos. Por eso surgió el
-Análisis Semántico Latente (o más conocido por LSA, \textit{Latent Semantic Analysis}), que es una técnica popular
-de reducción de la dimensionalidad. Básicamente transforma datos en forma de texto en términos de $d\in\mathbb{N}$
-características latentes (es decir, escondidas), donde $d<m$, siendo $m\in\mathbb{N}$, el número de términos en los
+En el análisis de datos de texto se suele encontrar el problema de representar la semántica de un conjunto de datos.
+En general, lo que se quiere es extraer el significado de esos datos. Esto permite entender, interpretar los datos
+a partir de su estructura (por ejemplo, a partir de frases y párrafos, si los datos son texto) e identificar relaciones
+entre ellos.
+
+A raíz de eso, surgió el Análisis Semántico Latente (o más conocido por LSA, \textit{Latent Semantic Analysis} \cite{dumais2004latent}),
+que es una técnica popular para analizar relaciones entre las palabras de un texto. Básicamente transforma datos en forma de texto en vectores de $d\in\mathbb{N}$
+componentes o características latentes (es decir, escondidas), donde $d<m$, siendo $m\in\mathbb{N}$, el número de
 datos. Una de las primeras menciones del término \textit{embedding} puede ser encontrada en \cite{landauer1997learning}.
 En este trabajo, un \textit{embedding} se va a definir como:
 
-\begin{definition}[Embedding]
-    Dado un conjunto de datos $D$, de tamaño $m\in\mathbb{N}$, un término $w\in D$, el embedding de $w$ es
+\begin{definition}[\textit{Embedding}]
+    Dado un conjunto de datos $D$, de tamaño $m\in\mathbb{N}$, un elemento $w\in D$, el embedding de $w$ es
     la representación en un vector de $d$ dimensiones (o características) con $d<m$.
 \end{definition}
 
 Este concepto puede ser usado para codificar la semántica de un término, en un espacio vectorial de dimensión reducida
 y fija, $m$, de forma que se pueda operar con esas representaciones de forma sencilla y eficiente. A continuación se ve cómo
 se deduce la semántica del término a partir de su \textit{embedding}. Normalmente si el conjunto de datos son palabras, el nombre
-que se suele usar es \textit{word embedding}.
+que se suele usar es \textit{word embedding}. Es importante notar que $D$ normalmente es un grupo de palabras, pero también puede ser,
+por ejemplo, un grupo de frases \cite{lin2017structured} o un grupo de tropos, como el caso de este trabajo.
 
 \subsection*{Semántica de un embedding}
 

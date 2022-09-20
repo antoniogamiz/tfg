@@ -144,11 +144,14 @@ words = {
     "hot",
     "inputv",
     "kw",
-    "jh"
+    "jh",
     "multinomial",
     "of",
-    "one"
+    "one",
     "outputi",
+    "outputv",
+    "jh",
+    "one",
     "hiddeni",
     "sobreestimada",
     "sobreestimación",
@@ -156,11 +159,14 @@ words = {
     "vectors",
     "softmax",
     "dimensionalidad",
+    "rectangle",
     "analysis",
     "HU",
     "INVEST",
     "cotutorizado",
     "stakeholders",
     "invest",
-    "hu"
+    "hu",
+    "continuous",
+    "multinomial",
 }
