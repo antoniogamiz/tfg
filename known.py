@@ -169,4 +169,9 @@ words = {
     "hu",
     "continuous",
     "multinomial",
+    "commits",
+    "milestone",
+    "milestones",
+    "mvp",
+    "product"
 }
