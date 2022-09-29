@@ -86,13 +86,23 @@ Del hecho de que \textit{coche} aparezca al lado de palabras como \textit{transp
 de igual forma aparecen para camión, sugiere que un coche y un camión son similares (ambos son vehículos). Usando esta intuición,
 ahora se va a introducir como detectar estas relaciones matemáticamente.
 
-
 Dada una palabra, se puede generar un vector que represente el valor semántico de tal palabra (\textit{embedding}), es decir, qué significa la palabra, qué caracteriza
 su significado, etc. Esta representación vectorial se genera de forma que se puedan obtener otras palabras
 cercanas `semánticamente' (dada la representación vectorial de la palabra \textit{coche}, la representación de la palabra \textit{camión}
 debería ser cercana semánticamente a la de camión porque ambas son vehículos). Para medir este concepto se va a definir una forma de medir el nivel
-de cercanía semántica entre dos palabras. Una posible forma sería usar la similitud coseno (es importante notar que la similitud coseno no es una función de medida,
-ya que no cumple la desigualdad de Schwarz):
+de cercanía semántica entre dos palabras. Para ello, se suelen usar funciones de medida (o lo más parecido a ellas):
+
+\begin{definition}
+    Sea $d: A\times A \longrightarrow \mathbb{R}$ una función, donde $A$ es un conjunto cualquiera de elementos. Se dice que $d$ es una métrica o función
+    de medida si cumple las siguientes propiedades:
+    \begin{enumerate}
+        \item No negatividad: sean $x,y\in A$, entonces $d(x,y)\geq 0$. $d(x,y)=0$ si y solo si $x=y$.
+        \item Simetría: sean $x,y\in A$, entonces $d(x,y) = d(y,x)$.
+        \item Desigualdad triangular o de Schwarz: sean $x,y,z\in A$, entonces $d(x,y) \leq d(x,z) + d(z,y)$.
+    \end{enumerate}
+\end{definition}
+
+Una posible elección sería usar la similitud coseno:
 
 \begin{definition}
   Dados dos vectores $a,b\in\mathbb{R}$, $n\in\mathbb{N}$, se define la similitud coseno como:
@@ -102,7 +112,13 @@ ya que no cumple la desigualdad de Schwarz):
 donde $\theta\in[-\pi,\pi]$ es el ángulo entre los vectores $a$ y $b$.
 \end{definition}
 
-Se usa esta función para medir la cercanía semántica porque la magnitud de los vectores usados para las representaciones no aporta
+Aunque es importante notar que esta función no es de medida, ya que no cumple dos de las propiedades:
+\begin{itemize}
+    \item Si $A=\mathbb{R}^2$, entonces se tiene que $S_c\left( (1,1), (2,2) \right) = 0$ pero $(1,1)\neq (2,2)$.
+    \item Si $A=\mathbb{R}^2$, entonces tomando $x=(1,0)$, $y=(0,1)$ y $z=(1,1)$, se tiene que $S_c\left( x, y \right) > S_c(x,z) + S_c(z,y)$.
+\end{itemize}
+
+Aunque esta función no sea una métrica, se usa para medir la cercanía semántica porque la magnitud de los vectores usados para las representaciones no aporta
 ningún valor semántico, sino que es la dirección del vector la que lo aporta. Sea un embedding de dimensión $d\in\mathbb{N}$, es decir,
 se tienen $d$ componentes numéricas por cada embedding. El valor de las componentes (o más bien las combinaciones lineales) de esos embeddings,
 codifican el significado semántico de cada palabra. Un famoso ejemplo de este cálculo sería \emph{rey} - \emph{hombre} + \emph{mujer} = \emph{reina} \cite{drozd-etal-2016-word}.
