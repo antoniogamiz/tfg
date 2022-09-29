@@ -1,4 +1,42 @@
 \chapter{Estado del arte}
 
-El software libre y sus licencias \cite{gplv3} ha permitido llevar a cabo una expansión del
-aprendizaje de la informática sin precedentes.
+El concepto de \emph{tropo} para el cine fue definido por Michael Rizzo \cite{rizzo2013art} en el año 2013. Este término
+tiene el mismo origen que los tropos para la literatura, cuyo estudio y clasificación fue una importante investigación en el
+campo de la retórica (como por ejemplo, el estudio de tropos en películas \cite{nelson1998tropes}). En el ámbito del cine,
+los tropos han sido usados para el estudio de la semiología de las películas \cite{howtoreadafilm}, que incluye el estudio
+de los signos o elementos de una película y su significado (semántica).
+
+Hay algunos estudios recientes sobre los tropos en películas \cite{garcia2018overview} que han ayudado a interpretar las
+películas y los tropos que se encuentran dentro de ellas. En este trabajo se pretende extender ese estudio aplicando el uso
+de \emph{embeddings}, para extraer más información sobre los tropos y su semántica.
+
+La primera noción de \textit{embedding} proviene del concepto matemático de una instancia de alguna
+estructura matemática contenida en otra. Como por ejemplo, los números naturales, contenidos en los números enteros
+$\mathbb{N}$. Seguramente inspirado por este concepto, surgió el concepto de \textit{embedding} en la rama del procesamiento
+del lenguaje natural.
+
+A lo largo del tiempo, numerosos modelos han sido usados para encontrar o calcular estos \textit{embeddings}, cada uno
+con una aproximación diferente. A continuación se ven algunos de estos modelos.
+
+En el modelo \emph{word2vec} \cite{word2vec:1} \cite{word2vec:2}, se crea una representación
+en forma de vector para cada palabra. El principal problema de este modelo es que cada palabra tiene un único vector asociado,
+pero en el mundo real, cada palabra puede tener distintos significados dependiendo del contexto.
+Por ejemplo, en las frases \emph{kiwi y mango son coches españoles}, y \emph{kiwi y mango son frutas},
+el mismo word embedding es usado para kiwi y mango.
+
+Modelos como \emph{Adaptive Skipgram} \cite{adaptiveskipgram}, intentan solventar este problema usando
+varios vectores para \emph{cada} sentido de una palabra, generando así un vocabulario de sentidos de palabras.
+Sin embargo, se sigue usando el mismo embedding para cada ocurrencia de un sentido en específico.
+
+Entre los últimos avances se encuentra \emph{BERT/ELMO} \cite{bert}, un exitoso modelo que soluciona el
+problema antes descrito. En lugar de aportar información sobre el significado de una palabra, se construye
+un embedding dependiente del contexto (y por lo tanto, específico a cada aparición). De forma que la palabra
+\emph{kiwi} tendrá diferentes embeddings en las frases \emph{kiwi y mango son coches españoles}, y
+\emph{kiwi y mango son frutas}.
+
+En el caso de este trabajo, los tropos no tienen, a priori, distintos sentidos, por lo que se ha optado
+por usar el modelo \emph{word2vec}.
+
+Como el nombre del trabajo indica, la intención es generar \textit{any embeddings}, es decir, no solo aplicado a
+palabras \cite{word2vec:1} \cite{word2vec:2} o frases \cite{kiros2015skip}. En este trabajo en particular, se va a centrar
+el estudio en generar embeddings para tropos de películas.
