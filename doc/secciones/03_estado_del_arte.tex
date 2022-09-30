@@ -10,11 +10,6 @@ Hay algunos estudios recientes sobre los tropos en películas \cite{garcia2018ov
 películas y los tropos que se encuentran dentro de ellas. En este trabajo se pretende extender ese estudio aplicando el uso
 de \emph{embeddings}, para extraer más información sobre los tropos y su semántica.
 
-La primera noción de \textit{embedding} proviene del concepto matemático de una instancia de alguna
-estructura matemática contenida en otra. Como por ejemplo, los números naturales, contenidos en los números enteros
-$\mathbb{N}$. Seguramente inspirado por este concepto, surgió el concepto de \textit{embedding} en la rama del procesamiento
-del lenguaje natural.
-
 A lo largo del tiempo, numerosos modelos han sido usados para encontrar o calcular estos \textit{embeddings}, cada uno
 con una aproximación diferente. A continuación se ven algunos de estos modelos.
 
@@ -36,6 +31,12 @@ un embedding dependiente del contexto (y por lo tanto, específico a cada aparic
 
 En el caso de este trabajo, los tropos no tienen, a priori, distintos sentidos, por lo que se ha optado
 por usar el modelo \emph{word2vec}.
+
+Este trabajo está inspirado por un estudio similar realizado con platos
+de cocina \cite{kazama2018neural} donde unos investigadores extienden el modelo \textit{Word2Vec} para crear embeddings asociados a
+ingredientes, añadiendo además a la semántica de los mismos información sobre el país donde suelen ser usados. Con esos embeddings,
+los investigadores son capaces de, por ejemplo, transformar una receta japonesa en su versión francesa, realizando este tipo de operaciones:
+$\textit{huevo }- \textit{ japonés } + \textit{ francés } = \textit{ mantequilla}$.
 
 Como el nombre del trabajo indica, la intención es generar \textit{any embeddings}, es decir, no solo aplicado a
 palabras \cite{word2vec:1} \cite{word2vec:2} o frases \cite{kiros2015skip}. En este trabajo en particular, se va a centrar

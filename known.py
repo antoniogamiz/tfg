@@ -173,5 +173,6 @@ words = {
     "milestone",
     "milestones",
     "mvp",
-    "product"
+    "product",
+    "exs",
 }
