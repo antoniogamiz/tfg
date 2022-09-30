@@ -169,4 +169,5 @@ words = {
     "hu",
     "continuous",
     "multinomial",
+    "exs"
 }
