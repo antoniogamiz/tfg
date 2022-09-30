@@ -91,7 +91,9 @@ hacer las historias de usuario más pequeñas e independientes (acorde a \textit
 \subsubsection{Criterios de aceptación}
 
 \begin{itemize}
-      \item Dado un conjunto de tropos, se deben poder obtener sus representaciones para operar con ellos  (\textit{embeddings}).
+      \item Dado un tropo, se debe poder obtener el más similar semánticamente.
+      \item Dado un tropo, se deben poder ver los más \textit{cercanos} a él semánticamente.
+      \item Dado un conjunto de tropos, se deben poder obtener sus representaciones para operar con ellos (\textit{embeddings}).
       \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
 \end{itemize}
 
@@ -107,6 +109,22 @@ los tropos son conjuntos no ordenados.
 
 \begin{itemize}
       \item La implementación de la extensión debe estar documentada.
+      \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
+\end{itemize}
+
+\subsection{[HU3] Considerar datos sobre \textit{rating}}\label{uc:word2vec_rating}
+
+Como guionista quiero poder asociar \textit{ratings} a los tropos para saber cómo van
+a influir en mi siguiente obra.
+
+Como tribunal/tutor/científico de datos necesito entender cómo se ha asociado la información
+de \textit{ratings} al conjunto de tropos.
+
+\subsubsection{Criterios de aceptación}
+
+\begin{itemize}
+      \item Dado un conjunto de tropos, se debe poder consultar información sobre el \textit{rating} que se obtendría.
+      \item Dado un conjunto de tropos, se debe poder saber cómo modificar un tropo afectaría al rating.
       \item El desarrollo del algoritmo tiene que estar claramente explicado, incluyendo el desarrollo de las herramientas matemáticas usadas.
 \end{itemize}
 
