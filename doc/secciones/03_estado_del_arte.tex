@@ -32,6 +32,12 @@ un embedding dependiente del contexto (y por lo tanto, específico a cada aparic
 En el caso de este trabajo, los tropos no tienen, a priori, distintos sentidos, por lo que se ha optado
 por usar el modelo \emph{word2vec}.
 
+Este trabajo está inspirado por un estudio similar realizado con platos
+de cocina \cite{kazama2018neural} donde unos investigadores extienden el modelo \textit{Word2Vec} para crear embeddings asociados a
+ingredientes, añadiendo además a la semántica de los mismos información sobre el país donde suelen ser usados. Con esos embeddings,
+los investigadores son capaces de, por ejemplo, transformar una receta japonesa en su versión francesa, realizando este tipo de operaciones:
+$\textit{huevo }- \textit{ japonés } + \textit{ francés } = \textit{ mantequilla}$.
+
 Como el nombre del trabajo indica, la intención es generar \textit{any embeddings}, es decir, no solo aplicado a
 palabras \cite{word2vec:1} \cite{word2vec:2} o frases \cite{kiros2015skip}. En este trabajo en particular, se va a centrar
 el estudio en generar embeddings para tropos de películas.
