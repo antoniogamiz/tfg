@@ -7,7 +7,7 @@ de la Inteligencia Artificial. En general, el objetivo del aprendizaje máquina 
 que mejoran a partir de la experiencia. Tom M. Mitchell \cite{mitchell1997} enunció una definición formal
 del término:
 
-\begin{definition}
+\begin{definition}[Aprender]
     Se dice que un programa \textit{aprende} de una experiencia \textit{E}, con respecto a un grupo
     de tareas \textit{T} y una medida de rendimiento \textit{P}, si su rendimiento en las tareas de
     \textit{T}, medido por \textit{P}, mejora con la experiencia \textit{E}.
@@ -274,11 +274,11 @@ El ratio de aprendizaje puede ser constante o adaptarse al número de iteracione
 
 A continuación se justifica porque la expresión anterior converge hacia un mínimo. Antes de continuar, es necesario definir algunos
 conceptos nuevos:
-\begin{definition}
+\begin{definition}[Conjunto convexo]
     Un conjunto $K\subset \mathbb{R}^n$ se dice que es convenxo si para cualesquiera $x,y\in K$, con $t\in[0,1]$, entonces $tx+(1-t)\in K$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Función convexa]
     Sea $K\subset \mathbb{R}^n$ un conjunto convexo y sea $f: K \rightarrow \mathbb{R}$. Se dice que $f$ es convexa si para cada $x,y\in K$ y cada $t \in [0,1]$, se da:
     \[
         f(tx+(1-t)y) \leq tf(x)+(1-t)f(y)
@@ -321,7 +321,7 @@ Las funciones convexas tienen una propiedad importante para nuestro objetivo:
     \end{enumerate}
 \end{proof}
 
-\begin{definition}
+\begin{definition}[Gradiente lipschitziano]
     Sea $K \subset \mathbb{R}^n$ y $f: K \rightarrow \mathbb{R}$ una función diferenciable. Sea dice que la aplicación gradiente de $f$ es \textit{lipschitziano} con constante $L\geq 0$ si:
     \[
         \norm{\nabla f(x) - \nabla f(y)} \leq L \norm{x-y} \;\; \forall x,y \in K

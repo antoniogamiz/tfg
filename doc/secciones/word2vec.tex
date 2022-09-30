@@ -7,7 +7,7 @@ sido entrenado, es posible detectar sinónimos de palabras o incluso sugerir pal
 Como su nombre indica, \textit{word2vec} representa cada palabra mediante un vector. Estos vectores se escogen de forma que palabras semánticamente similares
 estén relativamente cerca entre ellas. Para medir esta cercanía, se usa la similitud coseno:
 
-\begin{definition}
+\begin{definition}[Similitud coseno]
   Dados dos vectores $a,b\in\mathbb{R}$, $n\in\mathbb{N}$, se define la similitud coseno como:
   \[
     S_c(a,b)=\cos\theta = \frac{a\cdot b}{\norm{a}\norm{b}} \in [-1, 1]
