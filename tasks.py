@@ -15,13 +15,14 @@ def get_files_to_check():
 @task
 def spellcheck(c):
     exit_code = 0
+    lowercase_known_words = set([word.lower() for word in known.words])
     for tex_path in get_files_to_check():
         tex = tex_path.read_text()
         aspell_output = subprocess.check_output(
             ["aspell", "-t", "--list", "--lang=es"], input=tex, text=True
         )
-        incorrect_words_from_aspell = [word.lower() for word in aspell_output.split("\n")]
-        incorrect_words = set(incorrect_words_from_aspell) - {""} - known.words
+        lowercase_incorrect_words = set([word.lower() for word in set(aspell_output.split("\n"))])
+        incorrect_words = lowercase_incorrect_words - {""} - lowercase_known_words
         if len(incorrect_words) > 0:
             print(f"In {tex_path} the following words are not known: ")
             for string in sorted(incorrect_words):
