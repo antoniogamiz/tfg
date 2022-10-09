@@ -275,7 +275,7 @@ El ratio de aprendizaje puede ser constante o adaptarse al número de iteracione
 A continuación se justifica porque la expresión anterior converge hacia un mínimo. Antes de continuar, es necesario definir algunos
 conceptos nuevos:
 \begin{definition}[Conjunto convexo]
-    Un conjunto $K\subset \mathbb{R}^n$ se dice que es convenxo si para cualesquiera $x,y\in K$, con $t\in[0,1]$, entonces $tx+(1-t)\in K$.
+    Un conjunto $K\subset \mathbb{R}^n$ se dice que es convexo si para cualesquiera $x,y\in K$, con $t\in[0,1]$, entonces $tx+(1-t)\in K$.
 \end{definition}
 
 \begin{definition}[Función convexa]
@@ -346,7 +346,7 @@ Las funciones convexas tienen una propiedad importante para nuestro objetivo:
          & \leq \norm{\nabla f(x+t(y-x))-\nabla f(x)} \norm{y-x}
          & \leq Lt\norm{y-x}^2
     \end{align*}
-    Y por último, aplicando el teorma fundamental del cálculo:
+    Y por último, aplicando el teorema fundamental del cálculo:
     \begin{align*}
         f(y) & = g(1) = g(0)  + \displaystyle\int_0^1g'(t)dt \leq g(0) + g'(0) + L\norm{y-x}^2\int_0^1tdt \\
              & = f(x) + \nabla f(x)^T(y-x) + \frac{L}{2}\norm{y-x}^2

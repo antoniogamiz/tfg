@@ -169,5 +169,14 @@ words = {
     "hu",
     "continuous",
     "multinomial",
-    "exs"
+    "exs",
+    "cauchy",
+    "df",
+    "dt",
+    "lipschitziano",
+    "lt",
+    "random",
+    "swartz",
+    "tdt",
+    "tf"
 }
