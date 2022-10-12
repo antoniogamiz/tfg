@@ -178,5 +178,15 @@ words = {
     "random",
     "swartz",
     "tdt",
-    "tf"
+    "tf",
+    "ésimo",
+    "ycj",
+    "ydj",
+    "yuj",
+    "gram",
+    "skip",
+    "xk",
+    "cj",
+    "multinomiales",
+
 }

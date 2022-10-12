@@ -343,7 +343,7 @@ Las funciones convexas tienen una propiedad importante para nuestro objetivo:
     para cada $t\in [0,1]$. Aplicando la desigualdad de Cauchy-Swartz y la definición de gradiente lipschitziano \ref{def:gradiente_lips}, se tiene:
     \begin{align*}
         g'(t) - g'(0) & = \left[ \nabla f(x+t(y-x))-\nabla f(x) \right]^T (y-x)\\
-         & \leq \norm{\nabla f(x+t(y-x))-\nabla f(x)} \norm{y-x}
+         & \leq \norm{\nabla f(x+t(y-x))-\nabla f(x)} \norm{y-x} \\
          & \leq Lt\norm{y-x}^2
     \end{align*}
     Y por último, aplicando el teorema fundamental del cálculo:

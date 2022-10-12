@@ -18,7 +18,7 @@ Primero se va a desarrollar el modelo \textit{bolsa continua de palabras} (o CBO
 Esto será útil para establecer la notación para el resto del trabajo. Que haya una única palabra por contexto implica que el modelo generará también una única palabra objetivo.
 Por lo tanto, se está presentando un modelo \textit{bigram} (es decir, que usa dos palabras).
 
-\begin{figure}[H]
+\begin{figure}[h]
   \centering
   \begin{tikzpicture}[
           roundnode/.style={circle, draw=black, minimum size=4mm},
@@ -241,7 +241,7 @@ de una palabra $w$. En este caso particular, repitiendo los cálculos del aparta
   \end{split}
 \end{equation}
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \begin{tikzpicture}[
           roundnode/.style={circle, draw=black, minimum size=4mm},
@@ -332,3 +332,139 @@ necesario aplicarlo para cada palabra $w_{I,c}$ en el contexto:
 \begin{equation}
   v_{w_{I,c}}^{(nuevo)} = v_{w_{I,c}}^{(antiguo)} - \frac{1}{C}\eta EH^T \;\; \forall c \in \{1,2,\cdots, C \}
 \end{equation}
+
+\section{Skip-gram}
+
+Esta versión del modelo fue introducida en \cite{word2vec:1} \cite{word2vec:2}. En la figura \ref{redneuronal:5} se muestra el modelo. Como se
+puede apreciar, es la versión contrario al modelo de bolsa continua de palabras. En este caso solo tenemos una palabra de entrada y $C$ de salida (las
+del contexto).
+
+Se va a seguir denotando por $v_{w_I}$ al único vector de entrada en la capa de entrada. Además se tiene la misma definición de $h$ \ref{eq:h}. Se recuerda que $h$
+no era más que copiar y transponer una fila de $W$:
+\[
+  h = W_{(k,\cdot)}^T := w_{w_i}^T
+\]
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[
+          roundnode/.style={circle, draw=black, minimum size=4mm},
+      ]
+      \node[rectangle, draw, minimum width = 0.3cm, minimum height = 2cm] (xk) at (0.5,3) {};
+      \node[] at (-0.2,3) {$x_{k}$};
+      \draw[] (0.5, 3.7) circle (0.1cm);
+      \draw[] (0.5, 3.3) circle (0.1cm);
+      \draw[] (0.5, 2.3) circle (0.1cm);
+      \path (0.5, 2.3) -- (0.5, 3.3) node [black, midway, sloped] {$\dots$};
+
+      \node[rectangle, draw, minimum width = 0.3cm, minimum height = 1.6cm] (xdk) at (3.5,3) {};
+      \node[] at (4,3) {$h$};
+      \draw[] (3.5, 3.5) circle (0.1cm);
+      \draw[] (3.5, 2.4) circle (0.1cm);
+      \path (3.5, 2.4) -- (3.5, 3.5) node [black, midway, sloped] {$\dots$};
+
+    %  % ========= connections input->hidden layer
+
+     \draw[] (0.65,4) -- (3.35,3.8);
+     \draw[] (0.65,2) -- (3.35,2.2);
+
+     \node[] at (1.5,3) {$W_{V\times N}$};
+
+
+    %  % ========= output layer
+
+      \node[rectangle, draw, minimum width = 0.3cm, minimum height = 2cm] (ycj) at (6.5,0) {};
+      \node[] at (7,0) {$y_{Cj}$};
+      \draw[] (6.5, 0.7) circle (0.1cm);
+      \draw[] (6.5, 0.3) circle (0.1cm);
+      \draw[] (6.5, -0.7) circle (0.1cm);
+      \path (6.5, -0.9) -- (6.5, 0.3) node [black, midway, sloped] {$\dots$};
+
+    \node[rectangle, draw, minimum width = 0.3cm, minimum height = 2cm] (ydj) at (6.5,3) {};
+    \node[] at (7,3) {$y_{2k}$};
+    \draw[] (6.5, 3.7) circle (0.1cm);
+    \draw[] (6.5, 3.3) circle (0.1cm);
+    \draw[] (6.5, 2.3) circle (0.1cm);
+    \path (6.5, 2.3) -- (6.5, 3.3) node [black, midway, sloped] {$\dots$};
+
+    \node[rectangle, draw, minimum width = 0.3cm, minimum height = 2cm] (yuj) at (6.5,6) {};
+    \node[] at (7,6) {$y_{1k}$};
+    \draw[] (6.5, 6.7) circle (0.1cm);
+    \draw[] (6.5, 6.3) circle (0.1cm);
+    \draw[] (6.5, 5.3) circle (0.1cm);
+    \path (6.5, 5.3) -- (6.5, 6.3) node [black, midway, sloped] {$\dots$};
+
+    \path (ydj) -- (ycj) node [black, midway, sloped] {$\dots$};
+
+    %  % ========= connections hidden->output layer
+
+     \draw[] (3.65,3.8) -- (6.35, 7);
+     \draw[] (3.65,2.2) -- (6.35, 5);
+
+     \draw[] (3.65,3.8) -- (6.35, 4);
+     \draw[] (3.65,2.2) -- (6.35, 2);
+
+     \draw[] (3.65,3.8) -- (6.35, 1);
+     \draw[] (3.65,2.2) -- (6.35, -1);
+
+     \node[] at (5.5,5) {$W'_{N\times V}$};
+     \node[] at (5.5,3) {$W'_{N\times V}$};
+     \node[] at (5.5,1) {$W'_{N\times V}$};
+
+  \end{tikzpicture}
+  \caption{Skip-gram con C palabras por contexto}
+  \label{redneuronal:5}
+\end{figure}
+
+Ahora, en la capa de salida, en lugar de tener una distribución multinomial lo que se tiene son $C$ distribuciones
+multinomiales. Cada salida se calcula usando la misma matriz $W'$:
+\[
+  p\left( w_{c,j} = w_{O,c} | w_I \right) = y_{c,j} = \frac{\exp(u_{c,j})}{\sum_{j'=1}^V\exp(u_{j'})}
+\]
+donde $w_{c,j}$ es la $j$-ésima palabra del $c$-ésimo elemento en la capa de salida; $w_{O,c}$ es la $c$-ésima
+palabra en el contexto; $w_I$ es la única palabra de entrada; $y_{c,j}$ es la salida de la $j$-ésima unidad en la $c$-ésima
+palabra de la capa de salida; $u_{c,j}$ es el valor de la red de la $j$-ésima unidad en la $c$-ésima palabra de la capa de salida.
+Como cada palabra de la capa de salida usa la misma matriz de pesos $W'$, se tiene:
+\[
+  u_{c,j} = u_j = v^{'T}_{w_j}h \;\;\; c=1,\cdots, C
+\]
+donde $v'_{w_j}$ es el vector de salida de la $j$-ésima palabra en el vocabulario, $w_j$. Además, $v'_{w_j}$ no es más que una de las
+columnas de la matriz de pesos $W'$.
+
+La derivación de las ecuaciones de actualización no es muy diferente del proceso desarrollado en el modelo anterior. Simplemente se cambia la función de pérdida a:
+\begin{align}
+  E & = - \log p\left( w_{O,1}, w_{O,2}, \cdots, w_{O,C} | w_I \right) \\
+    & = - \log \prod_{c=1}^C \frac{\exp(u_{c,j_c^*})}{\sum_{j'=1}^V\exp(u_{j'})} \\
+    & = - \sum_{c=1}^C u_{j^*_c} + C\log \sum_{j'=1}^V\exp(u_{j'}).
+\end{align}
+donde $j_c^*$ es el índice de la $c$-ésima palabra del contexto en el vocabulario.
+
+Ahora se deriva $E$ respecto al valor de la red $u_{c,j}$:
+\[
+  \frac{\partial E}{\partial u_{c,j}} = y_{c,j} - t_{c,j} := e_{c,j}
+\]
+que es el error de predicción de cada unidad. Para simplificar la notación se define un vector $V$-dimensional $EI=\{EI_1, \cdots, EI_V\}$ como la suma de los errores de
+predicción sobra todas las palabras del contexto:
+\[
+  EI_j = \sum_{c=1}^C e_{c,j}
+\]
+A continuación, se calcula la derivada de $E$ con respecto a cada elemento de $W'$, obteniendo:
+\[
+  \frac{\partial E}{\partial w'_{ij}} = \sum_{c=1}^C \frac{\partial E}{\partial u_{c,j}} \frac{\partial u_{c,j}}{\partial w'_{ij}} = EI_j h_i
+\]
+Con lo que se han obtenido las ecuaciones de actualización para la capa escondida y la capa de salida:
+\[
+w_{ij}^{'(nueva)} = w_{ij}^{'(vieja)} - \eta EI_j h_i
+\]
+o
+\[
+  v_{w_{j}}^{'(nueva)}= v_{w_j}^{'(vieja)} - \eta EI_j h \;\;\; j = 1,2, \cdots, V
+\]
+La obtención de la ecuación de actualización para la capa de entrada y escondida es igual que en el modelo anterior, obteniéndose:
+\[
+  v_{w_I}^{(nueva)} = w_{w_I}^{(vieja)} - \eta EH^T
+\]
+donde $EH$ es un vector $N$-dimensional, donde cada componente viene definida por:
+\[
+  EH_i = \sum_{j=1}^V EI_j w_{ij}'
+\]
