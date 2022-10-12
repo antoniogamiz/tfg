@@ -5,18 +5,7 @@ El algoritmo usa un modelo con una red neuronal para aprender asociaciones entre
 sido entrenado, es posible detectar sinónimos de palabras o incluso sugerir palabras en oraciones incompletas.
 
 Como su nombre indica, \textit{word2vec} representa cada palabra mediante un vector. Estos vectores se escogen de forma que palabras semánticamente similares
-estén relativamente cerca entre ellas. Para medir esta cercanía, se usa la similitud coseno:
-
-\begin{definition}[Similitud coseno]
-  Dados dos vectores $a,b\in\mathbb{R}$, $n\in\mathbb{N}$, se define la similitud coseno como:
-  \[
-    S_c(a,b)=\cos\theta = \frac{a\cdot b}{\norm{a}\norm{b}} \in [-1, 1]
-  \]
-donde $\theta\in[-\pi,\pi]$ es el ángulo entre los vectores $a$ y $b$.
-\end{definition}
-
-Es importante notar que la similitud coseno no es una función de medida, ya que no cumple la desigualdad de Schwarz (o desigualdad triangular). El resultado
-de esta función indica el nivel de similitud semántica entre las palabras representadas por esos vectores.
+estén relativamente cerca entre ellas. Para medir esta cercanía, se recuerda que se va a usar la similitud coseno \ref{def:similitud_coseno}.
 
 A continuación, se presenta cómo se van a obtener esos vectores, y posteriormente, cómo tratar esos vectores para obtener información sobre las palabras. Para
 ello, se presentan dos variantes del modelo.
