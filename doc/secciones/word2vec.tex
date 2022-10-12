@@ -1,6 +1,6 @@
 \chapter{Word2Vec}
 
-El modelo \textit{word2vec} es una técnica para el procesamiento del lenguaje natural publicada en 2013 (\cite{word2vec:1}, \cite{word2vec:2}).
+El modelo \textit{word2vec} es una técnica para obtener representaciones de las palabras del lenguaje natural publicada en 2013 (\cite{word2vec:1}, \cite{word2vec:2}).
 El algoritmo usa un modelo con una red neuronal para aprender asociaciones entre las palabras de un conjunto de texto. Una vez que el modelo ha
 sido entrenado, es posible detectar sinónimos de palabras o incluso sugerir palabras en oraciones incompletas.
 
@@ -21,11 +21,11 @@ de esta función indica el nivel de similitud semántica entre las palabras repr
 A continuación, se presenta cómo se van a obtener esos vectores, y posteriormente, cómo tratar esos vectores para obtener información sobre las palabras. Para
 ello, se presentan dos variantes del modelo.
 
-\section{Continuous Bag-of-Word Model}
+\section{Bolsa continua de palabras}
 
 \subsection{Contexto de una sola palabra}
 
-Primero se va a desarrollar el modelo \textit{bolsa de palabras continuas} (o CBOW, por sus siglas en inglés) considerando que el contexto está formado por una única palabra.
+Primero se va a desarrollar el modelo \textit{bolsa continua de palabras} (o CBOW, por sus siglas en inglés) considerando que el contexto está formado por una única palabra.
 Esto será útil para establecer la notación para el resto del trabajo. Que haya una única palabra por contexto implica que el modelo generará también una única palabra objetivo.
 Por lo tanto, se está presentando un modelo \textit{bigram} (es decir, que usa dos palabras).
 

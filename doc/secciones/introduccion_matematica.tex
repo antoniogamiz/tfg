@@ -321,7 +321,7 @@ Las funciones convexas tienen una propiedad importante para nuestro objetivo:
     \end{enumerate}
 \end{proof}
 
-\begin{definition}[Gradiente lipschitziano]
+\begin{definition}[Gradiente lipschitziano]\label{def:gradiente_lips}
     Sea $K \subset \mathbb{R}^n$ y $f: K \rightarrow \mathbb{R}$ una función diferenciable. Sea dice que la aplicación gradiente de $f$ es \textit{lipschitziano} con constante $L\geq 0$ si:
     \[
         \norm{\nabla f(x) - \nabla f(y)} \leq L \norm{x-y} \;\; \forall x,y \in K
@@ -340,7 +340,7 @@ Las funciones convexas tienen una propiedad importante para nuestro objetivo:
     \[
         g'(t) = \nabla f(x+t(y-x))^T(y-x)
     \]
-    para cada $t\in [0,1]$. Aplicando la desigualdad de Cauchy-Swartz y la definición de gradiente lipschitziano, se tiene:
+    para cada $t\in [0,1]$. Aplicando la desigualdad de Cauchy-Swartz y la definición de gradiente lipschitziano \ref{def:gradiente_lips}, se tiene:
     \begin{align*}
         g'(t) - g'(0) & = \left[ \nabla f(x+t(y-x))-\nabla f(x) \right]^T (y-x)\\
          & \leq \norm{\nabla f(x+t(y-x))-\nabla f(x)} \norm{y-x}
