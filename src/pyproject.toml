@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "model"
+version = "0.1.0"
+description = "Any2Word implementation"
+authors = ["antoniogamizdelgado <antoniogamiz10@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.28.1"
+
+[tool.poetry.scripts]
+get_data_set = 'scripts.get_data_set:main'
+clean = 'scripts.get_data_set:clean'
+test = 'scripts.test:test'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

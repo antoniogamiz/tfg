@@ -1,3 +1,5 @@
+datasets/
+.DS_Store
 doc/proyecto.tex
 ## Core latex/pdflatex auxiliary files:
 *.aux
