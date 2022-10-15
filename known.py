@@ -175,4 +175,11 @@ words = {
     "mvp",
     "product",
     "exs",
+    "conda",
+    "javascript",
+    "pip",
+    "poetry",
+    "scripts",
+    "tropescraper",
+    "python",
 }
