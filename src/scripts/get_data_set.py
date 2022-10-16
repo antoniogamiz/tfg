@@ -4,7 +4,7 @@ import requests
 import os
 from pathlib import Path
 
-DATASET_DIR_PATH = '../datasets'
+DATASET_DIR_PATH = f'{Path(__file__).resolve().parent}/../datasets'
 PATH_TO_ZIP_FILE = os.path.join(DATASET_DIR_PATH, 'dataset.zip')
 
 DATASET_NEW_FILE_NAME = 'dataset.json'
