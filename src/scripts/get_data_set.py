@@ -2,6 +2,7 @@ import glob
 import zipfile
 import requests
 import os
+from pathlib import Path
 
 DATASET_DIR_PATH = '../datasets'
 PATH_TO_ZIP_FILE = os.path.join(DATASET_DIR_PATH, 'dataset.zip')
@@ -24,6 +25,9 @@ def main():
 
 def _download_file(url, save_to):
     response = requests.get(url)
+    dataset_directory = Path(save_to).parts[-2]
+    if not os.path.exists(dataset_directory):
+        os.makedirs(dataset_directory)
     with open(save_to, 'wb')as f:
         f.write(response.content)
 
