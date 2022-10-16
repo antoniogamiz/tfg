@@ -8,9 +8,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 requests = "^2.28.1"
+numpy = "^1.23.4"
 
 [tool.poetry.scripts]
 get_data_set = 'scripts.get_data_set:main'
+start = 'main:main'
 clean = 'scripts.get_data_set:clean'
 test = 'scripts.test:test'
 
