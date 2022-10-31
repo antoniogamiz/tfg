@@ -3,7 +3,7 @@
 Un tropo, como describe Rizzo Michael \cite{rizzo2013art}, es una imagen
 universalmente reconocida, con varias capas de significado contextual que
 crean un nueva metáfora visual. Un buen ejemplo, es el tropo \emph{Puedo explicarlo} \cite{tropo:ICanExplain}, donde un caracter que se siente culpable,
-reacciona a la aparición de una figura autoritaria diciendo: \emph{"Puedo
+reacciona a la aparición de una figura autoritaria diciendo: \emph{"¡Puedo
     explicarlo!"}, procediendo a explicar lo que sea que haya pasado. Este tropo ha
 sido enormemente utilizado en una infinidad de situaciones en obras culturales
 \cite{tropo:ICanExplain}, desde \emph{Iron Man} hasta la serie de animación
@@ -25,7 +25,7 @@ El trabajo está organizado en diferentes bloques:
 
 \begin{enumerate}
     \item Bloque I: se describe en detalle el problema que se trata en el
-          trabajo, seguido del estado del arte en el uso del NLP para encontrar
+          trabajo, seguido del estado del arte en el uso del procesamiento del lenguaje natural(o NLP, del inglés \textit{Natural Language Processing}) para encontrar
           relaciones entre palabras. A continuación, se detalla la planificación
           seguida para resolver el problema, así como las prácticas seguidas para
           realizarla.
@@ -41,6 +41,19 @@ Este proyecto es software libre, y está liberado con la licencia \cite{gplv3}.
 
 Antes de pasar a la descripción del problema, es necesario definir algunos conceptos importantes para
 este trabajo.
+
+\begin{definition}[Dato]
+    Se define como dato a la unidad de información más pequeña con la que se trabajar.
+\end{definition}
+
+\begin{definition}[Conjunto de datos]
+    Se define como conjunto de datos a una agrupación de datos.
+\end{definition}
+
+En la mayor parte del desarrollo matemático, se entenderá como datos a las palabras del vocabulario que se use. Como conjunto de datos
+se usará el corpus de texto (que está formado por palabras). Al final del desarrollo, los datos pasarán a ser tropos, que es el objetivo principal
+de este trabajo. Sin embargo, como se observa en las conclusiones finales, este desarrollo también es válido para otros tipos de datos, como ingredientes
+de recetas \cite{kazama2018neural}.
 
 \subsection*{\textit{Embeddings}}
 
