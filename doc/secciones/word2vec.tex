@@ -171,11 +171,11 @@ basta con derivar la misma expresión pero respecto de $w'_{ij}$:
 \end{equation}
 Por lo tanto, ya se puede aplicar la técnica de descenso de gradiente porque se ha obtenido la ecuación de actualización de pesos para cada uno de los valores de $W'$:
 \[
-  w_{ij}^(nuevo) = w_{ij}^{'(viejo)} - \eta e_jh_i
+  w_{ij}^{(nuevo)} = w_{ij}^{'(viejo)} - \eta e_jh_i
 \]
 En lugar de escalar a escalar, esa expresión también se puede escribir usando la representación vectorial de la palabra $w$ en $W'$, es decir, $v'_{w_j}$:
 \[
-  v_{w_j}^{'(nuevo) }= v_{w_j}^{'(viejo)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
+  v_{w_j}^{'(nuevo)}= v_{w_j}^{'(viejo)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
 \]
 donde $\eta > 0$ es el ratio de aprendizaje.
 
@@ -200,7 +200,7 @@ de salida de todas las palabras, promediados por el error de predicción.
 El siguiente paso sería calcular la derivada de $E$ con respecto de $W$. Primero, se recuerda que la capa escondida simplemente es una función lineal de los valores de la capa de entrada. Expandiendo
 la notación vectorial de \ref*{eq:h}, se obtiene:
 \begin{equation}
-  h_i=\sum_{k=1}^Vx_kw_k{ki}
+  h_i=\sum_{k=1}^Vx_kw_{ki}
 \end{equation}
 Usando esa expresión se puede derivar $E$ con respecto a cada elemento de $W$, obteniendo:
 \begin{equation}
