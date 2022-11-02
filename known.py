@@ -188,5 +188,10 @@ words = {
     "xk",
     "cj",
     "multinomiales",
-
+    "gradient",
+    "ia",
+    "zx",
+    "language",
+    "processing",
+    "exploding"
 }

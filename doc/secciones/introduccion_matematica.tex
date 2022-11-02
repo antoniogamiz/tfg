@@ -292,11 +292,11 @@ donde $\epsilon$ es un escalar positivo, pequeño y arbitrario, denominado \text
 El ratio de aprendizaje puede ser constante o adaptarse al número de iteraciones y al valor del gradiente en cada momento.
 
 Ahora se puede introducir un problema importante al escoger la función de activación para la red neuronal, el \textit{vanishing gradient problem} \cite{hochreiter1991untersuchungen}.
-Al usasr funciones de activación que tienen un gradiente pequeño, como es el caso de la tangente hiperbólica (cuyo gradiente está en el intervalo $(0,1]$), el error aprendido decrece exponencialmente
+Al usar funciones de activación que tienen un gradiente pequeño, como es el caso de la tangente hiperbólica (cuyo gradiente está en el intervalo $(0,1]$), el error aprendido decrece exponencialmente
 con el número de capas de la red. Esto se debe a que se usa la regla de la cadena para propagar el error, por lo que se multiplica $n$ veces ese gradiente, provocando que el error propagado que se obtiene
 en la primera capa sea muy pequeño.
 
-Hay otro problema complentario, denominado \textit{exploding gradient problem}, que ocurre justo cuando se usan funciones de activación con gradientes que toman valores más grandes \cite{philipp2017exploding}.
+Hay otro problema complementario, denominado \textit{exploding gradient problem}, que ocurre justo cuando se usan funciones de activación con gradientes que toman valores más grandes \cite{philipp2017exploding}.
 
 Ninguno de esos problemas afecta a la red neuronal de este trabajo, ya que solo tenemos 3 capas (es decir, solo computamos dos veces la derivada en el algoritmo de descenso de gradiente).
 
