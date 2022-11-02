@@ -103,7 +103,7 @@ $W$ y $x$, se puede obtener el vector $N$-dimensional de la capa intermedia, de 
   h=W^Tx=W^T_{k, \cdot}=v^T_{w_I}
 \end{equation}
 donde es importante resaltar que esta operación no es más que copiar la fila $k$-ésima de $W$ en $h$. Esa fila fue denotada en el párrafo anterior por $v_{w_I}$.
-Esto significa que la función de activación de la capa escondida es simplemente linear, es decir, pasa directamente la suma ponderada de sus inputs a la siguiente capa.
+Esto significa que la función de activación de la capa escondida es simplemente lineal, es decir, pasa directamente la suma ponderada de sus inputs a la siguiente capa.
 
 De forma similar, se puede operar de la capa escondida a la capa de salida, donde se tiene una matriz de pesos diferente, $W'\in\mathbb{R}^{N\times V}$. En esta matriz, la representación
 de cada palabra viene dada por cada una de sus columnas, es decir, la representación de la palabra $w_j$ en $W'$, es la columna $j$-ésima de $W'$ y es representada por $v'_{v_{w_j}}$. Con
@@ -197,7 +197,7 @@ donde $h_i$ es la $i$-ésima componente de la capa escondida, $u_j$ se definió 
 de la $j$-ésima unidad de la capa de salida. A partir de $EH_i$, se puede definir un vector de dimensión $N$, en el que cada componente es la suma de los vectores
 de salida de todas las palabras, promediados por el error de predicción.
 
-El siguiente paso sería calcular la derivada de $E$ con respecto de $W$. Primero, se recuerda que la capa escondida simplemente es una función linear de los valores de la capa de entrada. Expandiendo
+El siguiente paso sería calcular la derivada de $E$ con respecto de $W$. Primero, se recuerda que la capa escondida simplemente es una función lineal de los valores de la capa de entrada. Expandiendo
 la notación vectorial de \ref*{eq:h}, se obtiene:
 \begin{equation}
   h_i=\sum_{k=1}^Vx_kw_k{ki}
