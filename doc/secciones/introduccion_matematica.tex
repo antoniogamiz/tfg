@@ -7,22 +7,23 @@ de la Inteligencia Artificial. En general, el objetivo del aprendizaje máquina 
 que mejoran a partir de la experiencia. Tom M. Mitchell \cite{mitchell1997} enunció una definición formal
 del término:
 
-\begin{definition}
+\begin{definition}[Aprender]
     Se dice que un programa \textit{aprende} de una experiencia \textit{E}, con respecto a un grupo
     de tareas \textit{T} y una medida de rendimiento \textit{P}, si su rendimiento en las tareas de
     \textit{T}, medido por \textit{P}, mejora con la experiencia \textit{E}.
 \end{definition}
 
-Estas técnicas suelen estar basadas en el concepto biológico de redes neuronales, las cuales están formadas por neuronas. A lo largo de este capítulo, se va a formalizar este concepto de neurona y se va a definir cómo interactúan entre ellas.
+Estas técnicas pueden estar basadas en el concepto biológico de redes neuronales, las cuales están formadas por neuronas.
+A lo largo de este capítulo, se va a formalizar este concepto de neurona y se va a definir cómo interactúan entre ellas.
 
 \section{Introducción}
 
 Las redes neuronales suelen ser usadas en objetos que, a priori, no tienen una representación matemática,
-como imágenes. El procedimiento habitual es encontrar una representación numérica que permita, de forma
+como palabras o tropos. El procedimiento habitual es encontrar una representación numérica que permita, de forma
 cómoda, operar con esos objetos. Por ejemplo, para representar una imagen en blanco y negro, se puede
 tomar un vector $x$, con tantas entradas como píxeles, donde cada entrada es un valor entre 0 y 1,
 representando el valor del color en ese píxel. La red neuronal ahora debe tomar ese valor de entrada,
-y producir otra representación matemática distinta, que también debe ser interpretada. Por ejemplo,
+y producir otra representación matemática distinta y compacta, que también debe ser interpretada. Por ejemplo,
 si se quieren detectar números escritos en la imagen, la representación de salida puede ser un vector
 de 10 entradas, donde el valor de cada entrada será igual a 1 si el índice de esa entrada coincide con
 el número presente en la imagen.
@@ -72,7 +73,17 @@ Es trivial comprobar que $a^{(n+1)}$ es un número real, de cualquier valor. Est
 lo que se quiere ahora es saber cuando una neurona está \textit{activa}. Para ello, se puede usar lo
 que se denomina una \textit{función de activación}, que no es ni más ni menos que una función  que transforma
 la recta real en el intervalo $[0,1]$. Intuitivamente, el valor que devuelve la función de activación dice
-cómo de positivo es el valor de esa neurona. Hay muchas elecciones posibles de función de activación, a continuación
+cómo de positivo es el valor de esa neurona. Ahora ya se puede definir formalmente nuestra neurona:
+
+\begin{definition}[Neurona]
+    Sea $w\in\mathbb{R}^n$ y $\theta:\mathbb{R}^n \longrightarrow \mathbb{R}$ una función de activación. Una neurona calcula la función
+    $h: \mathbb{R}^n \times \mathbb{R}^n \longrightarrow \mathbb{R}$ dada por:
+    \[
+        h(w, a) = \theta\left( \sum_{i=1}^d w_ia_i \right), \;\;\; \forall w, a \in \mathbb{R}^n
+    \]
+\end{definition}
+
+Hay muchas elecciones posibles de función de activación, a continuación
 se proponen algunas.
 
 \subsubsection{Sigmoide}
@@ -96,9 +107,6 @@ Esta función es una de las más usada como función de activación. Entre sus p
     \centering
 \end{figure}
 
-El principal problema de esta función se denomina \textit{vanishing problem} \cite{hochreiter1991untersuchungen}.
-Cuando se avance un poco más en los fundamentos de las redes neuronales, se volverá a este problema.
-
 \subsubsection{Tangente Hiperbólica}
 
 La función tangente hiperbólica está definida como:
@@ -114,11 +122,11 @@ En el gráfico de esta función, se puede apreciar que su derivada es más pronu
     \centering
 \end{figure}
 
-\subsubsection{Unidad Linear Rectificada (ReLU)}
+\subsubsection{Unidad Lineal Rectificada (ReLU)}
 
 La función ReLU está definida por:
 \begin{align*}
-    f \colon & \mathbb{R} \longrightarrow ]0,1[ \\
+    f \colon & \mathbb{R} \longrightarrow ]0,1[ \
     \quad    & x \longmapsto f(x) = \max(0,x)
 \end{align*}
 
@@ -153,11 +161,11 @@ red neuronal de interés solo tiene una capa escondida, así que se adaptará la
     \item $x_1, \ldots x_K$ es el vector con los valores de entrada.
     \item $h_1, \ldots h_N$ es el vector con los valores de la capa escondida.
     \item $y_1, \ldots y_M$ es el vector con los valores de salida.
-    \item $W = (w_{ki})$ es una matriz de dimensiones $n\times m$, donde $n$ es la dimensión
-          del vector de entrada, $m$ la dimensión del vector de valores de la capa escondida y $w_{ki}$ es el peso de la conexión de la
+    \item $W = (w_{ki})$ es una matriz de dimensiones $N\times M$, donde $N$ es la dimensión
+          del vector de entrada, $M$ la dimensión del vector de valores de la capa escondida y $w_{ki}$ es el peso de la conexión de la
           neurona $x_k$ con la neurona $h_i$.
-    \item $W' = (w_{ij}')$ es una matriz de dimensiones $m\times q$, donde $m$ es la dimensión
-          del vector de valores de la capa escondida, $q$ es la dimensión del vector de salida y $w_{ki}'$
+    \item $W' = (w_{ij}')$ es una matriz de dimensiones $M\times Q$, donde $M$ es la dimensión
+          del vector de valores de la capa escondida, $Q$ es la dimensión del vector de salida y $w_{ki}'$
           es el peso de la conexión de la neurona $h_i$ con la neurona $y_j$.
 \end{itemize}
 
@@ -238,6 +246,8 @@ Con esta nueva notación, la expresión \ref{eqn:1}, puede escribirse como:
     y_j = f(u_i') = f\left(\sum_{i=1}^N w_{ij}' h_i\right)
 \end{equation}
 
+donde $u_i=\sum_{k=1}^K w_{ki} x_k$ y $u_i'=\sum_{i=1}^N w_{ij}' h_i$.
+
 \section{Descenso de gradiente}
 
 Una vez se han definido los elementos de una red neuronal, es necesario definir cómo esa red neuronal
@@ -252,8 +262,18 @@ cuadrado entre el resultado de la red $y = (y_1, \ldots, y_M)$ y la salida esper
 \end{equation}
 
 A partir de las ecuaciones \ref{eqn:2}, la dependencia de $x$, $W$ y $W'$ en la definición del error se
-El objetivo a lo largo de esta sección va a ser minimizar esa función multidimensional.
-ve de forma inmediata.
+ve de forma inmediata. El objetivo a lo largo de esta sección va a ser minimizar esa función multidimensional.
+Para ello, es necesario primero definir el gradiente de una función.
+
+\begin{definition}[Gradiente]
+    Sea una función $f: \mathbb{R}^n \longrightarrow \mathbb{R}$ parcialmente derivable en un punto $a\in\mathbb{R}^n$, se define como
+    el gradiente de $f$ en $a$, al vector $\nabla f(a)\in\mathbb{R}^n$ dado por:
+    \[
+        \nabla f(a) = \left( \frac{\partial f}{\partial x_1} (a), \frac{\partial f}{\partial x_2} (a), \cdots, \frac{\partial f}{\partial x_n} (a)  \right)
+    \]
+    de modo que la $j$-ésima coordenada del vector gradiente de $f$ en $a$ es la derivada parcial con respecto a la $j$-ésima variable de $f$ en $a$, para todo $j\in\{1, \cdots, n\}$.
+\end{definition}
+
 
 El algoritmo que se va a usar se denomina \textit{descenso de gradiente} \cite{lemarechal2012cauchy}.
 Su nombre proviene del hecho
@@ -263,15 +283,157 @@ una función multidimensional y $\nabla f$ su gradiente, es trivial deducir que 
 siempre va \textit{cuesta abajo}. Este hecho puede ser explotado para encontrar mínimos, en principio locales,
 de $f$, usando la expresión:
 
-
 \begin{equation}
     \label{eqn:gradient_descent}
-    x'=x-\epsilon\nabla f(x)
+    x_{t+1}=x_t-\epsilon\nabla f(x_t)
 \end{equation}
 
 donde $\epsilon$ es un escalar positivo, pequeño y arbitrario, denominado \textit{ratio de aprendizaje}.
-Para la elección de $\epsilon$, se pueden tomar
-varias opciones:
+El ratio de aprendizaje puede ser constante o adaptarse al número de iteraciones y al valor del gradiente en cada momento.
+
+Ahora se puede introducir un problema importante al escoger la función de activación para la red neuronal, el \textit{vanishing gradient problem} \cite{hochreiter1991untersuchungen}.
+Al usar funciones de activación que tienen un gradiente pequeño, como es el caso de la tangente hiperbólica (cuyo gradiente está en el intervalo $(0,1]$), el error aprendido decrece exponencialmente
+con el número de capas de la red. Esto se debe a que se usa la regla de la cadena para propagar el error, por lo que se multiplica $n$ veces ese gradiente, provocando que el error propagado que se obtiene
+en la primera capa sea muy pequeño.
+
+Hay otro problema complementario, denominado \textit{exploding gradient problem}, que ocurre justo cuando se usan funciones de activación con gradientes que toman valores más grandes \cite{philipp2017exploding}.
+
+Ninguno de esos problemas afecta a la red neuronal de este trabajo, ya que solo tenemos 3 capas (es decir, solo computamos dos veces la derivada en el algoritmo de descenso de gradiente).
+
+\subsection*{Convergencia}
+
+A continuación se justifica porque la expresión anterior converge hacia un mínimo. Antes de continuar, es necesario definir algunos
+conceptos nuevos:
+\begin{definition}[Conjunto convexo]
+    Un conjunto $K\subset \mathbb{R}^n$ se dice que es convexo si para cualesquiera $x,y\in K$, con $t\in[0,1]$, entonces $tx+(1-t)\in K$.
+\end{definition}
+
+\begin{definition}[Función convexa]\label{prop:convexa}
+    Sea $K\subset \mathbb{R}^n$ un conjunto convexo y sea $f: K \rightarrow \mathbb{R}$. Se dice que $f$ es convexa si para cada $x,y\in K$ y cada $t \in [0,1]$, se da:
+    \[
+        f(tx+(1-t)y) \leq tf(x)+(1-t)f(y)
+    \]
+\end{definition}
+
+Las funciones convexas tienen una propiedad importante para nuestro objetivo:
+
+\begin{proposition}\label{prop:convexo}
+    Sea $K\subset \mathbb{R}^n$ convexo, y abierto y sea $f: K \rightarrow \mathbb{R}$ una función convexa. Entonces:
+    \begin{enumerate}
+        \item Cualquier mínimo local de $f$ es un mínimo global.
+        \item Si $f$ es diferenciable, entonces para cualesquiera $x,y\in K$ se cumple:
+        \begin{equation}\label{random:2}
+            \nabla f(y)^T(x-y) \leq f(x) - f(y)
+        \end{equation}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}$ $
+    \begin{enumerate}
+        \item Sea $x^*$ un mínimo local. Eso implica que existe $r\in\mathbb{R}^+$ $\forall y \in B(x^*, r)$ tal que $f(x^*)\leq f(y)$. Sea $z\in K$, cumpliendo $f(z)<f(x^*)$, el objetivo
+        es llegar a una contradicción.
+
+        Como $K$ es convexo y $z\in K$, entonces el segmento $\overline{zx^*}$ está contenido en $K$. Sea $w\in \overline{zx^*}\cap B(x^*, r)$ con $w$ distinto de $z$ y $x^*$. Como $w$ es un punto
+        del segmento $\overline{zx^*}$, existe $t^*\in ]0,1[$: $t^*x^*+(1-t^*)z=w$. Por tanto:
+        \[
+            f(w) = f(t^*x^*+(1-t^*)z)\leq t^*f(x^*)+(1-t^*)f(z) < t^*f(x^*) + (1-t^*)f(x^*) = f(x^*)
+        \]
+        \item Como $f$ es convexa, se tiene:
+        \[
+            f(y+t(x-y))-f(y) \leq t(f(x)-f(y))
+        \]
+        Ahora se puede simplificar por $t>0$ a ambos lados:
+        \[
+            \frac{f(y+t(x-y))-f(y)}{t}
+        \]
+        Tomando límite cuando $t \longrightarrow 0$, se obtiene:
+        \[
+            \lim_{t\longrightarrow 0 } \frac{f(y+t(x-y))-f(y)}{t} = \nabla f(y)^T)(x-y)=df_y(x-y) \leq f(x)-f(y)
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}[Gradiente lipschitziano]\label{def:gradiente_lips}
+    Sea $K \subset \mathbb{R}^n$ y $f: K \rightarrow \mathbb{R}$ una función diferenciable. Sea dice que la aplicación gradiente de $f$ es \textit{lipschitziano} con constante $L\geq 0$ si:
+    \[
+        \norm{\nabla f(x) - \nabla f(y)} \leq L \norm{x-y} \;\; \forall x,y \in K
+    \]
+\end{definition}
+
+\begin{proposition}
+    Sea $K\subset \mathbb{R}^n$ convexo y $f: K \longrightarrow \mathbb{R}$ una función diferenciable. Si el gradiente de $f$ es lipschitziano con constante $L>0$, entonces:
+    \begin{equation}\label{prop:ineq}
+        f(y) \leq f(x) + \nabla f(x)^T(y-x) + \frac{L}{2}\norm{y-x}^2, \;\;\; \forall x,y \in K
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    Sea $x,y\in K$. Sea $g(t)=f(x+t(y-x))$ para cada $t\in[0,1]$. Entonces $g$ es derivable con:
+    \[
+        g'(t) = \nabla f(x+t(y-x))^T(y-x)
+    \]
+    para cada $t\in [0,1]$. Aplicando la desigualdad de Cauchy-Swartz y la definición de gradiente lipschitziano \ref{def:gradiente_lips}, se tiene:
+    \begin{align*}
+        g'(t) - g'(0) & = \left[ \nabla f(x+t(y-x))-\nabla f(x) \right]^T (y-x)\\
+         & \leq \norm{\nabla f(x+t(y-x))-\nabla f(x)} \norm{y-x} \\
+         & \leq Lt\norm{y-x}^2
+    \end{align*}
+    Y por último, aplicando el teorema fundamental del cálculo:
+    \begin{align*}
+        f(y) & = g(1) = g(0)  + \displaystyle\int_0^1g'(t)dt \leq g(0) + g'(0) + L\norm{y-x}^2\int_0^1tdt \\
+             & = f(x) + \nabla f(x)^T(y-x) + \frac{L}{2}\norm{y-x}^2
+    \end{align*}
+\end{proof}
+
+Con esta última proposición, ya se disponen de todos los ingredientes necesarios para probar la convergencia del descenso de gradiente.
+
+\begin{proposition}
+    Sea $f: \mathbb{R}^n \longrightarrow \mathbb{R}$ tal que $f\in C^1(\mathbb{R}^n)$, una función convexa con gradiente lipschitziano con constante
+    $L>0$. Suponiendo que $x^*$ es un mínimo local de $f$. Sea $\eta \leq \frac{1}{L}$ y sea $x_0\in\mathbb{R}^n$. Se define
+    \[
+        x_k = x_{k-1} - \eta \nabla f(x_{k-1})
+    \]
+    para cada $k\in\mathbb{N}$. Entonces:
+    \[
+        f(x_k)-f(x^*) \leq \frac{\norm{x_0-x^*}^2}{2\eta k}
+    \]
+\end{proposition}
+
+\begin{proof}
+    Dado que $f$ es convexa, usando \ref*{prop:convexa}, es seguro que $x^*$ es un mínimo global. Sea $x\in\mathbb{R}^n$ un elemento fijo y sea
+    $y=x-\eta\nabla (x)$. Usando la desigualdad \ref*{prop:ineq} se tiene que:
+    \[
+        f(y) \leq f(x) - \eta\norm{\nabla f(x)}^2 + \frac{L}{2}\eta^2\norm{\nabla f(x)}^2
+    \]
+    Como $\eta<\frac{1}{L}$:
+    \begin{equation}\label{random:1}
+        f(y) \leq f(x) - \frac{1}{2}\eta \norm{\nabla f(x)}^2
+    \end{equation}
+    En particular, $f(y)\leq f(x)$, y por tanto:
+    \[
+        f(x_{k+1}) \leq f(x_k)
+    \]
+    Lo cual demuestra que la actualización del gradiente descendente conlleva al decrecimiento de la función objetivo en cada iteración. Usando la desigualdad
+    \ref*{random:2}, se obtiene:
+    \[
+        f(y) - f(x^*) \leq \frac{1}{2\eta}\left( 2\eta \nabla f(x)^T(x-x^*) - \eta^2\norm{f(x)}^2 \right)
+    \]
+    Sumando y restando $\norm{x-x^*}^2$ y usando:
+    \[
+        \norm{y-x^*}^2 = \norm{x-\eta \nabla f(x)-x^*}^2 = \norm{x-x^*}^2 + \eta^2\norm{\nabla f(x)}^2 - 2\eta \nabla f(x)^T(x-x^*),
+    \]
+    se llega a la siguiente desigualdad:
+    \[
+        f(y) - f(x^*) \leq \frac{1}{2\eta} \left( \norm{x-x^*}^2 - \norm{y-x^*}^2 \right)
+    \]
+    Para finalizar la demostración basta con aplicar la desigualdad anterior tomando $x=x_{i-1}$, $y=x_{i-1}-\eta\nabla f(x_{i-1})$ para cada
+    $i$ de forma que:
+    \begin{align*}
+        k\left( f(x_k) - f(x^*) \right) & \leq \displaystyle \sum_{i=1}^k \left( f(x_i) - f(x^*) \right) \leq \displaystyle \sum_{i=1}^k \frac{1}{2\eta}\left( \norm{x_{i-1}-x^*} - \norm{x_i - x^*}^2 \right) \\
+              & = \frac{1}{2\eta} \left( \norm{x_0 - x^*}^2 - \norm{x_k-x^*}^2 \right) \\
+              & \leq \frac{1}{2\eta} \norm{x_0-x^*}^2
+    \end{align*}
+\end{proof}
 
 \section{Back-propagation}
 
