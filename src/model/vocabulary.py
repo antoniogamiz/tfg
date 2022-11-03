@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Vocabulary:
-    corpus: List[str]
+    words: List[str]
     _word_to_index: Dict[str, int]
     _index_to_word: Dict[int, str]
 
@@ -15,4 +15,4 @@ class Vocabulary:
 
     @property
     def size(self):
-        return len(self.corpus)
+        return len(self.words)

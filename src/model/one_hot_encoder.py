@@ -2,7 +2,7 @@ from typing import List
 
 import numpy as np
 
-from src.model.vocabulary import Vocabulary
+from model.vocabulary import Vocabulary
 
 
 def one_hot_encode_word(vocabulary: Vocabulary, word: str):
