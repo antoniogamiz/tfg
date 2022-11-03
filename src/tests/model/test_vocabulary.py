@@ -28,3 +28,15 @@ class VocabularyTestCase(unittest.TestCase):
 
         expected_size = 2
         self.assertEqual(expected_size, actual_size)
+
+    def test_given_words_when_generating_the_vocabulary_from_them_then_is_generated(self):
+        words = ['some', 'words']
+
+        actual_vocabulary = Vocabulary.from_words(words)
+
+        expected_vocabulary = Vocabulary(
+            words=['some', 'words'],
+            _word_to_index={'some': 0, 'words': 1},
+            _index_to_word={0: 'some', 1: 'words'}
+        )
+        self.assertEqual(expected_vocabulary, actual_vocabulary)

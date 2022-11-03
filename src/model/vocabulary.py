@@ -16,3 +16,11 @@ class Vocabulary:
     @property
     def size(self):
         return len(self.words)
+
+    @classmethod
+    def from_words(cls, words: List[str]):
+        word_to_index, index_to_word = dict(), dict()
+        for index, word in enumerate(words):
+            word_to_index[word] = index
+            index_to_word[index] = word
+        return cls(words=words, _word_to_index=word_to_index, _index_to_word=index_to_word)

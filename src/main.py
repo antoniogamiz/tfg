@@ -1,27 +1,26 @@
-import numpy as np
-
 from model.any2vec import Any2Vec
-from model.data import process_sentences, get_sentences_from_file
+from model.anys.words import get_sentences_from_file, get_corpus_from_sentences, get_words_in_vocabulary
 from model.training_data import generate_training_data
 from model.vocabulary import Vocabulary
 
 
-def main():
-    embedding_size = 2
-    sentences = get_sentences_from_file('./datasets/jef_archer.txt')
-    word_to_index, index_to_word, corpus = process_sentences(sentences)
+def word_example(embedding_size: int, epochs: int, learning_rate: float):
+    print("Running Any2Vec with words...")
 
-    vocabulary = Vocabulary(words=list(set(corpus)), _word_to_index=word_to_index, _index_to_word=index_to_word)
+    sentences = get_sentences_from_file('./datasets/jef_archer.txt')
+    corpus = get_corpus_from_sentences(sentences)
+    words = get_words_in_vocabulary(sentences)
+    vocabulary = Vocabulary.from_words(words)
+
     any2vec = Any2Vec(
         vocabulary=vocabulary,
         training_data=generate_training_data(window_size=2, corpus=corpus),
-        weight_input_hidden=np.random.uniform(-1, 1, (vocabulary.size, embedding_size)),
-        weight_hidden_output=np.random.uniform(-1, 1, (embedding_size, vocabulary.size)),
-        learning_rate=0.001
+        learning_rate=learning_rate,
+        embedding_size=embedding_size
     )
 
-    any2vec.run(epochs=100)
+    any2vec.run(epochs=epochs)
 
 
-if __name__ == "__main__":
-    main()
+def main():
+    word_example(embedding_size=2, epochs=10, learning_rate=0.001)

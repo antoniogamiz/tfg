@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import Any, List
+from dataclasses import dataclass, field
+from typing import List
 
 from numpy.core.records import ndarray
 import numpy as np
@@ -13,15 +13,20 @@ from model.vocabulary import Vocabulary
 class Any2Vec:
     vocabulary: Vocabulary
     training_data: List[TrainingData]
-    weight_input_hidden: Any
-    weight_hidden_output: Any
+    weight_input_hidden: ndarray = field(init=False)
+    weight_hidden_output: ndarray = field(init=False)
     learning_rate: float
+    embedding_size: int
+
+    def __post_init__(self):
+        self.weight_input_hidden = np.random.uniform(-1, 1, (self.vocabulary.size, self.embedding_size))
+        self.weight_hidden_output = np.random.uniform(-1, 1, (self.embedding_size, self.vocabulary.size))
 
     def run(self, epochs: int):
         encoded_training_data = encode_training_data(self.vocabulary, self.training_data)
 
         for i in range(epochs):
-            print(f"Epoch {i}. Remaining {epochs - i - 1}")
+            print(f"Epoch {i + 1}/{epochs}.")
             for data in encoded_training_data:
                 y_predicted, hidden_layer, u = self.forward_propagation(data.target)
                 error = self.error(y_predicted, data.context)
