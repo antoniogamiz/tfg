@@ -1,9 +1,8 @@
-import tempfile
 import unittest
 import os
 
 
-from model.data import read_text_file, process_sentences, get_sentences_from_file
+from src.model.data import read_text_file, process_sentences, get_sentences_from_file
 
 
 class DataTestCase(unittest.TestCase):
