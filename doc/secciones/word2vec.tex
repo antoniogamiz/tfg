@@ -18,7 +18,7 @@ Primero se va a desarrollar el modelo \textit{bolsa continua de palabras} (o CBO
 Esto será útil para establecer la notación para el resto del trabajo. Que haya una única palabra por contexto implica que el modelo generará también una única palabra objetivo.
 Por lo tanto, se está presentando un modelo \textit{bigram} (es decir, que usa dos palabras).
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \begin{tikzpicture}[
           roundnode/.style={circle, draw=black, minimum size=4mm},
@@ -241,7 +241,7 @@ de una palabra $w$. En este caso particular, repitiendo los cálculos del aparta
   \end{split}
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \begin{tikzpicture}[
           roundnode/.style={circle, draw=black, minimum size=4mm},
@@ -333,6 +333,29 @@ necesario aplicarlo para cada palabra $w_{I,c}$ en el contexto:
   v_{w_{I,c}}^{(nuevo)} = v_{w_{I,c}}^{(antiguo)} - \frac{1}{C}\eta EH^T \;\; \forall c \in \{1,2,\cdots, C \}
 \end{equation}
 
+\subsection{Extensión a tropos}
+
+Una vez el modelo se ha desarrollado completamente, se puede realizar la extensión a datos que no sean palabras, como por ejemplo, tropos. La principal distinción
+entre las palabras y los tropos es el orden. En una oración el orden de las palabras tiene gran importancia porque determina en cierto sentido parte de su significado. Por
+el contrario, en una película u obra cultural, los tropos no tienen un orden definido. Por ejemplo, pueden darse dos o más tropos al mismo tiempo.
+
+En el desarrollo matemático anterior se puede observar que lo único que se ha usado para representar el orden de las palabras es el contexto. Por lo tanto, para no considerar el orden,
+lo único que hay que hacer es incrementar el tamaño del contexto al del vocabulario, quedando:
+
+\begin{equation}
+  h = W^T(x_1+x_2+\cdots + x_V) = \sum_{i=1}^V v_{w_i}
+\end{equation}
+
+\begin{equation}
+  v_{w_{I,i}}^{(nuevo)} = v_{w_{I,i}}^{(antiguo)} - \frac{1}{V}\eta EH^T \;\; \forall i \in \{1,2,\cdots, V \}
+\end{equation}
+
+\begin{equation}
+  v_{w_j}^{'(nuevo)}=v_{w_j}^{'(viejo)} - \eta e_j h, \;\;\; j \in \{1, \cdots, V\}
+\end{equation}
+
+Las expresiones de $E$ y $EH$ no han cambiado, ya que no dependían del contexto.
+
 \section{Skip-gram}
 
 Esta versión del modelo fue introducida en \cite{word2vec:1} \cite{word2vec:2}. En la figura \ref{redneuronal:5} se muestra el modelo. Como se
@@ -345,7 +368,7 @@ no era más que copiar y transponer una fila de $W$:
   h = W_{(k,\cdot)}^T := w_{w_i}^T
 \]
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \begin{tikzpicture}[
           roundnode/.style={circle, draw=black, minimum size=4mm},
@@ -468,3 +491,16 @@ donde $EH$ es un vector $N$-dimensional, donde cada componente viene definida po
 \[
   EH_i = \sum_{j=1}^V EI_j w_{ij}'
 \]
+
+\subsection{Extensión a tropos}
+
+De igual forma se puede proceder en esta versión del modelo y eliminar el orden para poder usar datos como tropos. En este caso, la función de pérdida
+sí que ha sufrido cambios:
+\begin{align}
+  E & = - \log p\left( w_{O,1}, w_{O,2}, \cdots, w_{O,V} | w_I \right) \\
+    & = - \log \prod_{i=1}^V \frac{\exp(u_i)}{\sum_{j'=1}^V\exp(u_{j'})} \\
+    & = - \sum_{j=1}^V u_{j} + V\log \sum_{j'=1}^V\exp(u_{j'}).
+\end{align}
+
+En este caso la expresión de $h$ no cambia ya que siempre se ha tenido una palabra únicamente, independientemente del contexto. Por lo
+tanto, el valor de la unidad $u_{j}$ tampoco ha cambiado. Las expresiones de $v$ y $v'$ tampoco han sufrido alteraciones adicionales.
