@@ -16,3 +16,15 @@ class VocabularyTestCase(unittest.TestCase):
 
         expected_index = 1
         self.assertEqual(expected_index, actual_index)
+
+    def test_given_a_vocabulary_when_getting_size_then_is_computed_correctly(self):
+        vocabulary = Vocabulary(
+            corpus=['some', 'words'],
+            _word_to_index={'some': 1, 'word': 2},
+            _index_to_word={1: 'some', 2: 'word'}
+        )
+
+        actual_size = vocabulary.size
+
+        expected_size = 2
+        self.assertEqual(expected_size, actual_size)
