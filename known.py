@@ -193,5 +193,11 @@ words = {
     "zx",
     "language",
     "processing",
-    "exploding"
+    "exploding",
+    "commits",
+    "milestone",
+    "milestones",
+    "mvp",
+    "product",
+    "exs"
 }
