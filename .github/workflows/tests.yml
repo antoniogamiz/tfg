@@ -35,5 +35,5 @@ jobs:
         if: steps.cache-deps.outputs.cache-hit != 'true'
 
       - run: cd src && poetry install --no-interaction
-
+      - run: cd src && poetry run mypy --config-file pyproject.toml ./
       - run: cd src && poetry run pytest

@@ -10,7 +10,7 @@ class Vocabulary:
     _word_to_index: Dict[str, int]
     _index_to_word: Dict[int, str]
 
-    def get_index_by_word(self, word: str) -> str | None:
+    def get_index_by_word(self, word: str) -> int | None:
         return self._word_to_index.get(word)
 
     @property

@@ -17,6 +17,12 @@ start = 'main:main'
 clean = 'scripts.get_data_set:clean'
 test = 'scripts.test:test'
 
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.982"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+exclude = ['scripts']

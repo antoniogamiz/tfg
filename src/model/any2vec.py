@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from numpy.core.records import ndarray
 import numpy as np
+from numpy import ndarray
 
 from model.one_hot_encoder import encode_training_data
 from model.training_data import TrainingData

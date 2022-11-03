@@ -13,7 +13,9 @@ class EncodedTrainingData:
     target: ndarray
     context: ndarray
 
-    def __eq__(self, other: "EncodedTrainingData"):
+    def __eq__(self, other):
+        if not isinstance(other, EncodedTrainingData):
+            return NotImplemented
         return (self.target == other.target).all() and (self.context == other.context).all()
 
 
