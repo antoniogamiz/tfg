@@ -1,10 +1,11 @@
 from model.any2vec import Any2Vec
 from model.anys.words import get_sentences_from_file, get_corpus_from_sentences, get_words_in_vocabulary
+from model.data import LearningRate
 from model.training_data import generate_training_data
 from model.vocabulary import Vocabulary
 
 
-def word_example(embedding_size: int, epochs: int, learning_rate: float):
+def word_example(embedding_size: int, epochs: int, learning_rate: LearningRate):
     print("Running Any2Vec with words...")
 
     sentences = get_sentences_from_file('./datasets/jef_archer.txt')
@@ -23,4 +24,4 @@ def word_example(embedding_size: int, epochs: int, learning_rate: float):
 
 
 def main():
-    word_example(embedding_size=2, epochs=10, learning_rate=0.001)
+    word_example(embedding_size=2, epochs=10, learning_rate=LearningRate(value=0.001))

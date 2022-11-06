@@ -4,7 +4,7 @@ from typing import List, Generic
 import numpy as np
 from numpy import ndarray
 
-from model.data import Data
+from model.data import Data, OneHotEncoding, LearningRate
 from model.one_hot_encoder import encode_training_data
 from model.training_data import TrainingData
 from model.vocabulary import Vocabulary
@@ -16,7 +16,7 @@ class Any2Vec(Generic[Data]):
     training_data: List[TrainingData]
     weight_input_hidden: ndarray = field(init=False)
     weight_hidden_output: ndarray = field(init=False)
-    learning_rate: float
+    learning_rate: LearningRate
     embedding_size: int
 
     def __post_init__(self):
@@ -33,13 +33,13 @@ class Any2Vec(Generic[Data]):
                 error = self.error(y_predicted, data.context)
                 self.backward_propagation(data.target, hidden_layer, error)
 
-    def forward_propagation(self, target_word: ndarray):
+    def forward_propagation(self, target_word: OneHotEncoding):
         hidden_layer = np.dot(self.weight_input_hidden.T, target_word)
         u = np.dot(self.weight_hidden_output.T, hidden_layer)
         y_predicted = softmax(u)
         return y_predicted, hidden_layer, u
 
-    def backward_propagation(self, target_word: ndarray, hidden_layer: ndarray, error: ndarray):
+    def backward_propagation(self, target_word: OneHotEncoding, hidden_layer: ndarray, error: ndarray):
         delta_weight_input_hidden = np.outer(target_word, np.dot(self.weight_hidden_output, error.T))
         self.weight_input_hidden -= self.learning_rate * delta_weight_input_hidden
 
@@ -47,12 +47,12 @@ class Any2Vec(Generic[Data]):
         self.weight_hidden_output -= self.learning_rate * delta_weight_hidden_output
 
     @staticmethod
-    def error(y_predicted: ndarray, y_expected: ndarray):
+    def error(y_predicted: ndarray, y_expected: OneHotEncoding):
         number_of_expected_context_words = len(np.where(y_expected == 1)[0])
         return y_predicted * number_of_expected_context_words - y_expected
 
     @staticmethod
-    def loss(u: ndarray, y_expected: ndarray):
+    def loss(u: ndarray, y_expected: OneHotEncoding):
         first_part = - u[y_expected == 1].sum()
         number_of_words_expected_words = len(np.where(y_expected == 1)[0])
         second_part = number_of_words_expected_words * np.log(np.sum(np.exp(u)))
