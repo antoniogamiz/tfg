@@ -1,3 +1,4 @@
+*.pickle
 .idea
 datasets/
 .DS_Store

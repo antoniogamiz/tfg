@@ -1,5 +1,5 @@
-import os
 import pickle
+import sys
 from signal import signal, SIGINT
 
 from model.any2vec import Any2Vec
@@ -7,8 +7,6 @@ from model.anys.words import get_sentences_from_file, get_corpus_from_sentences,
 from model.data import LearningRate
 from model.training_data import generate_training_data
 from model.vocabulary import Vocabulary
-
-SAVE_MODEL_STATE_TO = 'model.pickle'
 
 
 def any2vec_with_words(embedding_size: int, learning_rate: LearningRate) -> Any2Vec:
@@ -30,15 +28,20 @@ def any2vec_with_words(embedding_size: int, learning_rate: LearningRate) -> Any2
 
 
 def main():
-    previously_run_model_exists = os.path.exists(SAVE_MODEL_STATE_TO)
-    if previously_run_model_exists:
-        with open(SAVE_MODEL_STATE_TO, 'rb') as f:
+    if len(sys.argv) < 2:
+        print("You need to provide a name for the model run")
+        exit(1)
+
+    model_name = sys.argv[1]
+    model_file = f"{model_name}.pickle"
+    try:
+        with open(model_file, 'rb') as f:
             model = pickle.load(f)
-    else:
+    except FileNotFoundError:
         model = any2vec_with_words(embedding_size=2, learning_rate=LearningRate(value=0.001))
 
     def save_model_state(*_):
-        with open('model.pickle', 'wb') as f:
+        with open(model_file, 'wb') as f:
             pickle.dump(model, f)
         exit(0)
 
