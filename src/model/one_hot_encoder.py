@@ -2,16 +2,16 @@ from dataclasses import dataclass
 from typing import List
 
 import numpy as np
-from numpy import ndarray
 
+from model.data import OneHotEncoding, Data
 from model.training_data import TrainingData
 from model.vocabulary import Vocabulary
 
 
 @dataclass
 class EncodedTrainingData:
-    target: ndarray
-    context: ndarray
+    target: OneHotEncoding
+    context: OneHotEncoding
 
     def __eq__(self, other):
         if not isinstance(other, EncodedTrainingData):
@@ -24,23 +24,23 @@ def encode_training_data(vocabulary: Vocabulary, training_data: List[TrainingDat
     for data in training_data:
         encoded_training_data.append(
             EncodedTrainingData(
-                target=one_hot_encode_word(vocabulary, data.target),
-                context=one_hot_encode_words(vocabulary, data.context)
+                target=one_hot_encode_data(vocabulary, data.target),
+                context=one_hot_encode_data_list(vocabulary, data.context)
             )
         )
     return encoded_training_data
 
 
-def one_hot_encode_word(vocabulary: Vocabulary, word: str):
+def one_hot_encode_data(vocabulary: Vocabulary, data: Data) -> OneHotEncoding:
     vector = np.zeros(vocabulary.size)
-    index_of_word = vocabulary.get_index_by_data(word)
+    index_of_word = vocabulary.get_index_by_data(data)
     vector[index_of_word] = 1
     return vector
 
 
-def one_hot_encode_words(vocabulary: Vocabulary, words: List[str]):
+def one_hot_encode_data_list(vocabulary: Vocabulary, data: List[Data]) -> OneHotEncoding:
     vector = np.zeros(vocabulary.size)
-    for word in words:
+    for word in data:
         index_of_word = vocabulary.get_index_by_data(word)
         vector[index_of_word] = 1
     return vector
