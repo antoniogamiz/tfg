@@ -18,6 +18,7 @@ class Any2Vec(Generic[Data]):
     weight_hidden_output: ndarray = field(init=False)
     learning_rate: LearningRate
     embedding_size: int
+    historic_loss: List[float] = field(default_factory=lambda: [])
 
     def __post_init__(self):
         self.weight_input_hidden = np.random.uniform(-1, 1, (self.vocabulary.size, self.embedding_size))
@@ -28,10 +29,13 @@ class Any2Vec(Generic[Data]):
 
         for i in range(epochs):
             print(f"Epoch {i + 1}/{epochs}.")
+            loss = 0
             for data in encoded_training_data:
                 y_predicted, hidden_layer, u = self.forward_propagation(data.target)
                 error = self.error(y_predicted, data.context)
                 self.backward_propagation(data.target, hidden_layer, error)
+                loss += self.loss(u, data.context)
+            self.historic_loss.append(loss)
 
     def forward_propagation(self, target_word: OneHotEncoding):
         hidden_layer = np.dot(self.weight_input_hidden.T, target_word)
