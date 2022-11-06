@@ -10,9 +10,9 @@ def word_example(embedding_size: int, epochs: int, learning_rate: float):
     sentences = get_sentences_from_file('./datasets/jef_archer.txt')
     corpus = get_corpus_from_sentences(sentences)
     words = get_words_in_vocabulary(sentences)
-    vocabulary = Vocabulary.from_words(words)
+    vocabulary = Vocabulary.from_data_list(words)
 
-    any2vec = Any2Vec(
+    any2vec = Any2Vec[str](
         vocabulary=vocabulary,
         training_data=generate_training_data(window_size=2, corpus=corpus),
         learning_rate=learning_rate,

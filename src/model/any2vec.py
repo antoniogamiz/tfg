@@ -1,17 +1,18 @@
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Generic
 
 import numpy as np
 from numpy import ndarray
 
+from model.data import Data
 from model.one_hot_encoder import encode_training_data
 from model.training_data import TrainingData
 from model.vocabulary import Vocabulary
 
 
 @dataclass
-class Any2Vec:
-    vocabulary: Vocabulary
+class Any2Vec(Generic[Data]):
+    vocabulary: Vocabulary[Data]
     training_data: List[TrainingData]
     weight_input_hidden: ndarray = field(init=False)
     weight_hidden_output: ndarray = field(init=False)

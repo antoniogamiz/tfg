@@ -9,9 +9,9 @@ from model.vocabulary import Vocabulary
 
 class OneHotEncodersTestCase(unittest.TestCase):
     VOCABULARY = Vocabulary(
-        words=['some', 'words'],
-        _word_to_index={'some': 0, 'word': 1},
-        _index_to_word={0: 'some', 1: 'word'}
+        data=['some', 'words'],
+        _data_to_index={'some': 0, 'word': 1},
+        _index_to_data={0: 'some', 1: 'word'}
     )
 
     def test_given_word_when_generating_its_encoding_then_it_is_generated_correctly(self):
