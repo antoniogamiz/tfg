@@ -41,10 +41,10 @@ class Any2Vec(Generic[Data]):
 
     def backward_propagation(self, target_word: OneHotEncoding, hidden_layer: ndarray, error: ndarray):
         delta_weight_input_hidden = np.outer(target_word, np.dot(self.weight_hidden_output, error.T))
-        self.weight_input_hidden -= self.learning_rate * delta_weight_input_hidden
+        self.weight_input_hidden -= self.learning_rate.value * delta_weight_input_hidden
 
         delta_weight_hidden_output = np.outer(hidden_layer, error)
-        self.weight_hidden_output -= self.learning_rate * delta_weight_hidden_output
+        self.weight_hidden_output -= self.learning_rate.value * delta_weight_hidden_output
 
     @staticmethod
     def error(y_predicted: ndarray, y_expected: OneHotEncoding):
