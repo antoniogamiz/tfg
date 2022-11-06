@@ -27,7 +27,8 @@ class Any2Vec(Generic[Data]):
     def run(self, epochs: int):
         encoded_training_data = encode_training_data(self.vocabulary, self.training_data)
 
-        for i in range(epochs):
+        previously_computed_epochs = len(self.historic_loss)
+        for i in range(previously_computed_epochs, epochs):
             print(f"Epoch {i + 1}/{epochs}.")
             loss = 0
             for data in encoded_training_data:
