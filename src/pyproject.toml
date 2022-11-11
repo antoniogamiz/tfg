@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "model"
+name = "any2vec"
 version = "0.1.0"
 description = "Any2Word implementation"
 authors = ["antoniogamizdelgado <antoniogamiz10@gmail.com>"]
