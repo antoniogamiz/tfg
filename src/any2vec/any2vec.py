@@ -4,7 +4,8 @@ from typing import List, Callable, Iterator
 import numpy as np
 from numpy import ndarray
 
-from any2vec.data import OneHotEncoding, LearningRate
+from any2vec.one_hot_encoding import OneHotEncoding
+from any2vec.learning_rate import LearningRate
 from any2vec.one_hot_encoder import encoding_training_data_item
 from any2vec.training_data import TrainingData
 from any2vec.vocabulary import Vocabulary
@@ -29,7 +30,10 @@ class Any2Vec:
         for i in range(previously_computed_epochs, epochs):
             print(f"Epoch {i + 1}/{epochs}.")
             loss = 0
+            j = 0
             for data in self.training_data():
+                j += 1
+                print(j/1048108.0)
                 encoded_data = encoding_training_data_item(self.vocabulary, data)
                 y_predicted, hidden_layer, u = self.forward_propagation(encoded_data.target)
                 error = self.error(y_predicted, encoded_data.context)
@@ -38,27 +42,28 @@ class Any2Vec:
             self.historic_loss.append(loss)
 
     def forward_propagation(self, target_word: OneHotEncoding):
-        hidden_layer = np.dot(self.weight_input_hidden.T, target_word)
+        hidden_layer = target_word.matrix_product(self.weight_input_hidden.T)
         u = np.dot(self.weight_hidden_output.T, hidden_layer)
         y_predicted = softmax(u)
         return y_predicted, hidden_layer, u
 
     def backward_propagation(self, target_word: OneHotEncoding, hidden_layer: ndarray, error: ndarray):
-        delta_weight_input_hidden = np.outer(target_word, np.dot(self.weight_hidden_output, error.T))
-        self.weight_input_hidden -= self.learning_rate.value * delta_weight_input_hidden
+        delta_weight_input_hidden = np.dot(self.weight_hidden_output, error.T) * self.learning_rate.value
+        for index in target_word.indexes:
+            self.weight_input_hidden[index] -= delta_weight_input_hidden
 
-        delta_weight_hidden_output = np.outer(hidden_layer, error)
-        self.weight_hidden_output -= self.learning_rate.value * delta_weight_hidden_output
+        delta_weight_hidden_output = np.outer(hidden_layer, error) * self.learning_rate.value
+        self.weight_hidden_output -= delta_weight_hidden_output
 
     @staticmethod
     def error(y_predicted: ndarray, y_expected: OneHotEncoding):
-        number_of_expected_context_words = len(np.where(y_expected == 1)[0])
-        return y_predicted * number_of_expected_context_words - y_expected
+        number_of_expected_context_words = len(y_expected.indexes)
+        return y_expected.subtract(y_predicted * number_of_expected_context_words)
 
     @staticmethod
     def loss(u: ndarray, y_expected: OneHotEncoding):
-        first_part = - u[y_expected == 1].sum()
-        number_of_words_expected_words = len(np.where(y_expected == 1)[0])
+        first_part = - sum(u[index] for index in y_expected.indexes)
+        number_of_words_expected_words = len(y_expected.indexes)
         second_part = number_of_words_expected_words * np.log(np.sum(np.exp(u)))
         return first_part + second_part
 

@@ -1,6 +1,6 @@
 import unittest
 
-from any2vec.data import LearningRate
+from any2vec.learning_rate import LearningRate
 
 
 class MyTestCase(unittest.TestCase):

@@ -12,8 +12,8 @@ class Vocabulary:
     _data_to_index: Dict[Data, int]
     _index_to_data: Dict[int, Data]
 
-    def get_index_by_data(self, data: Data) -> int | None:
-        return self._data_to_index.get(data)
+    def get_index_by_data(self, data: Data) -> int:
+        return self._data_to_index.get(data, -1)
 
     @property
     def size(self) -> int:

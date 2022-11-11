@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from any2vec.any2vec import softmax, Any2Vec
+from any2vec.one_hot_encoding import OneHotEncoding
 
 
 class Any2VecTestCase(unittest.TestCase):
@@ -16,7 +17,7 @@ class Any2VecTestCase(unittest.TestCase):
 
     def test_given_y_predicted_and_expected_when_computing_the_error_then_is_computed_correctly(self):
         y_predicted = np.array([9, 6, 5, 4, 2])
-        y_expected = np.array([1, 0, 0, 1, 0])
+        y_expected = OneHotEncoding(indexes=[0,3], real_size=5)
 
         actual_error = Any2Vec.error(y_predicted, y_expected)
 

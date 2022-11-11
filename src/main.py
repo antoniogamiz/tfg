@@ -5,7 +5,7 @@ from any2vec.any2vec import Any2Vec
 from any2vec.anys.tropes import get_tropes_from_file, get_unique_tropes, get_training_tropes
 from any2vec.anys.words import get_sentences_from_file, get_corpus_from_sentences, get_words_in_vocabulary, \
     generate_training_data
-from any2vec.data import LearningRate
+from any2vec.learning_rate import LearningRate
 from any2vec.model_runner import ModelRunner
 from any2vec.vocabulary import Vocabulary
 
