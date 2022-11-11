@@ -2,9 +2,9 @@ import unittest
 
 from numpy import array
 
-from model.one_hot_encoder import one_hot_encode_data, one_hot_encode_data_list, encode_training_data, EncodedTrainingData
-from model.training_data import TrainingData
-from model.vocabulary import Vocabulary
+from any2vec.one_hot_encoder import one_hot_encode_data, one_hot_encode_data_list, encode_training_data, EncodedTrainingData
+from any2vec.training_data import TrainingData
+from any2vec.vocabulary import Vocabulary
 
 
 class OneHotEncodersTestCase(unittest.TestCase):

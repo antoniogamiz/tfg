@@ -3,9 +3,9 @@ from typing import List
 
 import numpy as np
 
-from model.data import OneHotEncoding, Data
-from model.training_data import TrainingData
-from model.vocabulary import Vocabulary
+from any2vec.data import OneHotEncoding, Data
+from any2vec.training_data import TrainingData
+from any2vec.vocabulary import Vocabulary
 
 
 @dataclass

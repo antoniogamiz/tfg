@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List, Dict, Generic
 from dataclasses import dataclass
 
-from model.data import Data
+from any2vec.data import Data
 
 
 @dataclass(frozen=True)

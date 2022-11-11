@@ -5,8 +5,8 @@ from typing import Generic
 
 from numpy import savetxt, asarray, loadtxt
 
-from model.any2vec import Any2Vec
-from model.data import Data
+from any2vec.any2vec import Any2Vec
+from any2vec.data import Data
 from utils.filesystem import create_directory_if_not_exists, delete_file
 
 

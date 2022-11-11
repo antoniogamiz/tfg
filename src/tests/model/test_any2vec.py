@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from model.any2vec import softmax, Any2Vec
+from any2vec.any2vec import softmax, Any2Vec
 
 
 class Any2VecTestCase(unittest.TestCase):

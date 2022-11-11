@@ -4,10 +4,10 @@ from typing import List, Generic, Callable, Iterator
 import numpy as np
 from numpy import ndarray
 
-from model.data import Data, OneHotEncoding, LearningRate
-from model.one_hot_encoder import encoding_training_data_item
-from model.training_data import TrainingData
-from model.vocabulary import Vocabulary
+from any2vec.data import Data, OneHotEncoding, LearningRate
+from any2vec.one_hot_encoder import encoding_training_data_item
+from any2vec.training_data import TrainingData
+from any2vec.vocabulary import Vocabulary
 
 
 @dataclass

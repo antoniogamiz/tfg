@@ -1,7 +1,7 @@
 from typing import List
 from functools import reduce
 
-from model.training_data import TrainingData
+from any2vec.training_data import TrainingData
 from utils.filesystem import read_text_file
 
 EXCLUDE_WORDS = ['\n', '-', '']

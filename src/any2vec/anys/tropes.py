@@ -2,7 +2,7 @@ import json
 from itertools import chain
 from typing import Dict, List, Iterator
 
-from model.training_data import TrainingData
+from any2vec.training_data import TrainingData
 from utils.filesystem import read_text_file
 
 

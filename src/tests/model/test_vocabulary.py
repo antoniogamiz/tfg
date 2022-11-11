@@ -1,7 +1,7 @@
 import unittest
 
 
-from model.vocabulary import Vocabulary
+from any2vec.vocabulary import Vocabulary
 
 
 class VocabularyTestCase(unittest.TestCase):

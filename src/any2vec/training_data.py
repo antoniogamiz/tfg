@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from model.data import Data
+from any2vec.data import Data
 
 
 @dataclass
