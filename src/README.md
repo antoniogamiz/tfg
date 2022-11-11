@@ -15,5 +15,5 @@ poetry run clean
 To run the tests you can run:
 
 ~~~bash
-poetry run test
+poetry run pytest
 ~~~
