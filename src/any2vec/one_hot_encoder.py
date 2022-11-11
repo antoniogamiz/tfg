@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Sequence
 
 import numpy as np
 
@@ -31,7 +31,7 @@ def encode_training_data(vocabulary: Vocabulary, training_data: List[TrainingDat
     return encoded_training_data
 
 
-def encoding_training_data_item(vocabulary: Vocabulary, training_data: TrainingData):
+def encoding_training_data_item(vocabulary: Vocabulary, training_data: TrainingData) -> EncodedTrainingData:
     return EncodedTrainingData(
         target=one_hot_encode_data(vocabulary, training_data.target),
         context=one_hot_encode_data_list(vocabulary, training_data.context)
@@ -45,7 +45,7 @@ def one_hot_encode_data(vocabulary: Vocabulary, data: Data) -> OneHotEncoding:
     return vector
 
 
-def one_hot_encode_data_list(vocabulary: Vocabulary, data: List[Data]) -> OneHotEncoding:
+def one_hot_encode_data_list(vocabulary: Vocabulary, data: Sequence[Data]) -> OneHotEncoding:
     vector = np.zeros(vocabulary.size)
     for word in data:
         index_of_word = vocabulary.get_index_by_data(word)

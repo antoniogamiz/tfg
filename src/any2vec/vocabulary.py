@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from typing import List, Dict, Generic
+from typing import Dict, Sequence
 from dataclasses import dataclass
 
 from any2vec.data import Data
 
 
 @dataclass(frozen=True)
-class Vocabulary(Generic[Data]):
-    data: List[Data]
+class Vocabulary:
+    data: Sequence[Data]
     _data_to_index: Dict[Data, int]
     _index_to_data: Dict[int, Data]
 
@@ -20,7 +20,7 @@ class Vocabulary(Generic[Data]):
         return len(self.data)
 
     @classmethod
-    def from_data_list(cls, data_list: List[Data]) -> Vocabulary:
+    def from_data_list(cls, data_list: Sequence[Data]) -> Vocabulary:
         data_to_index, index_to_data = dict(), dict()
         for index, word in enumerate(data_list):
             data_to_index[word] = index

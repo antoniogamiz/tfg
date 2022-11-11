@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Iterator, Sequence
 from functools import reduce
 
 from any2vec.training_data import TrainingData
@@ -26,14 +26,12 @@ def get_sentences_from_file(path: str) -> List[str]:
     return [sentence.strip() for sentence in corpus]
 
 
-def generate_training_data(window_size: int, corpus: List[str]) -> List[TrainingData]:
-    training_data = []
+def generate_training_data(window_size: int, corpus: Sequence[str]) -> Iterator[TrainingData]:
     corpus_size = len(corpus)
     for target_word_index, target_word in enumerate(corpus):
         context_indexes = _get_context_indexes(corpus_size, window_size, target_word_index)
         context_words = [corpus[index] for index in context_indexes]
-        training_data.append(TrainingData(target=target_word, context=context_words))
-    return training_data
+        yield TrainingData(target=target_word, context=context_words)
 
 
 def _get_context_indexes(corpus_size: int, window_size: int, target_word_index: int) -> List[int]:

@@ -1,9 +1,18 @@
 from dataclasses import dataclass
-from typing import TypeVar, Hashable
+from typing import Hashable, Protocol
 
 from numpy import ndarray
 
-Data = TypeVar("Data", bound=Hashable)
+
+class Data(Protocol, Hashable):
+    """
+        Base class to represent Data in the Any2Vec model. The
+        only requirement for is to be Hashable (needed to create
+        OneHotEncodings
+    """
+    pass
+
+
 OneHotEncoding = ndarray
 Embedding = ndarray
 

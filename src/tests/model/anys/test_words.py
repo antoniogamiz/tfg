@@ -37,7 +37,7 @@ class WordsTestCase(unittest.TestCase):
     def test_given_corpus_when_generating_training_data_then_it_is_generated_correctly(self):
         corpus = ['words', 'some', 'words', 'a']
 
-        actual_training_data = generate_training_data(window_size=3, corpus=corpus)
+        actual_training_data = list(generate_training_data(window_size=3, corpus=corpus))
 
         expected_training_data = [
             TrainingData(target='words', context=['some', 'words', 'a']),

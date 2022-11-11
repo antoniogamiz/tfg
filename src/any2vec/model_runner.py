@@ -1,19 +1,17 @@
 from os import path
 from signal import signal, SIGINT
 from dataclasses import dataclass
-from typing import Generic
 
 from numpy import savetxt, asarray, loadtxt
 
 from any2vec.any2vec import Any2Vec
-from any2vec.data import Data
 from utils.filesystem import create_directory_if_not_exists, delete_file
 
 
 @dataclass
-class ModelRunner(Generic[Data]):
+class ModelRunner:
     name: str
-    model: Any2Vec[Data]
+    model: Any2Vec
 
     def start(self, epochs: int):
         if path.exists(self.cache_directory_path):
@@ -26,6 +24,7 @@ class ModelRunner(Generic[Data]):
         def _signal(*_):
             self.save_model_state()
             exit(0)
+
         signal(SIGINT, _signal)
 
     def restore_model_state(self):
@@ -54,14 +53,14 @@ class ModelRunner(Generic[Data]):
         delete_file(self.weight_hidden_output_path)
 
     def save_weight_input_hidden(self):
-        savetxt(self.weight_input_hidden_path, self.model.weight_input_hidden, delimiter=',') # noqa
+        savetxt(self.weight_input_hidden_path, self.model.weight_input_hidden, delimiter=',')  # noqa
 
     def save_weight_hidden_output(self):
-        savetxt(self.weight_hidden_output_path, self.model.weight_hidden_output, delimiter=',') # noqa
+        savetxt(self.weight_hidden_output_path, self.model.weight_hidden_output, delimiter=',')  # noqa
 
     def save_historic_loss(self):
         historic_loss = asarray(self.model.historic_loss)
-        savetxt(self.historic_loss_path, historic_loss, delimiter=',') # noqa
+        savetxt(self.historic_loss_path, historic_loss, delimiter=',')  # noqa
 
     @property
     def weight_input_hidden_path(self):
