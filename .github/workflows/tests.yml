@@ -31,9 +31,12 @@ jobs:
           path: .venv
           key: pydeps-${{ hashFiles('**/poetry.lock') }}
 
-      - run: cd src && poetry install --no-interaction --no-root
-        if: steps.cache-deps.outputs.cache-hit != 'true'
+      - run: poetry install --no-interaction --no-root
+        working-directory: src
+		if: steps.cache-deps.outputs.cache-hit != 'true'
 
-      - run: cd src && poetry install --no-interaction
-      - run: cd src && poetry run mypy --config-file pyproject.toml ./
-      - run: cd src && poetry run pytest
+      - run: poetry run mypy --config-file pyproject.toml ./
+	  	working-directory: src
+
+      - run: poetry run pytest
+	    working-directory: src
