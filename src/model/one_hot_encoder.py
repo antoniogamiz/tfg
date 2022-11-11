@@ -31,6 +31,13 @@ def encode_training_data(vocabulary: Vocabulary, training_data: List[TrainingDat
     return encoded_training_data
 
 
+def encoding_training_data_item(vocabulary: Vocabulary, training_data: TrainingData):
+    return EncodedTrainingData(
+        target=one_hot_encode_data(vocabulary, training_data.target),
+        context=one_hot_encode_data_list(vocabulary, training_data.context)
+    )
+
+
 def one_hot_encode_data(vocabulary: Vocabulary, data: Data) -> OneHotEncoding:
     vector = np.zeros(vocabulary.size)
     index_of_word = vocabulary.get_index_by_data(data)

@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
-from typing import List, Generic
+from typing import List, Generic, Callable, Iterator
 
 import numpy as np
 from numpy import ndarray
 
 from model.data import Data, OneHotEncoding, LearningRate
-from model.one_hot_encoder import encode_training_data
+from model.one_hot_encoder import encoding_training_data_item
 from model.training_data import TrainingData
 from model.vocabulary import Vocabulary
 
@@ -13,7 +13,7 @@ from model.vocabulary import Vocabulary
 @dataclass
 class Any2Vec(Generic[Data]):
     vocabulary: Vocabulary[Data]
-    training_data: List[TrainingData]
+    training_data: Callable[[], Iterator[TrainingData]]
     weight_input_hidden: ndarray = field(init=False)
     weight_hidden_output: ndarray = field(init=False)
     learning_rate: LearningRate
@@ -25,13 +25,12 @@ class Any2Vec(Generic[Data]):
         self.weight_hidden_output = np.random.uniform(-1, 1, (self.embedding_size, self.vocabulary.size))
 
     def run(self, epochs: int):
-        encoded_training_data = encode_training_data(self.vocabulary, self.training_data)
-
         previously_computed_epochs = len(self.historic_loss)
         for i in range(previously_computed_epochs, epochs):
             print(f"Epoch {i + 1}/{epochs}.")
             loss = 0
-            for data in encoded_training_data:
+            for data in self.training_data():
+                data = encoding_training_data_item(self.vocabulary, data)
                 y_predicted, hidden_layer, u = self.forward_propagation(data.target)
                 error = self.error(y_predicted, data.context)
                 self.backward_propagation(data.target, hidden_layer, error)

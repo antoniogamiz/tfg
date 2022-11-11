@@ -1,8 +1,9 @@
 import unittest
 import os
 
-
-from model.anys.words import get_sentences_from_file, get_corpus_from_sentences, get_words_in_vocabulary
+from model.anys.words import get_sentences_from_file, get_corpus_from_sentences, get_words_in_vocabulary, \
+    generate_training_data
+from model.training_data import TrainingData
 
 
 class WordsTestCase(unittest.TestCase):
@@ -32,3 +33,16 @@ class WordsTestCase(unittest.TestCase):
 
         expected_words = ["repeated", "some", "words"]
         self.assertEqual(expected_words, actual_words)
+
+    def test_given_corpus_when_generating_training_data_then_it_is_generated_correctly(self):
+        corpus = ['words', 'some', 'words', 'a']
+
+        actual_training_data = generate_training_data(window_size=3, corpus=corpus)
+
+        expected_training_data = [
+            TrainingData(target='words', context=['some', 'words', 'a']),
+            TrainingData(target='some', context=['words', 'words', 'a']),
+            TrainingData(target='words', context=['words', 'some', 'a']),
+            TrainingData(target='a', context=['words', 'some', 'words']),
+        ]
+        self.assertEqual(expected_training_data, actual_training_data)
