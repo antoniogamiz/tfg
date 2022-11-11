@@ -54,14 +54,14 @@ class ModelRunner(Generic[Data]):
         delete_file(self.weight_hidden_output_path)
 
     def save_weight_input_hidden(self):
-        savetxt(self.weight_input_hidden_path, self.model.weight_input_hidden, delimiter=',')
+        savetxt(self.weight_input_hidden_path, self.model.weight_input_hidden, delimiter=',') # noqa
 
     def save_weight_hidden_output(self):
-        savetxt(self.weight_hidden_output_path, self.model.weight_hidden_output, delimiter=',')
+        savetxt(self.weight_hidden_output_path, self.model.weight_hidden_output, delimiter=',') # noqa
 
     def save_historic_loss(self):
         historic_loss = asarray(self.model.historic_loss)
-        savetxt(self.historic_loss_path, historic_loss, delimiter=',')
+        savetxt(self.historic_loss_path, historic_loss, delimiter=',') # noqa
 
     @property
     def weight_input_hidden_path(self):
