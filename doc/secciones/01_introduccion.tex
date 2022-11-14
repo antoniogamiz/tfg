@@ -2,9 +2,8 @@
 
 Un tropo, como describe Rizzo Michael \cite{rizzo2013art}, es una imagen
 universalmente reconocida, con varias capas de significado contextual que
-crean un nueva metáfora visual. Un buen ejemplo, es el tropo \emph{I can
-    explain} \cite{tropo:ICanExplain}, donde un caracter que se siente culpable,
-reacciona a la aparición de una figura autoritaria diciendo: \emph{"Puedo
+crean un nueva metáfora visual. Un buen ejemplo, es el tropo \emph{Puedo explicarlo} \cite{tropo:ICanExplain}, donde un caracter que se siente culpable,
+reacciona a la aparición de una figura autoritaria diciendo: \emph{"¡Puedo
     explicarlo!"}, procediendo a explicar lo que sea que haya pasado. Este tropo ha
 sido enormemente utilizado en una infinidad de situaciones en obras culturales
 \cite{tropo:ICanExplain}, desde \emph{Iron Man} hasta la serie de animación
@@ -26,7 +25,7 @@ El trabajo está organizado en diferentes bloques:
 
 \begin{enumerate}
     \item Bloque I: se describe en detalle el problema que se trata en el
-          trabajo, seguido del estado del arte en el uso del NLP para encontrar
+          trabajo, seguido del estado del arte en el uso del procesamiento del lenguaje natural(o NLP, del inglés \textit{Natural Language Processing}) para encontrar
           relaciones entre palabras. A continuación, se detalla la planificación
           seguida para resolver el problema, así como las prácticas seguidas para
           realizarla.
@@ -42,6 +41,19 @@ Este proyecto es software libre, y está liberado con la licencia \cite{gplv3}.
 
 Antes de pasar a la descripción del problema, es necesario definir algunos conceptos importantes para
 este trabajo.
+
+\begin{definition}[Dato]
+    Se define como dato a la unidad de información más pequeña con la que se trabajar.
+\end{definition}
+
+\begin{definition}[Conjunto de datos]
+    Se define como conjunto de datos a una agrupación de datos.
+\end{definition}
+
+En la mayor parte del desarrollo matemático, se entenderá como datos a las palabras del vocabulario que se use. Como conjunto de datos
+se usará el corpus de texto (que está formado por palabras). Al final del desarrollo, los datos pasarán a ser tropos, que es el objetivo principal
+de este trabajo. Sin embargo, como se observa en las conclusiones finales, este desarrollo también es válido para otros tipos de datos, como ingredientes
+de recetas \cite{kazama2018neural}.
 
 \subsection*{\textit{Embeddings}}
 
@@ -62,10 +74,10 @@ En este trabajo, un \textit{embedding} se va a definir como:
 \end{definition}
 
 Este concepto puede ser usado para codificar la semántica de un término, en un espacio vectorial de dimensión reducida
-y fija, $m$, de forma que se pueda operar con esas representaciones de forma sencilla y eficiente. A continuación se ve cómo
+y fija, $m \in \mathbb{N}$, de forma que se pueda operar con esas representaciones de forma sencilla y eficiente. A continuación se ve cómo
 se deduce la semántica del término a partir de su \textit{embedding}. Normalmente si el conjunto de datos son palabras, el nombre
 que se suele usar es \textit{word embedding}. Es importante notar que $D$ normalmente es un grupo de palabras, pero también puede ser,
-por ejemplo, un grupo de frases \cite{lin2017structured} o un grupo de tropos, como el caso de este trabajo.
+por ejemplo, un grupo de frases \cite{lin2017structured} o un grupo de tropos, como es el caso de este trabajo.
 
 \subsection*{Semántica de un embedding}
 
@@ -97,7 +109,7 @@ cercanas `semánticamente' (dada la representación vectorial de la palabra \tex
 debería ser cercana semánticamente a la de camión porque ambas son vehículos). Para medir este concepto se va a definir una forma de medir el nivel
 de cercanía semántica entre dos palabras. Para ello, se suelen usar funciones de medida (o lo más parecido a ellas):
 
-\begin{definition}
+\begin{definition}\label{metrica}
     Sea $d: A\times A \longrightarrow \mathbb{R}$ una función, donde $A$ es un conjunto cualquiera de elementos. Se dice que $d$ es una métrica o función
     de medida si cumple las siguientes propiedades:
     \begin{enumerate}
@@ -110,14 +122,14 @@ de cercanía semántica entre dos palabras. Para ello, se suelen usar funciones 
 Una posible elección sería usar la similitud coseno:
 
 \begin{definition}[Similitud coseno]\label{def:similitud_coseno}
-  Dados dos vectores $a,b\in\mathbb{R}$, $n\in\mathbb{N}$, se define la similitud coseno como:
+  Dados dos vectores $a,b\in\mathbb{R}^n$, $n\in\mathbb{N}$, se define la similitud coseno como:
   \[
     S_c(a,b)=\cos\theta = \frac{a\cdot b}{\norm{a}\norm{b}} \in [-1, 1]
   \]
 donde $\theta\in[-\pi,\pi]$ es el ángulo entre los vectores $a$ y $b$.
 \end{definition}
 
-Aunque es importante notar que esta función no es de medida, ya que no cumple dos de las propiedades:
+Aunque es importante notar que esta función no es de medida, ya que no cumple dos de las propiedades de métrica \ref*{metrica}:
 \begin{proof}
     $ $
     \begin{itemize}
@@ -134,7 +146,7 @@ De ahí se puede deducir que hay una cierta dirección que más o menos apunta a
 
 A partir de ese ejemplo, se puede ver perfectamente la razón de que la magnitud de los vectores no sea relevante pero sí lo sea su dirección. Sean $a,b\in\mathbb{R}^d$ dos embeddings
 distintos, de forma que $a=(-1, 2, 3)$ y $b=(-3, 6, -9)$. Estos dos vectores tienen magnitudes totalmente distintas ($a=3b$), pero apuntan hacia la misma dirección
-(por lo que tienen similitud coseno \ref{def:similitud_coseno} igual a 0, $S_c(a,b)=0$). Eso es el resultado esperable porque significa que tienen la misma proporción relativa en cada componente.
+(por lo que tienen similitud coseno \ref{def:similitud_coseno} igual a 1, $S_c(a,b)=1$). Eso es el resultado esperable porque significa que tienen la misma proporción relativa en cada componente.
 Sin embargo, si se hubiera usado la distancia euclídea usual, la distancia entra $a$ y $b$ sería de aproximadamente $7.48$. Sería fácil encontrar otro vector $c$ igual de cercano (distancia euclídea) a $a$
 que $b$, pero probablemente apuntaría en una dirección totalmente distinta.
 

@@ -1,4 +1,3 @@
 # Instrucciones de uso
 
-Por ahora nada que instalar :D.
-
+- Poetry: `curl -sSL https://install.python-poetry.org | python -I`

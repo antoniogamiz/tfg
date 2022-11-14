@@ -1,6 +1,6 @@
-# Trabajo de Fin de Grado: *Título*
+# Trabajo de Fin de Grado: Any2Vec
 
-**Este sería el README de tu proyecto. Consulta las [instrucciones de
+**Consulta las [instrucciones de
 instalación](INSTALL.md)
 
 ### Autor: Antonio Gámiz Delgado
