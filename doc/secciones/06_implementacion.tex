@@ -44,9 +44,9 @@ Uno de los objetivos de la implementación es permitir a otras persones (como ci
 estructuras de datos que permiten este objetivo. Se han usado términos anglosajones el código debido a que es el lenguaje por defecto en la comunidad.
 
 \begin{itemize}
-  \item \textit{Data}: es la únidad básica de la red neuronal. El único requerimiento que tienen los inputs de la red es que se pueda generar un hash a partir de ellos. Para enforzar esta regla
-  a nivel de código se ha usado una potente característica de python conocida como \textit{tipado sustructural}, que presenta varios beneficios \cite{walker2005substructural}. El principal siendo
-  que el cliente del módulo no tiene por qué heredar explícitamete de clases provistes por el módulo, creando un código menos acoplado.
+  \item \textit{Data}: es la unidad básica de la red neuronal. El único requerimiento que tienen los inputs de la red es que se pueda generar un hash a partir de ellos. Para asegurar que esta regla
+  se cumple, se ha usado una potente característica de python conocida como \textit{tipado substructural}, que presenta varios beneficios \cite{walker2005substructural}. El principal siendo
+  que el cliente del módulo no tiene por qué heredar de forma explícita de clases provistas por el módulo, creando un código menos acoplado.
   \item \textit{Vocabulary}: esta clase se usa para representar un conjunto de \textit{Data}. Dado que el algoritmo es \textit{any2vec}, el vocabulario puede estar formado por cualquier tipo de
   estructuras.
 \end{itemize}
@@ -55,10 +55,10 @@ estructuras de datos que permiten este objetivo. Se han usado términos anglosaj
 
 Las estructuras \textit{Data} y \textit{Vocabulary} se pueden usar ahora para generar vectores \textit{one-hot}. Se recuerda que los vectores \textit{one-hot} tienen un tamaño $V$, siendo $V$ el tamaño del vocabulario, y
 una de sus entradas vale 1. Esto puede suponer un problema de eficiencia para vocabularios muy grandes, como es el caso de los tropos. Para solucionar este problema se ha optado por no representar
-estas estructuras internamente como vectores, sino simplemente almacenar los índices que tienen un 1 almacenado. Esto hace que las operaaciones matriciales se conviertan en simplemente copiar filas o columnas a otra estructura, reduciendo el tiempo de ejecución considerablemente.
+estas estructuras internamente como vectores, sino simplemente almacenar los índices que tienen un 1 almacenado. Esto hace que las operaciones matriciales se conviertan en simplemente copiar filas o columnas a otra estructura, reduciendo el tiempo de ejecución considerablemente.
 
 Aunque los vectores $one-hot$ solo puedan, en principio, tener una de sus entradas a 1, por razones de eficiencia en este modelo se ha optado por eliminar esta restricción. Lo que permite acelerar
-las operaciones con el contexto (en Skip-Gram) y las opereaciones con el input (en el caso de Bolsa Continua de Palabras).
+las operaciones con el contexto (en Skip-Gram) y las operaciones con el input (en el caso de Bolsa Continua de Palabras).
 
 \subsection{Any2Vec}
 

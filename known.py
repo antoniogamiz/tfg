@@ -207,4 +207,14 @@ words = {
     "tropescraper",
     "python",
     "exs",
+    "tipado",
+    "closure",
+    "csv",
+    "hash",
+    "modelstateinterface",
+    "solid",
+    "substructural",
+    "context",
+    "target",
+    "vocabulary"
 }
