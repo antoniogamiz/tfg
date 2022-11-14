@@ -38,3 +38,40 @@ Las herramientas que se han usado para implementar el trabajo son:
   un paquete en Python para generar un conjunto de datos actualizados en cualquier momento.
 \end{enumerate}
 
+\section{Estructuras de datos}
+
+Uno de los objetivos de la implementación es permitir a otras persones (como científicos de datos) poder usar este modelo y modificarlo sin restricciones. Para ello, se han definido varias
+estructuras de datos que permiten este objetivo. Se han usado términos anglosajones el código debido a que es el lenguaje por defecto en la comunidad.
+
+\begin{itemize}
+  \item \textit{Data}: es la únidad básica de la red neuronal. El único requerimiento que tienen los inputs de la red es que se pueda generar un hash a partir de ellos. Para enforzar esta regla
+  a nivel de código se ha usado una potente característica de python conocida como \textit{tipado sustructural}, que presenta varios beneficios \cite{walker2005substructural}. El principal siendo
+  que el cliente del módulo no tiene por qué heredar explícitamete de clases provistes por el módulo, creando un código menos acoplado.
+  \item \textit{Vocabulary}: esta clase se usa para representar un conjunto de \textit{Data}. Dado que el algoritmo es \textit{any2vec}, el vocabulario puede estar formado por cualquier tipo de
+  estructuras.
+\end{itemize}
+
+\subsection{Vectores codificados \textit{one-hot}}
+
+Las estructuras \textit{Data} y \textit{Vocabulary} se pueden usar ahora para generar vectores \textit{one-hot}. Se recuerda que los vectores \textit{one-hot} tienen un tamaño $V$, siendo $V$ el tamaño del vocabulario, y
+una de sus entradas vale 1. Esto puede suponer un problema de eficiencia para vocabularios muy grandes, como es el caso de los tropos. Para solucionar este problema se ha optado por no representar
+estas estructuras internamente como vectores, sino simplemente almacenar los índices que tienen un 1 almacenado. Esto hace que las operaaciones matriciales se conviertan en simplemente copiar filas o columnas a otra estructura, reduciendo el tiempo de ejecución considerablemente.
+
+Aunque los vectores $one-hot$ solo puedan, en principio, tener una de sus entradas a 1, por razones de eficiencia en este modelo se ha optado por eliminar esta restricción. Lo que permite acelerar
+las operaciones con el contexto (en Skip-Gram) y las opereaciones con el input (en el caso de Bolsa Continua de Palabras).
+
+\subsection{Any2Vec}
+
+Esta clase es la encargada de coordinar los pasos de propagación hacia delante y atrás, así cómo de registrar el error acumulado. El hecho de haber usado una aproximación dirigida a objetos
+seguramente tenga un efecto en la eficiencia del programa, pero añade bastante claridad al módulo y a su uso, así que se ha estimado beneficioso.
+
+Como se puede observar, esta clase usa generadores para producir los pares de entrenamiento $(target, context)$. Esto se ha decidido así para aprovechar al máximo la memoria de la máquina donde
+se corra el programa. La alternativa sería leer el conjunto de datos en su totalidad (lo que en el caso de los tropos no supone un gran problema). Posteriormente, habría que generar todos los pares.
+Esto puede suponer un gran consumo de memoria, dependiendo en la estrategia elegida para generar los pares. Otra consideración importante es que el uso de generadores está \textit{envuelto} por una
+función que, valga la redundancia, los genera. Este tipo de funciones es conocida como \textit{closure}. Esto es necesario ya que los generadores solo pueden ser recorridos una vez.
+
+Any2Vec también acepta matrices de pesos ya inicializadas, así se permite al consumidor ejecutar el modelo con pesos de antiguas iteraciones o generados usando otras técnicas. También se permite
+al consumidor guardar el progreso de entrenamiento. De esto se encarga la interfaz \textit{ModelStateInterface}. Se ha usado inyección de dependencias (parte de los principios \textit{SOLID} \cite{martin2000design})
+para permitir al consumidor usar el mejor proveedor que él estime oportuno. En el caso de este trabajo, se ha optado por simplemente usar un almacenamiento básico en formato CSV, directamente en el sistema de
+archivos de la máquina que ejecuta el modelo.
+
