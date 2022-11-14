@@ -199,5 +199,11 @@ words = {
     "milestones",
     "mvp",
     "product",
-    "exs"
+    "exs",
+    "ch",
+    "fill",
+    "huffman",
+    "label",
+    "root",
+    "vp"
 }

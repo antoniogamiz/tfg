@@ -511,7 +511,7 @@ Como se puede deducir a partir de \ref{eq:yj}, calcular el denominador de la fun
 se pueden aplicar dos técnicas:
 
 \begin{itemize}
-  \item Muestreo negativo \cite{goldberg2014word2vec}: en esta técnica se genera el par esperado (o positivo). Posteriormente se escojen $k$ muestras adicionales, que no se generan a partir del contexto, es decir, son \textit{negativas}.
+  \item Muestreo negativo \cite{goldberg2014word2vec}: en esta técnica se genera el par esperado (o positivo). Posteriormente se escogen $k$ muestras adicionales, que no se generan a partir del contexto, es decir, son \textit{negativas}.
   Una vez se tienen las muestras positivas y negativas, se aplica una nueva función objetivo más rápida de calcular que \textit{softmax}. Esta opción se ha descartado porque en el caso de tropos no
   está muy claro cómo se deberían generar esas muestras negativas.
   \item \textit{Softmax} jerárquico: esta opción evita usar todo el vocabulario en cada cálculo, usando solo un número muy reducido de elementos del vocabulario. Esta opción se desarrolla a continuación.
@@ -605,7 +605,7 @@ que es exactamente lo que se obtiene desarrollando \ref{eq:soft}. De igual forma
   \sum_{i=1}^Vp\left( w_i = w_O \right) = 1
 \end{equation}
 
-haciéndo que al \textit{softmax jerárquico} una distribución multinomial bien definida.
+haciendo que al \textit{softmax jerárquico} una distribución multinomial bien definida.
 
 Ahora lo que queda es escribir las nuevas ecuaciones de actualización. Por simplicidad primero se va a proceder con el modelo de un término por contexto, ya que extenderlas
 al de más términos, es muy sencillo. Para simplificar la notación, se toma:
@@ -636,7 +636,7 @@ Lo que produce la siguiente ecuación de actualización:
 \begin{equation}
   v^{'(nuevo)}_j = v^{'(viejo)}_j - \nabla \left( \sigma\left( v^{'T}_j h \right) - t_j \right)h
 \end{equation}
-Para propagar el error, simplemente hay que tomar la derivdada de $E$ con respecto a $h$:
+Para propagar el error, simplemente hay que tomar la derivada de $E$ con respecto a $h$:
 \begin{align}
   \frac{\partial E }{\partial h} & = \sum_{j=1}^{L(w) - 1}\frac{\partial E}{\partial v'_jh} \frac{\partial v'_jh}{\partial h} \\
                                  & = \sum_{j=1}^{L(w) - 1} \left( \sigma\left( v^{'T}_j h \right) - t_j \right)v'_j \\
