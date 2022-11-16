@@ -514,7 +514,7 @@ se pueden aplicar dos técnicas:
   \item Muestreo negativo \cite{goldberg2014word2vec}: en esta técnica se genera el par esperado (o positivo). Posteriormente se escogen $k$ muestras adicionales, que no se generan a partir del contexto, es decir, son \textit{negativas}.
   Una vez se tienen las muestras positivas y negativas, se aplica una nueva función objetivo más rápida de calcular que \textit{softmax}. Esta opción se ha descartado porque en el caso de tropos no
   está muy claro cómo se deberían generar esas muestras negativas.
-  \item \textit{Softmax} jerárquico: esta opción evita usar todo el vocabulario en cada cálculo, usando solo un número muy reducido de elementos del vocabulario. Esta opción se desarrolla a continuación.
+  \item \textit{Softmax} jerárquico: esta opción, al contrario que la función \textit{softmax} convencional, evita usar todo el vocabulario en cada cálculo del denominador, usando solo un número muy reducido de elementos del vocabulario. Esta opción se desarrolla a continuación.
 \end{itemize}
 
 El algoritmo \textit{softmax jerárquico} es una forma eficiente de calcular la función \textit{softmax} \cite{morin2005hierarchical}. El algoritmo usa un árbol binario para representar todos los términos
