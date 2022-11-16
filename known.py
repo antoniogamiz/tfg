@@ -199,5 +199,22 @@ words = {
     "milestones",
     "mvp",
     "product",
-    "exs"
+    "conda",
+    "javascript",
+    "pip",
+    "poetry",
+    "scripts",
+    "tropescraper",
+    "python",
+    "exs",
+    "tipado",
+    "closure",
+    "csv",
+    "hash",
+    "modelstateinterface",
+    "solid",
+    "substructural",
+    "context",
+    "target",
+    "vocabulary"
 }
