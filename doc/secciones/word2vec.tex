@@ -518,8 +518,8 @@ se pueden aplicar dos técnicas:
 \end{itemize}
 
 El algoritmo \textit{softmax jerárquico} es una forma eficiente de calcular la función \textit{softmax} \cite{morin2005hierarchical}. El algoritmo usa un árbol binario para representar todos los términos
-del vocabulario (de su representación en vectores). Si el vocabulario tiene $V$ términos, el árbol tendrá $V$ nodos hoja, uno por cada término. Es fácil comprobar que en un árbol binario se tienen $V-1$ nodos intermedios (el árbol binario
-usado es de Huffman, así cada nodo interno tiene siempre dos hijos \cite{van1976construction}).
+del vocabulario (su representación en vectores). Si el vocabulario tiene $V$ términos, el árbol tendrá $V$ nodos hoja, uno por cada término. Es fácil comprobar que en un árbol binario se tienen $V-1$ nodos intermedios (el árbol binario
+usado es de Huffman, así que cada nodo interno tiene siempre dos hijos \cite{van1976construction}).
 Por cada nodo hoja, existe un camino único desde la raíz hasta dicha hoja. Ese camino es usado para estimar la probabilidad de la palabra representada por la hoja. En la figura \ref{fig:softmax} se puede apreciar un
 ejemplo:
 
@@ -562,17 +562,17 @@ ejemplo:
 			\path (n8) -- (n9) node [black, font=\Huge, midway, sloped] {$\dots$};
 
 	\end{tikzpicture}
-	\caption{Ejemplo de árbol binario de Huffman (no se incluyen frecuencias) para el algoritmo \textit{softmax jerárquico}}.
+	\caption{Ejemplo de árbol binario de Huffman (no se incluyen frecuencias) para el algoritmo \textit{softmax jerárquico}.}
 	\label{fig:softmax}
 \end{figure}
 
-Un hecho importante de usar este algoritmo es que se pierde la representación de los vectores de salida. En su lugar, cada uno de los $V-1$ nodos intermedios tiene un vector de salida asociado
+Un hecho importante de usar este algoritmo es que se pierde la representación de los vectores de salida. En su lugar, cada uno de los $V-1$ nodos intermedios tiene un vector de salida asociado:
 $v'_{n(w,j)}$. La función objetivo cambia considerablemente, siendo ahora la probabilidad de que un término sea el término de salida:
 \begin{equation}\label{eq:soft}
   p\left( w=w_O \right) = \prod_{j=1}^{L(w)-1}\sigma\left( \llbracket n(w, j+1)=ch(n(w,j))\rrbracket v^{'T}_{n(w,j)}h \right)
 \end{equation}
 
-donde $ch(n)$ es el hijo izquierdo del nodo $n$; $v'_{n(w,j)}$ es la representación del nodo $n(w,j)$; $h$ es el valor de salida de la capa escondida; $\llbracket x\rrbracket$ es una función especial
+donde $ch(n)$ es el hijo izquierdo del nodo $n$; $v'_{n(w,j)}$ es la representación del nodo $n(w,j)$; $L(w)$ es la longitud del camino desde el nodo raíz hasta el nodo hoja que representa $w$; $h$ es el valor de salida de la capa escondida; $\llbracket x\rrbracket$ es una función especial
 definida como:
 \begin{equation}
   \llbracket x \rrbracket = \begin{cases}
@@ -610,31 +610,31 @@ haciendo que al \textit{softmax jerárquico} una distribución multinomial bien 
 Ahora lo que queda es escribir las nuevas ecuaciones de actualización. Por simplicidad primero se va a proceder con el modelo de un término por contexto, ya que extenderlas
 al de más términos, es muy sencillo. Para simplificar la notación, se toma:
 \begin{equation}
-  \llbracket \dot \rrbracket := \llbracket  n(w, j+1) = ch(n(w,j)) \rrbracket
+  \llbracket \cdot \rrbracket := \llbracket  n(w, j+1) = ch(n(w,j)) \rrbracket
 \end{equation}
 \begin{equation}
   v'_j := v'_{n_{w,j}}
 \end{equation}
 La función de error con la nueva probabilidad viene definida por:
 \begin{equation}
-  E = - \log p\left( w=w_O|w_I \right) = - \sum_{j=1}^{L(w) - 1} \log\sigma\left( \llbracket \dot \rrbracket v^{'T}_jh \right)
+  E = - \log p\left( w=w_O|w_I \right) = - \sum_{j=1}^{L(w) - 1} \log\sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right)
 \end{equation}
 Derivando $E$ respecto de $v'_jh$, se obtiene:
 \begin{align}
-  \frac{\partial E}\partial v'_j h{} & = \left( \sigma\left( \llbracket \dot \rrbracket v^{'T}_jh \right) \right) \llbracket \dot \rrbracket \\
+  \frac{\partial E}{\partial v'_j h} & = \left( \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) \right) \llbracket \cdot \rrbracket \\
                                      & = \begin{cases}
-                                      \sigma\left( \llbracket \dot \rrbracket v^{'T}_jh \right) - 1 & (\llbracket \dot \rrbracket = 1) \\
-                                      \sigma\left( \llbracket \dot \rrbracket v^{'T}_jh \right) & (\llbracket \dot \rrbracket = -1)
+                                      \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) - 1 & (\llbracket \cdot \rrbracket = 1) \\
+                                      \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) & (\llbracket \cdot \rrbracket = -1)
                                     \end{cases} \\
-                                    & = \sigma\left( \llbracket \dot \rrbracket v^{'T}_jh \right) - t_j
+                                    & = \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) - t_j
 \end{align}
-donde $t_j=1$ si $\llbracket \dot \rrbracket = 1$ y $t_j=0$ en otro caso. A continuación se deriva $E$ con respecto a la representación vectorial del nodo interno $n(w,j)$, obteniendo:
+donde $t_j=1$ si $\llbracket \cdot \rrbracket = 1$ y $t_j=0$ en otro caso. A continuación se deriva $E$ con respecto a la representación vectorial del nodo interno $n(w,j)$, obteniendo:
 \begin{equation}
   \frac{\partial E}{\partial v'_j} = \frac{\partial E}{\partial v'_j h} \frac{\partial v'_jh}{\partial v'_j} = \left( \sigma\left( v^{'T}_j h \right) - t_j \right) h
 \end{equation}
 Lo que produce la siguiente ecuación de actualización:
 \begin{equation}
-  v^{'(nuevo)}_j = v^{'(viejo)}_j - \nabla \left( \sigma\left( v^{'T}_j h \right) - t_j \right)h
+  v^{'(nuevo)}_j = v^{'(viejo)}_j - \eta \left( \sigma\left( v^{'T}_j h \right) - t_j \right)h
 \end{equation}
 Para propagar el error, simplemente hay que tomar la derivada de $E$ con respecto a $h$:
 \begin{align}
