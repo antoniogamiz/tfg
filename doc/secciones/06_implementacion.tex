@@ -75,3 +75,13 @@ al consumidor guardar el progreso de entrenamiento. De esto se encarga la interf
 para permitir al consumidor usar el mejor proveedor que él estime oportuno. En el caso de este trabajo, se ha optado por simplemente usar un almacenamiento básico en formato CSV, directamente en el sistema de
 archivos de la máquina que ejecuta el modelo.
 
+\section{Conjunto de datos}
+
+En el conjunto de datos seleccionado se encuentran 12567 películas distintas, con un total de 37317 tropos únicos. Eso significa que nuestro vocabulario tendrá 37317 términos, haciendo que
+los vectores presenten una alta dimensionalidad, lo que afecta enormemente a la eficiencia. Para reducir este problema se van a eliminar aquellos tropos que aparecen en pocas películas.
+El tropo más popular, es decir, el que aparece en más películas, es \href{\textit{Shout-Out}}{https://tvtropes.org/pmwiki/pmwiki.php/Main/ShoutOut}, con un total de 3603 apariciones.
+Por el contrario, los menos populares tienen solamente una aparición, como \href{\textit{Mecha}}{https://tvtropes.org/pmwiki/pmwiki.php/Main/Mecha}. Sorprendentemente, hay 4782 tropos con solo una aparición. Con menos
+de 50, hay 32905.
+
+Como heurística para reducir el dataset se van a descartar todos los tropos que aparezcan en pocas películas (concretamente, que aparezcan un mínimo de 500 veces) y películas con menos de 40 tropos.
+De esta forma, se descartan tropos poco significativos y películas con muy pocos tropos. Tras la reducción, se quedan un poco más de 100 tropos y más de 500 películas distintas.
