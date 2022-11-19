@@ -502,5 +502,147 @@ sí que ha sufrido cambios:
     & = - \sum_{j=1}^V u_{j} + V\log \sum_{j'=1}^V\exp(u_{j'}).
 \end{align}
 
-En este caso la expresión de $h$ no cambia ya que siempre se ha tenido una palabra únicamente, independientemente del contexto. Por lo
+En este caso la expresión de $h$ no cambia ya que siempre se ha tenido un término únicamente, independientemente del contexto. Por lo
 tanto, el valor de la unidad $u_{j}$ tampoco ha cambiado. Las expresiones de $v$ y $v'$ tampoco han sufrido alteraciones adicionales.
+
+\section{\textit{Softmax} jerárquico}
+
+Como se puede deducir a partir de \ref{eq:yj}, calcular el denominador de la función \textit{softmax} es increíblemente caro. Para disminuir el tiempo de ejecución de ese cálculo
+se pueden aplicar dos técnicas:
+
+\begin{itemize}
+  \item Muestreo negativo \cite{goldberg2014word2vec}: en esta técnica se genera el par esperado (o positivo). Posteriormente se escogen $k$ muestras adicionales, que no se generan a partir del contexto, es decir, son \textit{negativas}.
+  Una vez se tienen las muestras positivas y negativas, se aplica una nueva función objetivo más rápida de calcular que \textit{softmax}. Esta opción se ha descartado porque en el caso de tropos no
+  está muy claro cómo se deberían generar esas muestras negativas.
+  \item \textit{Softmax} jerárquico: esta opción, al contrario que la función \textit{softmax} convencional, evita usar todo el vocabulario en cada cálculo del denominador, usando solo un número muy reducido de elementos del vocabulario. Esta opción se desarrolla a continuación.
+\end{itemize}
+
+El algoritmo \textit{softmax jerárquico} es una forma eficiente de calcular la función \textit{softmax} \cite{morin2005hierarchical}. El algoritmo usa un árbol binario para representar todos los términos
+del vocabulario (su representación en vectores). Si el vocabulario tiene $V$ términos, el árbol tendrá $V$ nodos hoja, uno por cada término. Es fácil comprobar que en un árbol binario se tienen $V-1$ nodos intermedios (el árbol binario
+usado es de Huffman, así que cada nodo interno tiene siempre dos hijos \cite{van1976construction}).
+Por cada nodo hoja, existe un camino único desde la raíz hasta dicha hoja. Ese camino es usado para estimar la probabilidad de la función de activación para el término representado por la hoja. En la figura \ref{fig:softmax} se puede apreciar un
+ejemplo:
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+					roundnode/.style={circle, draw=black, minimum size=7mm},
+			]
+
+			\node[roundnode, fill=gray,label=above:{$n(w_2, 1)$}]   at (3.5,7)   (root)  {};
+			\node[roundnode, fill=gray,label=above:{$n(w_2, 2)$}]   at (2,6)   (n1)  {};
+			\node[roundnode, fill=gray]   at (5,6)   (n2)  {};
+
+			\draw[-stealth] (root) -- node[above,xshift=1cm]   {} (n1);
+			\draw[-stealth] (root) -- node[above,xshift=1cm]   {} (n2);
+
+
+			\node[roundnode, fill=gray,label=above:{$n(w_2, 3)$}]   at (1,5)   (n3)  {};
+			\draw[-stealth] (n1) -- node[above,xshift=1cm]   {} (n3);
+
+			\node[roundnode, fill=gray]   at (6,5)   (n4)  {};
+			\draw[-stealth] (n2) -- node[above,xshift=1cm]   {} (n4);
+
+			\node[roundnode,label=below:{$w_1$}]   at (0,4)   (n5)  {};
+			\node[roundnode,label=below:{$w_2$}]   at (2,4)   (n6)  {};
+			\draw[-stealth] (n3) -- node[above,xshift=1cm]   {} (n5);
+			\draw[-stealth] (n3) -- node[above,xshift=1cm]   {} (n6);
+
+			\node[roundnode,label=below:{$w_3$}]   at (3,4)   (n7)  {};
+			\draw[-stealth] (n1) -- node[above,xshift=1cm]   {} (n7);
+
+			\node[roundnode,label=below:{$w_4$}]   at (4,4)   (n8)  {};
+			\draw[-stealth] (n2) -- node[above,xshift=1cm]   {} (n8);
+
+			\node[roundnode,label=below:{$w_{V-1}$}]   at (6,4)   (n9)  {};
+			\node[roundnode,label=below:{$w_V$}]   at (7,4)   (n10)  {};
+			\draw[-stealth] (n4) -- node[above,xshift=1cm]   {} (n9);
+			\draw[-stealth] (n4) -- node[above,xshift=1cm]   {} (n10);
+
+			\path (n8) -- (n9) node [black, font=\Huge, midway, sloped] {$\dots$};
+
+	\end{tikzpicture}
+	\caption{Ejemplo de árbol binario de Huffman (no se incluyen frecuencias) para el algoritmo \textit{softmax jerárquico}.}
+	\label{fig:softmax}
+\end{figure}
+
+Un hecho importante de usar este algoritmo es que se pierde la representación de los vectores de salida. En su lugar, cada uno de los $V-1$ nodos intermedios tiene un vector de salida asociado:
+$v'_{n(w,j)}$. La función objetivo cambia considerablemente, siendo ahora la probabilidad de que un término sea el término de salida:
+\begin{equation}\label{eq:soft}
+  p\left( w=w_O \right) = \prod_{j=1}^{L(w)-1}\sigma\left( \llbracket n(w, j+1)=ch(n(w,j))\rrbracket v^{'T}_{n(w,j)}h \right)
+\end{equation}
+
+donde $ch(n)$ es el hijo izquierdo del nodo $n$; $v'_{n(w,j)}$ es la representación del nodo $n(w,j)$; $L(w)$ es la longitud del camino desde el nodo raíz hasta el nodo hoja que representa $w$; $h$ es el valor de salida de la capa escondida; $\llbracket x\rrbracket$ es una función especial
+definida como:
+\begin{equation}
+  \llbracket x \rrbracket = \begin{cases}
+    1 & \text{ si x es cierto} \\
+    -1 & \text{ si x es falso}
+  \end{cases}
+\end{equation}
+
+Véase un ejemplo para comprender un poco más esta nueva función. Mirando la figura \ref{fig:softmax}, supóngase que se quiere calcular la probabilidad de $w_2$ siendo el término de salida. Se define esa
+probabilidad como la probabilidad de un camino aleatorio empezando desde la raíz y terminando en el nodo hoja de $w_2$. En cada nodo interno (incluyendo la raíz), es necesario asignar las probabilidades
+de ir hacia la izquierda o hacia la derecha. La probabilidad de ir hacia la izquierda se define como:
+\begin{equation}
+  p\left( n, izquierda \right) = \sigma\left( v^{'T}_n h \right)
+\end{equation}
+
+que es determinada por la representación vectorial del nodo interno y el valor de la capa de salida (que es a su vez determinado por la representación vectorial del término de entrada). De forma sencilla
+se puede calcular la probabilidad de ir hacia la derecha:
+\begin{equation}
+  p\left( n, derecha \right) = 1 - p\left( n, izquierda \right) = \sigma\left( v^{'T}_n h \right)
+\end{equation}
+
+Siguiendo el camino en la figura \ref{fig:softmax}, del nodo raíz a $w_2$, se puede calcular la probabilidad buscada:
+\begin{align}
+  p\left( w_2 = w_O \right) & = p\left( n(w_2, 1), izquierda \right) p\left( n(w_2, 2), izquierda \right) p\left(n(w_2, 3), derecha\right)\\
+                            & = \sigma\left( v^{'T}_{n(w_2, 1)h} \right) \sigma\left( v^{'T}_{n(w_2, 2)h} \right) \sigma\left( - v^{'T}_{n(w_2, 3)h} \right)
+\end{align}
+
+que es exactamente lo que se obtiene desarrollando \ref{eq:soft}. De igual forma, teniendo en cuenta la definición de $\sigma$, es fácil ver que:
+\begin{equation}
+  \sum_{i=1}^Vp\left( w_i = w_O \right) = 1
+\end{equation}
+
+haciendo que al \textit{softmax jerárquico} una distribución multinomial bien definida.
+
+Ahora lo que queda es escribir las nuevas ecuaciones de actualización. Por simplicidad primero se va a proceder con el modelo de un término por contexto, ya que extenderlas
+al de más términos, es muy sencillo. Para simplificar la notación, se toma:
+\begin{equation}
+  \llbracket \cdot \rrbracket := \llbracket  n(w, j+1) = ch(n(w,j)) \rrbracket
+\end{equation}
+\begin{equation}
+  v'_j := v'_{n_{w,j}}
+\end{equation}
+La función de error con la nueva probabilidad viene definida por:
+\begin{equation}
+  E = - \log p\left( w=w_O|w_I \right) = - \sum_{j=1}^{L(w) - 1} \log\sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right)
+\end{equation}
+Derivando $E$ respecto de $v'_jh$, se obtiene:
+\begin{align}
+  \frac{\partial E}{\partial v'_j h} & = \left( \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) \right) \llbracket \cdot \rrbracket \\
+                                     & = \begin{cases}
+                                      \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) - 1 & (\llbracket \cdot \rrbracket = 1) \\
+                                      \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) & (\llbracket \cdot \rrbracket = -1)
+                                    \end{cases} \\
+                                    & = \sigma\left( \llbracket \cdot \rrbracket v^{'T}_jh \right) - t_j
+\end{align}
+donde $t_j=1$ si $\llbracket \cdot \rrbracket = 1$ y $t_j=0$ en otro caso. A continuación se deriva $E$ con respecto a la representación vectorial del nodo interno $n(w,j)$, obteniendo:
+\begin{equation}
+  \frac{\partial E}{\partial v'_j} = \frac{\partial E}{\partial v'_j h} \frac{\partial v'_jh}{\partial v'_j} = \left( \sigma\left( v^{'T}_j h \right) - t_j \right) h
+\end{equation}
+Lo que produce la siguiente ecuación de actualización:
+\begin{equation}
+  v^{'(nuevo)}_j = v^{'(viejo)}_j - \eta \left( \sigma\left( v^{'T}_j h \right) - t_j \right)h
+\end{equation}
+Para propagar el error, simplemente hay que tomar la derivada de $E$ con respecto a $h$:
+\begin{align}
+  \frac{\partial E }{\partial h} & = \sum_{j=1}^{L(w) - 1}\frac{\partial E}{\partial v'_jh} \frac{\partial v'_jh}{\partial h} \\
+                                 & = \sum_{j=1}^{L(w) - 1} \left( \sigma\left( v^{'T}_j h \right) - t_j \right)v'_j \\
+                                 & := EH
+\end{align}
+Basta con sustituir la nueva expresión de $EH$ en las ecuaciones que ya se tenían.
+
+A partir de las ecuaciones de actualización se puede observar que la complejidad computacional ha pasado de $O(V)$ a $O(\log V)$, lo que implica una gran mejora
+en velocidad. Sin embargo, todavía se tienen más o menos la misma cantidad de parámetros: $V-1$ frente a los $V$ anteriores.
