@@ -502,7 +502,7 @@ sí que ha sufrido cambios:
     & = - \sum_{j=1}^V u_{j} + V\log \sum_{j'=1}^V\exp(u_{j'}).
 \end{align}
 
-En este caso la expresión de $h$ no cambia ya que siempre se ha tenido una palabra únicamente, independientemente del contexto. Por lo
+En este caso la expresión de $h$ no cambia ya que siempre se ha tenido un término únicamente, independientemente del contexto. Por lo
 tanto, el valor de la unidad $u_{j}$ tampoco ha cambiado. Las expresiones de $v$ y $v'$ tampoco han sufrido alteraciones adicionales.
 
 \section{\textit{Softmax} jerárquico}
@@ -520,7 +520,7 @@ se pueden aplicar dos técnicas:
 El algoritmo \textit{softmax jerárquico} es una forma eficiente de calcular la función \textit{softmax} \cite{morin2005hierarchical}. El algoritmo usa un árbol binario para representar todos los términos
 del vocabulario (su representación en vectores). Si el vocabulario tiene $V$ términos, el árbol tendrá $V$ nodos hoja, uno por cada término. Es fácil comprobar que en un árbol binario se tienen $V-1$ nodos intermedios (el árbol binario
 usado es de Huffman, así que cada nodo interno tiene siempre dos hijos \cite{van1976construction}).
-Por cada nodo hoja, existe un camino único desde la raíz hasta dicha hoja. Ese camino es usado para estimar la probabilidad de la palabra representada por la hoja. En la figura \ref{fig:softmax} se puede apreciar un
+Por cada nodo hoja, existe un camino único desde la raíz hasta dicha hoja. Ese camino es usado para estimar la probabilidad de la función de activación para el término representado por la hoja. En la figura \ref{fig:softmax} se puede apreciar un
 ejemplo:
 
 \begin{figure}[H]
