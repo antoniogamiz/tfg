@@ -31,7 +31,7 @@ def any2vec_with_words(embedding_size: int, learning_rate: LearningRate) -> Tupl
 def any2vec_with_tropes(embedding_size: int, learning_rate: LearningRate) -> Tuple[str, Any2Vec]:
     print("Running Any2Vec with tropes...")
 
-    data = get_tropes_from_file('./datasets/dataset.json')
+    data = get_tropes_from_file('./datasets/sample.json')
     tropes = get_unique_tropes(data)
     vocabulary = Vocabulary.from_data_list(tropes)
 
