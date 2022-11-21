@@ -39,6 +39,7 @@ class ModelRunner:
         return loadtxt(self.weight_hidden_output_path, delimiter=',')
 
     def read_historic_loss(self):
+        return []
         return list(loadtxt(self.historic_loss_path, delimiter=','))
 
     def save_model_state(self):
