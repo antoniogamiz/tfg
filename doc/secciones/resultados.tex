@@ -19,6 +19,7 @@ relaciones entre los distintos tropos.
 \begin{figure}\label{embedding_size}[H]
   \includegraphics[width=12cm]{perdida.png}
   \centering
+  \caption{La pérdida es medida usando la función \ref{perdida_1}}
 \end{figure}
 
 \begin{center}
@@ -80,7 +81,7 @@ relaciones entre los distintos tropos.
 \end{table}
 \end{center}
 
-En la figura \ref{tsne_full} se puede ver la representación del resultado del modelo T-SNE (usado para representar datos con alta dimensionalidad en dos o tres dimensiones y detectar agrupaciones en los datos)
+En la figura \ref{tsne_full} se puede ver la representación del resultado del modelo t-SNE (usado para representar datos con alta dimensionalidad en dos o tres dimensiones y detectar agrupaciones en los datos)
 para los \textit{embeddings} de tamaño 100 y ratio de aprendizaje 0.001.
 En el repositorio del trabajo se encontrar la imagen a tamaño completo. En la figura \ref{tsne} se aprecia una versión amplificada de la gráfica anterior donde
 se pueden apreciar algunos de los tropos.
@@ -88,11 +89,13 @@ se pueden apreciar algunos de los tropos.
 \begin{figure}\label{tsne_full}
   \includegraphics[width=12cm]{tsne_full.png}
   \centering
+  \caption{Resultado de t-SNE para el conjunto de datos reducido}
 \end{figure}
 
 \begin{figure}\label{tsne}
   \includegraphics[width=12cm]{tsne.png}
   \centering
+  \caption{Ampliación del resultado de t-SNE para el conjunto de datos reducido}
 \end{figure}
 
 Se puede apreciar que después de 2500 iteraciones del modelo, la nube de puntos sigue bastante dispersa. Esto indica que el algoritmo no ha sido capaz de encontrar
@@ -110,6 +113,27 @@ Consultando el significado de estos tropos:
   \item \textit{ArcWords}: representa alguna frase simbólica que aparece reiteradas veces a lo largo de un arco argumental.
   \item \textit{ForegoneConclusion}: representa cuando el autor anuncia el final al principio de la obra pero no explica cómo se llega hasta ahí.
 \end{itemize}
-Como se puede ver, el resultado no parece tener mucho sentido. Esto junto con el hecho de no haber encontrado agrupaciones entre tropos, indica que no se ha sido capaz
+
+\begin{figure}\label{ampliacion_meta}
+  \includegraphics[width=12cm]{tsne.png}
+  \centering
+  \caption{Ampliación del resultado de t-SNE}
+\end{figure}
+
+En la ampliación \ref{ampliacion_meta} se pueden observar que varios tropos (\textit{Bmovie}, \textit{TrailersAlwaysSpoil} y \textit{MeaningfulName}) que son considerados \textit{meta}. Estos tropos no son narrativos,
+es decir, no describen la trama de la película, sino características de ella. Por ejemplo, \textit{B-Movie}, un tropo usado para describir aquellas películas que no quieres dejar de ver
+si ya la has empezado, pero que no volverías a verla.
+
+\begin{figure}\label{ampliacion_fecha}
+  \includegraphics[width=12cm]{tsne.png}
+  \centering
+  \caption{Ampliación del resultado de t-SNE}
+\end{figure}
+
+En la ampliacion \ref{ampliacion_fecha} se puede ver el meta tropo \textit{FilmsOfThe1970s}, usado para representar películas de la década de los 70. A su alrededor se encuentran
+\textit{KickTheDog} y \textit{GranUnifiedTimeline}, tropos que se hicieron populares en esa década.
+
+Como se puede ver, se ha obtenido información adicional de los tropos en algunos casos, mientras que se no se han conseguido los resultados esperados en otros.
+Esto junto con el hecho de no haber encontrado agrupaciones entre tropos, indica que no se ha sido capaz
 de resolver el problema propuesto de una forma satisfactoria. Sin embargo, sí se ha conseguido extender el modelo \textit{Word2Vec} a \textit{Any2Vec}. Esto significa
 que futuros investigadores o personas interesadas pueden continuar el trabajo con los tropos o incluso aplicar el modelo a otro tipo de datos, como recetas \cite{kazama2018neural}.

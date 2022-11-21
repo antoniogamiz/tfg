@@ -248,4 +248,12 @@ words = {
     "tearjerker",
     "trope",
     "troubledproduction",
+    "ampliacion",
+    "bmovie",
+    "filmsofthe",
+    "granunifiedtimeline",
+    "kickthedog",
+    "meaningfulname",
+    "movie",
+    "trailersalwaysspoil",
 }
