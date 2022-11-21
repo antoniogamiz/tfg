@@ -301,4 +301,10 @@ words = {
     "which",
     "with",
     "work",
+    "amazon",
+    "cccc",
+    "glasssdor",
+    "macbook",
+    "medium",
+    "services",
 }
