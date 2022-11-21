@@ -33,7 +33,7 @@ class Any2Vec:
             j = 0
             for data in self.training_data():
                 j += 1
-                print(j/1048108.0)
+                print(f"Epoch: {i} - {j/30838.0}")
                 encoded_data = encoding_training_data_item(self.vocabulary, data)
                 y_predicted, hidden_layer, u = self.forward_propagation(encoded_data.target)
                 error = self.error(y_predicted, encoded_data.context)

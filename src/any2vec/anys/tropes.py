@@ -11,7 +11,9 @@ def get_tropes_from_file(path: str) -> Dict:
 
 
 def get_unique_tropes(data: Dict) -> List[str]:
-    return list(set(chain.from_iterable(data.values())))
+    a = list(set(chain.from_iterable(data.values())))
+    a.sort()
+    return a
 
 
 def get_training_tropes(data: Dict) -> Iterator[TrainingData]:

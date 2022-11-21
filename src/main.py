@@ -50,12 +50,12 @@ def any2vec_with_tropes(embedding_size: int, learning_rate: LearningRate) -> Tup
 
 
 def main():
-    name, model = any2vec_with_tropes(embedding_size=2, learning_rate=LearningRate(0.001))
+    name, model = any2vec_with_tropes(embedding_size=25, learning_rate=LearningRate(0.05))
     runner = ModelRunner(
-        name=name,
+        name="w25_0.01_100",
         model=model
     )
-    runner.start(epochs=1)
+    runner.start(epochs=100)
 
 
 if __name__ == "__main__":
