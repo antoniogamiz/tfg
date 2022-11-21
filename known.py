@@ -307,4 +307,6 @@ words = {
     "macbook",
     "medium",
     "services",
+    "adam",
+    "sdg"
 }

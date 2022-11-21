@@ -1,2 +1,19 @@
 \chapter{Conclusiones y trabajos futuros}
 
+Para concluir este trabajo, se puede decir que se ha completado con éxito el objetivo de desarrollar una librería
+para extraer la semántica de contenido no verbal. Además, el modelo propuesto
+es perfectamente compatible con otros trabajos futuros que se quieran hacer (por ejemplo, se podría recrear el trabajo con recetas e ingredientes \cite{kazama2018neural}).
+
+Como se ha podido observar en los resultados, se ha extraído cierta información del conjunto de tropos,
+como qué tropos fueron populares en una década. Sin embargo, todavía
+queda margen de mejora a la hora de extraer más semántica de los tropos.
+
+Uno de los retos del trabajo ha sido cómo generar los pares de entrada y salida para entrenar el modelo. Los tropos, a diferencia de palabras organizadas en oraciones y textos,
+no tienen un contexto claramente definido. Esto implica que es el investigador quien tiene que definir, de alguna manera, ese contexto. En este caso, el contexto ha sido tomar todos los tropos
+de la película. No obstante, en trabajos futuros se pueden investigar formas adicionales de considerar los datos. Por ejemplo, se pueden tomar todas las combinaciones de los tropos tomados de $k$ en $k$.
+
+
+Otro punto de mejora que se ha detectado es la eficiencia del modelo. Actualmente, con un conjunto de datos completo, se requieren varias semanas
+para reducir de forma significativa el error. En este trabajo se ha usado el algoritmo \textit{softmax} jerárquico, que ha mejorado notablemente la eficiencia del modelo. Sin embargo,
+para trabajos futuros, se pueden aplicar técnicas adicionales: como mejorar la implementación de la propagación hacia atrás (\textit{ADAM} o \textit{SDG}).
+
