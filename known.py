@@ -248,4 +248,11 @@ words = {
     "tearjerker",
     "trope",
     "troubledproduction",
+    "amazon",
+    "cccc",
+    "glasssdor",
+    "macbook",
+    "medium",
+    "services",
+
 }
