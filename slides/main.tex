@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Based one the "beamer-greek-two" template provided
+%% by the Laboratory of Computational Mathematics,
+%% Mathematical Software and Digital Typography,
+%% Department of Mathematics, University of the Aegean
+%% (http://myria.math.aegean.gr/labs/dt/)
+%%
+%% Adapted by John Liaperdos, October-November 2014
+%% (ioannis.liaperdos@gmail.com)
+%%
+%% Last update: 22/06/2017 (English Support)
+%% Source: https://es.overleaf.com/latex/templates/thesis-presentation-template-beamer-english-version-dpt-of-computer-engineering-technological-educational-institute-of-peloponnese/vwhtyshhtqmg
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{naturalnames}{hyperref}
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{subfig}
+
+%%% FONT SELECTION %%%%%%%%%%%%%%%%%
+%%% we choose a sans font %%%%%%%%%%
+\usepackage{kmath,kerkis}
+%\usepackage[default]{gfsneohellenic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+
+%%
+% load TEI-Pel - specific layout
+\usepackage{TeiPel_En_Beamer_Layout}
+\setTeipelLayout{draft,newlogo}% options: "draft", "newlogo"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thesis Info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% title
+		\title[Any2Vec - Embeddings para búsqueda de semántica y aritmética de contenidos no verbales]{Any2Vec - Embeddings para búsqueda de semántica y aritmética de contenidos no verbales}
+	% author
+    % (In the mandatory argument "{}", separate multiple
+    % authors with "\and" - use "\\" for better author name formatting
+    % in the title page. In the optional argument "[]" include all
+	% author names, with no "\and" or text formatting macros.)
+	% Example:
+    %\author[A. Author Albert Einstein]{Anthony Author \and Albert Einstein}
+		\author[A. Gámiz]{Antonio Gámiz Delgado}
+	% supervisor
+		% \supervisor{Supervisor}{Mister Supervisor}{Professor}
+	% date
+		\presentationDate{? de noviembre de 2022}
+%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% typeset front slides
+	\typesetFrontSlides
+
+%%%%%%%%%%%%%%%%
+% Your Slides Start here:
+
+%%%%
+\section{Introducción}
+
+\subsection[Problema]{Descripción del problema}
+
+
+\end{document}
