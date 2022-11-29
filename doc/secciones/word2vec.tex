@@ -455,11 +455,12 @@ donde $v'_{w_j}$ es el vector de salida de la $j$-ésima palabra en el vocabular
 columnas de la matriz de pesos $W'$.
 
 La derivación de las ecuaciones de actualización no es muy diferente del proceso desarrollado en el modelo anterior. Simplemente se cambia la función de pérdida a:
-\begin{align}
+\begin{align}\label{perdida_1}
   E & = - \log p\left( w_{O,1}, w_{O,2}, \cdots, w_{O,C} | w_I \right) \\
     & = - \log \prod_{c=1}^C \frac{\exp(u_{c,j_c^*})}{\sum_{j'=1}^V\exp(u_{j'})} \\
     & = - \sum_{c=1}^C u_{j^*_c} + C\log \sum_{j'=1}^V\exp(u_{j'}).
-\end{align}
+  \end{align}
+
 donde $j_c^*$ es el índice de la $c$-ésima palabra del contexto en el vocabulario.
 
 Ahora se deriva $E$ respecto al valor de la red $u_{c,j}$:
